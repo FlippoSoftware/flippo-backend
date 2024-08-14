@@ -1,0 +1,2 @@
+DEFINE TABLE gestalt_set SCHEMAFULL TYPE RELATION IN gestalt OUT set
+;
