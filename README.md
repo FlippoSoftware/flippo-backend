@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Flippo
 
-## Getting Started
+## 1 О проекте
 
-First, run the development server:
+Проект направлен на создание удобного и функционального инструмента для обучения.
+Реализация проекта позволит пользователям эффективно организовывать учебный процесс, улучшая свои знания и навыки.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Цель проекта:** Создание веб-приложения для составления, хранения и использования обучающих карточек,
+предназначенных для улучшения запоминания информации и подготовки к экзаменам, тестам и другим образовательным целям.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 2 Целевая аудитория
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Ученики и студенты;
+- Преподаватели и репетиторы;
+- Люди, занимающиеся самообразованием;
+- Специалисты, готовящиеся к профессиональным экзаменам и сертификациям.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 3 Основные функции и возможности
 
-## Learn More
+1. Регистрация и авторизация пользователей:
 
-To learn more about Next.js, take a look at the following resources:
+- Регистрация через email и пароли;
+- Вход через социальные сети (Google, Facebook).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Профиль пользователя:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- Редактирование личных данных.
 
-## Deploy on Vercel
+3. Создание и управление карточками:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Создание карточек с вопросами и ответами;
+- Возможность добавления изображений и ссылок;
+- Организация карточек по темам и коллекциям.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+4. Обучение с помощью карточек:
+
+- Режим изучения: отображение вопросов и скрытие ответов до нажатия;
+- Режим тестирования: выбор ответа из предложенных вариантов или ввод вручную;
+- Прогресс и статистика обучения (количество изученных карточек, процент правильных ответов и т.д.).
+
+5. Импорт и экспорт карточек:
+
+- Импорт карточек из CSV и других форматов;
+- Экспорт созданных карточек для печати или обмена;
+- Копирование наборов или отдельных карточек по ссылке.
+
+6. Сообщество и обмен:
+
+- Возможность делиться коллекциями карточек с другими пользователями;
+- Поиск и подписка на коллекции других пользователей;
+- Оценка и комментарии к карточкам и коллекциям;
+- Возможность своместного редактирования набора карточек.
+
+7. Дополнительные функции:
+
+- Синхронизация данных между устройствами;
+- Поддержка многоязычности.
+
+## 4 Технические требования
+
+1. Веб-технологии:
+
+- Frontend: HTML5, CSS3, NextJS, SCSS, React;
+- Backend: -;
+- База данных: MongoDB.
+
+2. Безопасность:
+
+- Защита пользовательских данных (шифрование паролей);
+- SSL-сертификат для безопасного соединения;
+- Регулярные бэкапы данных.
+
+3. Вид веб-приложения
+
+- PWA;
+- SSR.
+
+## 5 Функциональные требования
+
+1. Header:
+
+- Лого для перехода на основную страницу;
+- Библиотека, кнопка для перехода на страницу споиском по общей базе данных;
+- Кнопка входа/регистрации. Для авторизованного при нажатии раскрывается меню: "Профиль", "Выйти";
+
+2. Основная страница:
+
+- Cодержит иформацию о проекте;
+- Cсылку для скачивания PWA версии.
+
+3. Профиль:
