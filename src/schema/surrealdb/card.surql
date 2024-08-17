@@ -3,7 +3,7 @@ DEFINE TABLE card SCHEMAFULL
     FOR create WHERE $scope = 'user'
 ;
 
-DEFINE FIELD owner ON TABLE card TYPE record<set>;
+DEFINE FIELD set ON TABLE card TYPE record<set>;
 DEFINE FIELD question ON TABLE card TYPE string
   DEFAULT ''
 ;
