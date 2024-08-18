@@ -1,6 +1,6 @@
 DEFINE TABLE gestalt SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE $scope = 'user'
+    FOR create WHERE $access = 'user'
     FOR select, update, delete WHERE owner = $auth.id;
 
 DEFINE FIELD owner ON TABLE gestalt TYPE record<user>
@@ -10,10 +10,12 @@ DEFINE FIELD owner ON TABLE gestalt TYPE record<user>
 
 DEFINE FIELD type ON TABLE gestalt TYPE string
   ASSERT $value INSIDE ['list', 'random']
+  DEFAULT "list"
 ;
 
 DEFINE FIELD state ON TABLE gestalt TYPE string
   ASSERT $value INSIDE ['normal', 'repetition']
+  DEFAULT "normal"
 ;
 
 DEFINE FIELD list_index ON TABLE gestalt TYPE number

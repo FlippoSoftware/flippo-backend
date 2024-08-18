@@ -1,6 +1,6 @@
 DEFINE TABLE history SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE $scope = 'user'
+    FOR create WHERE $access = 'user'
 ;
 
 DEFINE FIELD owner ON history TYPE record<set>

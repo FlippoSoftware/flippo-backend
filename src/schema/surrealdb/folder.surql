@@ -1,6 +1,6 @@
 DEFINE TABLE folder SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE  $scope = 'user'
+    FOR create WHERE  $access = 'user'
     FOR select WHERE author = $auth.id OR fn::viewingIsAllowed(access_settings, 'view') OR 
       (IF (SELECT * FROM liked WHERE in = $auth.id AND out = $this.id LIMIT 1) {RETURN TRUE;})
     FOR update WHERE author = $auth.id OR fn::viewingIsAllowed(access_settings, 'edit') 

@@ -1,6 +1,6 @@
 DEFINE TABLE card SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE $scope = 'user'
+    FOR create WHERE $access = 'user'
 ;
 
 DEFINE FIELD set ON TABLE card TYPE record<set>;

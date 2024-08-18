@@ -1,6 +1,6 @@
 DEFINE TABLE publication SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE $scope = 'user'
+    FOR create WHERE $access = 'user'
     FOR update, delete WHERE owner = $auth.id
 ;
 

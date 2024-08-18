@@ -16,7 +16,7 @@ DEFINE FIELD patronymic ON TABLE user TYPE option<string>
   ASSERT string::len($value) >= 2
 ;
 
-DEFINE FIELD username ON user TYPE string 
+DEFINE FIELD username ON user TYPE option<string>
   ASSERT string::len($value) >= 2
 ;
 
@@ -32,9 +32,9 @@ DEFINE FIELD password ON user TYPE string
 DEFINE FIELD avatarURL ON user TYPE option<string>
 ;
 
-DEFINE FIELD role ON user TYPE string 
+DEFINE FIELD role ON user TYPE option<string> 
   ASSERT $value INSIDE [ 'admin', 'user', 'premium']
-  DEFAULT 'standart'
+  DEFAULT 'user'
 ;
 
 DEFINE FIELD created ON user

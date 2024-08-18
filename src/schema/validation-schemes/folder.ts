@@ -2,7 +2,7 @@ import { record } from "@lib/zod";
 import { z } from "zod";
 
 const FolderSchema = z.object({
-  if: record("folder"),
+  id: record("folder"),
   name: z.string(),
   author: record("user"),
   created: z.coerce.date(),

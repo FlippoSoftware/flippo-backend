@@ -1,6 +1,6 @@
 DEFINE TABLE set SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE $scope = 'user'
+    FOR create WHERE $access = 'user'
     FOR select WHERE author = $auth.id OR fn::viewingIsAllowed(access_settings, 'view') OR 
       (IF (SELECT * FROM liked WHERE in = $auth.id AND out = $this.id LIMIT 1) {RETURN TRUE;})
     FOR update WHERE author = $auth.id OR fn::viewingIsAllowed(access_settings, 'edit') 
@@ -50,7 +50,8 @@ DEFINE EVENT removal ON TABLE set WHEN $event = "DELETE" THEN {
   DELETE tag_set WHERE out = $before;
   DELETE repetition WHERE repetition_set->set = $before; 
   DELETE gestalt WHERE gestalt_set->set = $before; 
-  DELETE folder_set WHERE out = $before;
+  DELETE folder_to WHERE out = $before;
+  DELETE access WHERE resource = $before;
   DELETE $before.history;
   DELETE $before.publcation;
 

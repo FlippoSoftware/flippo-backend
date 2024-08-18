@@ -1,6 +1,6 @@
 DEFINE TABLE repetition SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE $scope = 'user'
+    FOR create WHERE $access = 'user'
     FOR select, update, delete WHERE owner = $auth.id;
 
 DEFINE FIELD owner ON TABLE repetition TYPE record<user>

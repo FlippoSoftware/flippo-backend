@@ -2,7 +2,7 @@ import { record } from "@lib/zod";
 import { z } from "zod";
 
 const TagSchema = z.object({
-  id: record("id"),
+  id: record("tag"),
   name: z.string(),
   owner: record("user"),
   created: z.coerce.date(),

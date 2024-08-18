@@ -1,6 +1,6 @@
 DEFINE TABLE access SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE $scope = 'user'
+    FOR create WHERE $access = 'user'
     FOR select WHERE user = $auth.id OR resource.author = $auth.id  
     FOR update, delete WHERE resource.author = $auth.id  
 ;

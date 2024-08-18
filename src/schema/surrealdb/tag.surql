@@ -1,6 +1,6 @@
 DEFINE TABLE tag SCHEMAFULL
   PERMISSIONS
-    FOR create WHERE $scope = 'user'
+    FOR create WHERE $access = 'user'
     FOR select, update, delete WHERE owner = $auth.id
 ;
 
