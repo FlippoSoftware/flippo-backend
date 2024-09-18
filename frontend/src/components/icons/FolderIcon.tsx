@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface FolderIconProps extends IIconProps {
-  type: "default" | "stack";
+  type?: "default" | "stack";
 }
 
 const FolderTypes = {

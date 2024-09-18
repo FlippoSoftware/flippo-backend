@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface AddIconProps extends IIconProps {
-  type: "default" | "set" | "folder" | "person" | "note";
+  type?: "default" | "set" | "folder" | "person" | "note";
 }
 
 const AddTypes = {

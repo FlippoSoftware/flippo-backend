@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface PersonIconProps extends IIconProps {
-  type: "edit" | "editFilled" | "check" | "checkFilled";
+  type?: "edit" | "editFilled" | "check" | "checkFilled";
 }
 
 const PersonTypes = {

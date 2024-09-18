@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface CaptiveIconProps extends IIconProps {
-  type: "default" | "public";
+  type?: "default" | "public";
 }
 
 const CaptiveTypes = {

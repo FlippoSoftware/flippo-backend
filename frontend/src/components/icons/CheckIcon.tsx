@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface CheckIconProps extends IIconProps {
-  type: "default" | "circle" | "circleFilled";
+  type?: "default" | "circle" | "circleFilled";
 }
 
 const CheckTypes = {

@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface ListIconProps extends IIconProps {
-  type: "order" | "unorder";
+  type?: "order" | "unorder";
 }
 
 const ListTypes = {

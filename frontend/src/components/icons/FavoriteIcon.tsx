@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface FavoriteIconProps extends IIconProps {
-  type: "default" | "filled";
+  type?: "default" | "filled";
 }
 
 const FavoriteTypes = {

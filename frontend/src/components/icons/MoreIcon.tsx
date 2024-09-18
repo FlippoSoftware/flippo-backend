@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface MoreIconProps extends IIconProps {
-  type: "horizontal" | "vertical";
+  type?: "horizontal" | "vertical";
 }
 
 const MoreTypes = {

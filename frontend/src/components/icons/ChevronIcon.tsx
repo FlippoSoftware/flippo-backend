@@ -1,7 +1,7 @@
 import { IIconProps } from "./types/IIconProps";
 
 interface ChevronIconProps extends IIconProps {
-  type: "left" | "right" | "top" | "bottom";
+  type?: "left" | "right" | "top" | "bottom";
 }
 
 const ChevronTypes = {
