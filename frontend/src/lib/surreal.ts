@@ -1,9 +1,8 @@
-import { Surreal } from "surrealdb.js";
-import { env } from "@schema/validation-schemes/env";
+import { Surreal } from "surrealdb";
 
-const endpoint: string = env.SURREALDB_ENDPOINT;
-const namespace: string = env.SURREALDB_NS;
-const database: string = env.SURREALDB_DB;
+const endpoint = "http://localhost:3031/rpc";
+const namespace = "flippo";
+const database = "flippo";
 
 let surreal: Surreal;
 
