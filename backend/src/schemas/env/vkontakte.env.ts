@@ -9,7 +9,7 @@ const untestedVkontakteEnv = {
 };
 
 const VkontakteEnvSchema = z.object({
-  VK_CLIENT_ID: z
+  VK_CLIENT_ID: z.coerce
     .number({
       required_error: "Age is required",
       invalid_type_error: "Age must be a number"

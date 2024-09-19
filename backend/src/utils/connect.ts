@@ -1,13 +1,13 @@
 import { Surreal } from "surrealdb";
-import config from "config";
 import logger from "@utils/logger.ts";
+import { SurrealDBEnv } from "@schemas/index.ts";
 
-const endpoint: string = config.get("surrealDB.endpoint");
-const namespace: string = config.get("surrealDB.namespace");
-const database: string = config.get("surrealDB.database");
+const endpoint = SurrealDBEnv.SURREALDB_ENDPOINT;
+const namespace = SurrealDBEnv.SURREALDB_NS;
+const database = SurrealDBEnv.SURREALDB_DB;
 
-const rootUsername: string = config.get("surrealDB.rootUsername");
-const rootPassword: string = config.get("surrealDB.rootPassword");
+const rootUsername = SurrealDBEnv.SURREALDB_USER;
+const rootPassword = SurrealDBEnv.SURREALDB_PASS;
 
 let surreal: Surreal;
 
@@ -23,7 +23,7 @@ const initSurreal = async (): Promise<void> => {
     });
     logger.info("SurrealDB connected!");
   } catch (error: unknown) {
-    logger.error("Error connecting to SurrealDB.");
+    logger.error(`Error connecting to SurrealDB: ${error}`);
   }
 };
 

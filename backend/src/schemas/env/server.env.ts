@@ -2,11 +2,11 @@ import { z } from "zod";
 import "dotenv/config";
 
 const untestedServerEnv = {
-  SERVER_PORT: process.env.PORT
+  SERVER_PORT: process.env.SERVER_PORT
 };
 
 const ServerEnvSchema = z.object({
-  SERVER_PORT: z.number()
+  SERVER_PORT: z.coerce.number()
 });
 
 const ServerEnv = ServerEnvSchema.parse(untestedServerEnv);

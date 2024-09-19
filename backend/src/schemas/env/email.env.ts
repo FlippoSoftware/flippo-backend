@@ -6,7 +6,7 @@ const untestedEmailEnv = {
 };
 
 const EmailEnvSchema = z.object({
-  ISSUER_EMAIL: z.string().url("Invalid url")
+  ISSUER_EMAIL: z.string().email("Invalid email.")
 });
 
 const EmailEnv = EmailEnvSchema.parse(untestedEmailEnv);

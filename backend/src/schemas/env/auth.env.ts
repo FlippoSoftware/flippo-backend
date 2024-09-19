@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { TimeFormatSchema } from "@schemas/index.ts";
+import { TimeFormatSchema } from "@schemas/utils/time.schema.ts";
 import "dotenv/config";
 
 const untestedAuthEnv = {
