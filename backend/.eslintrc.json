@@ -1,0 +1,67 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier"],
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "rules": {
+    "prettier/prettier": ["warn", { "endOfLine": "auto" }, { "usePrettierrc": true }],
+    "@typescript-eslint/array-type": ["warn", { "default": "array", "readonly": "array" }],
+    "@typescript-eslint/consistent-generic-constructors": ["warn", "type-annotation"],
+    "@typescript-eslint/consistent-type-exports": "error",
+    "@typescript-eslint/consistent-type-imports": [
+      "error",
+      {
+        "prefer": "type-imports",
+        "disallowTypeAnnotations": true,
+        "fixStyle": "separate-type-imports"
+      }
+    ],
+    "default-param-last": "off",
+    "@typescript-eslint/default-param-last": "warn",
+    "@typescript-eslint/naming-convention": ["warn", { "format": "camelCase" }],
+    "@typescript-eslint/no-array-delete": "warn",
+    "@typescript-eslint/no-duplicate-enum-values": "error",
+    "@typescript-eslint/no-duplicate-type-constituents": "error",
+    "@typescript-eslint/typedef": [
+      "warn",
+      {
+        "arrowParameter": true,
+        "memberVariableDeclaration": true,
+        "variableDeclaration": true,
+        "propertyDeclaration": true,
+        "parameter": true,
+        "objectDestructuring": true
+      }
+    ],
+    "import/order": [
+      "warn",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "object",
+          "type"
+        ],
+        "newlines-between": "always"
+      }
+    ]
+  },
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
+  "env": {
+    "browser": true,
+    "amd": true,
+    "node": true
+  }
+}
