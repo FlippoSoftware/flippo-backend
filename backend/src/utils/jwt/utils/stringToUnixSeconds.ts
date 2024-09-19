@@ -4,7 +4,7 @@ const DAY = HOUR * 24;
 const WEEK = DAY * 7;
 const YEAR = DAY * 365.25;
 const REG =
-  /^(\+|\-)? ?(\d+|\d+\.\d+) ?(seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)&/i;
+  /^(\+|\-)? ?(\d+|\d+\.\d+) ?(seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)$/i;
 
 export default (str: string): number => {
   const matched = REG.exec(str);

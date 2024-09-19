@@ -22,7 +22,7 @@
     "paths": {
       "@utils/*": ["src/utils/*"],
       "@controller/*": ["src/controller/*"],
-      "@jwt/*": ["src/jwt/*"],
+      "@jwt/*": ["src/utils/jwt/*"],
       "@middelware/*": ["src/middelware/*"],
       "@dao/*": ["src/dao/*"],
       "@schemas/*": ["src/schemas/*"],
