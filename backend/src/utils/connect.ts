@@ -11,7 +11,7 @@ const rootPassword = SurrealDBEnv.SURREALDB_PASS;
 
 let surreal: Surreal;
 
-const initSurreal = async (): Promise<void> => {
+const connectSurrealDB = async (): Promise<void> => {
   surreal = new Surreal();
 
   try {
@@ -29,10 +29,10 @@ const initSurreal = async (): Promise<void> => {
 
 const getSurreal = (): Surreal => {
   if (!surreal) {
-    initSurreal();
+    connectSurrealDB();
   }
 
   return surreal;
 };
 
-export { getSurreal, initSurreal };
+export { getSurreal, connectSurrealDB };
