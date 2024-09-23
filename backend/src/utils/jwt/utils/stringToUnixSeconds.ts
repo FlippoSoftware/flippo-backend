@@ -12,8 +12,8 @@ export default (str: string): number => {
     throw new TypeError("Invalid time period format");
   }
 
-  const value: number = parseFloat(matched[1]);
-  const units: string = matched[2].toLowerCase();
+  const value: number = parseFloat(matched[2]);
+  const units: string = matched[3].toLowerCase();
   let numericDate: number;
 
   switch (units) {
@@ -44,7 +44,7 @@ export default (str: string): number => {
       break;
   }
 
-  if (matched[0]) return -numericDate;
+  if (matched[1]) return -numericDate;
 
   return numericDate;
 };
