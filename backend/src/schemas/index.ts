@@ -12,7 +12,15 @@ export {
   RefreshTokenSchema,
   type TRefreshToken
 } from "./db/refreshToken.schema.ts";
-export { UserRole, type TUserRole, UserSchema, type TUser } from "./db/user.schema.ts";
+export {
+  UserRoleSchema,
+  type TUserRole,
+  ProviderIDSchema,
+  type TProviderID,
+  UserSchema,
+  type TUser
+} from "./db/user.schema.ts";
 export { record } from "./db/record.schema.ts";
 
 export { TimeFormatSchema, type TTimeFormat } from "./utils/time.schema.ts";
+export { providerId } from "./utils/providerId.schema.ts";
