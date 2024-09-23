@@ -1,8 +1,6 @@
+import { UserIDSchema } from "@schemas/db/user.schema.ts";
+import { RefreshJwtIDSchema } from "@schemas/index.ts";
 import z from "zod";
-import { record, RefreshJwtIDSchema } from "@schemas/index.ts";
-
-const UserIDSchema = record("user");
-type TUserID = z.infer<typeof UserIDSchema>;
 
 const AccessPayloadSchema = z.object({
   iss: z.string().min(1, "Must be 1 or more characters long"),
@@ -26,11 +24,4 @@ const RefreshPayloadSchema = z.object({
 
 type TRefreshPayload = z.infer<typeof RefreshPayloadSchema>;
 
-export {
-  UserIDSchema,
-  type TUserID,
-  AccessPayloadSchema,
-  type TAccessPayload,
-  RefreshPayloadSchema,
-  type TRefreshPayload
-};
+export { AccessPayloadSchema, type TAccessPayload, RefreshPayloadSchema, type TRefreshPayload };
