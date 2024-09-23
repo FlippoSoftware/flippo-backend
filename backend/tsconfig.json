@@ -23,7 +23,7 @@
       "@utils/*": ["src/utils/*"],
       "@controller/*": ["src/controller/*"],
       "@jwt/*": ["src/utils/jwt/*"],
-      "@middelware/*": ["src/middelware/*"],
+      "@middleware/*": ["src/middleware/*"],
       "@dao/*": ["src/dao/*"],
       "@schemas/*": ["src/schemas/*"],
       "@service/*": ["src/service/*"]
