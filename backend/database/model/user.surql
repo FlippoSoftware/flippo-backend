@@ -24,9 +24,8 @@ DEFINE FIELD email ON user TYPE string
   ASSERT string::is::email($value)
 ;
 
-DEFINE FIELD password ON user TYPE string 
-  ASSERT string::len($value) >= 8
-  PERMISSIONS FOR select NONE
+DEFINE FIELD providersID ON TABLE user TYPE array<string>
+  ASSERT array::len($value) > 0;
 ;
 
 DEFINE FIELD image ON user TYPE option<string>
@@ -44,7 +43,8 @@ DEFINE FIELD updated ON user
   VALUE time::now()
   DEFAULT time::now();
 
-DEFINE INDEX uniqueName ON user FIELDS username UNIQUE;
+DEFINE INDEX uniqueUsername ON user FIELDS username UNIQUE;
+DEFINE INDEX uniqueProviderId ON user FIELDS providerId UNIQUE;
 DEFINE INDEX uniqueEmail ON user FIELDS email UNIQUE;
 
 DEFINE EVENT removal ON user WHEN $event = "DELETE" THEN {
