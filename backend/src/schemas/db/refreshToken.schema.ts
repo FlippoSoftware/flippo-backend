@@ -25,11 +25,19 @@ const RefreshTokenSchema = z.object({
 
 type TRefreshToken = z.infer<typeof RefreshTokenSchema>;
 
+const CreateRefreshTokenSchema = RefreshTokenSchema.extend({
+  connectionData: ConnectionDataSchema.omit({ date: true })
+}).omit({ id: true });
+
+type TCreateRefreshToken = z.infer<typeof CreateRefreshTokenSchema>;
+
 export {
   RefreshJwtIDSchema,
   type TRefreshJwtID,
   ConnectionDataSchema,
   type TConnectionData,
   RefreshTokenSchema,
-  type TRefreshToken
+  type TRefreshToken,
+  CreateRefreshTokenSchema,
+  type TCreateRefreshToken
 };
