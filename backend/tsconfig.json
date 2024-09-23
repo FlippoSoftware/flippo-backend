@@ -43,7 +43,7 @@
     /* Completeness */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "src/router/routersts"],
   "exclude": ["node_modules"],
   "ts-node": {
     "esm": true,
