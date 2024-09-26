@@ -25,17 +25,15 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@pages/*": ["src/components/pages/*"],
-      "@templates/*": ["src/components/templates/*"],
-      "@atoms/*": ["src/components/ui/atoms/*"],
-      "@molecules/*": ["src/components/ui/molecules/*"],
-      "@organisms/*": ["src/components/ui/organisms/*"],
-      "@functions/*": ["src/components/settings/functions/*"],
-      "@hooks/*": ["src/components/settings/hooks/*"],
-      "@styles/*": ["src/components/settings/styles/*"],
-      "@lib/*": ["src/lib/*"],
-      "@schemas/*": ["src/lib/schemas/*"],
-      "@*": ["./src/*"]
+      "@styles/*": ["src/settings/styles/*"],
+      "@ui/*": ["src/shared/ui/*"],
+      "@env/*": ["src/shared/env/*"],
+      "@hooks/*": ["src/shared/hooks/*"],
+      "@icons/*": ["src/shared/icons/*"],
+      "@schemas/*": ["src/shared/schemas/*"],
+      "@utils/*": ["src/shared/utils/*"],
+      "@*": ["./src/*"],
+      "@widgets/*": ["src/widgets/*"]
     }
   },
   "include": [
@@ -44,7 +42,7 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/lib/functions/import_surreal_ql.js",
-    "src/lib/auth/providers/google.ts"
+    "src/lib/utils/auth/providers/google.ts"
   ],
   "exclude": ["node_modules"]
 }
