@@ -1,29 +1,28 @@
 import * as jose from "jose";
-import { TRefreshJwtID } from "@schemas/index.ts";
-import { getExpiration, getIssuedAt } from "./utils/timestamps.ts";
-import generateUUID from "./utils/uuid.ts";
+import { type TRefreshJwtId, ENV } from "@schemas/index.ts";
+
+import { getExpiration, getIssuedAt } from "./timestamps.ts";
+import generateUUId from "./uuid.ts";
 import {
   AccessPayloadSchema,
+  DbTokenPayloadSchema,
   RefreshPayloadSchema,
-  TAccessPayload,
-  TRefreshPayload
-} from "./types/IAuthPayload.ts";
-import { TTokens } from "./types/TTokens.ts";
-import { SurrealDBEnv, AuthEnv } from "@schemas/index.ts";
-import { TUserID, UserIDSchema } from "@schemas/db/user.schema.ts";
-import { PrivateKeyObject } from "./utils/keys/privateKey.ts";
-import { PublicKeyObject } from "./utils/keys/publicKey.ts";
+  type TAccessPayload,
+  type TDbTokenPayload,
+  type TRefreshPayload
+} from "./types/TAuthPayload.ts";
+import { type TTokens } from "./types/TTokens.ts";
+import { PrivateKeyObject } from "./keys/privateKey.ts";
+import { PublicKeyObject } from "./keys/publicKey.ts";
+import { DbPrivateKey } from "./keys/index.ts";
 
-function generateAccessTokenPayload(userID: TUserID) {
+function generateAccessTokenPayload(userId: string) {
   const iat: number = getIssuedAt();
-  const expAccess: number = getExpiration(AuthEnv.AUTH_EXP_ACCESS_TOKEN, iat);
+  const expAccess: number = getExpiration(ENV.AUTH_EXP_ACCESS_TOKEN, iat);
 
   const payload = {
-    iss: AuthEnv.AUTH_ISS,
-    ID: userID,
-    NS: SurrealDBEnv.SURREALDB_NS,
-    DB: SurrealDBEnv.SURREALDB_DB,
-    AC: SurrealDBEnv.SURREALDB_AC,
+    iss: ENV.AUTH_ISS,
+    id: userId,
     iat: iat,
     exp: expAccess
   } as TAccessPayload;
@@ -31,15 +30,15 @@ function generateAccessTokenPayload(userID: TUserID) {
   return AccessPayloadSchema.parse(payload);
 }
 
-function generateRefreshTokenPayload(userID: TUserID) {
+function generateRefreshTokenPayload(userId: string) {
   const iat: number = getIssuedAt();
-  const expRefresh: number = getExpiration(AuthEnv.AUTH_EXP_REFRESH_TOKEN, iat);
-  const jtiRefresh: TRefreshJwtID = `refreshToken:${generateUUID()}` as TRefreshJwtID;
+  const expRefresh: number = getExpiration(ENV.AUTH_EXP_REFRESH_TOKEN, iat);
+  const jtiRefresh: TRefreshJwtId = `refreshToken:${generateUUId()}` as TRefreshJwtId;
 
   const payload = {
-    iss: AuthEnv.AUTH_ISS,
+    iss: ENV.AUTH_ISS,
     jti: jtiRefresh,
-    userID: userID,
+    userId: userId,
     iat: iat,
     exp: expRefresh
   } as TRefreshPayload;
@@ -47,45 +46,63 @@ function generateRefreshTokenPayload(userID: TUserID) {
   return RefreshPayloadSchema.parse(payload);
 }
 
-async function generateTokens(userID: TUserID): Promise<{
+async function generateDbToken(userId: string) {
+  const iat: number = getIssuedAt();
+  const expDb: number = getExpiration(ENV.SURREALDB_EXP_DB_TOKEN, iat);
+
+  const payload = {
+    iss: ENV.AUTH_ISS,
+    id: userId,
+    ns: ENV.SURREALDB_NS,
+    db: ENV.SURREALDB_DB,
+    ac: ENV.SURREALDB_AC,
+    iat: iat,
+    exp: expDb
+  } as TDbTokenPayload;
+
+  DbTokenPayloadSchema.parse(payload);
+
+  const dbToken = await new jose.SignJWT(payload)
+    .setProtectedHeader({
+      alg: ENV.AUTH_HASH_ALG
+    })
+    .sign(DbPrivateKey);
+
+  return dbToken;
+}
+
+async function generateTokens(userId: string): Promise<{
   tokens: TTokens;
   payloads: { accessPayload: TAccessPayload; refreshPayload: TRefreshPayload };
 }> {
-  const parseRes = UserIDSchema.safeParse(userID);
-  if (!parseRes.success) {
-    throw new TypeError("Invalid user ID");
-  }
+  const accessPayload: TAccessPayload = generateAccessTokenPayload(userId);
+  const refreshPayload: TRefreshPayload = generateRefreshTokenPayload(userId);
 
-  userID = parseRes.data;
-
-  const accessPayload: TAccessPayload = generateAccessTokenPayload(userID);
-  const refreshPayload: TRefreshPayload = generateRefreshTokenPayload(userID);
-
-  const accessToken: string = await generateToken(accessPayload);
-  const refreshToken: string = await generateToken(refreshPayload);
+  const accessToken: string = await generateToken<TAccessPayload>(accessPayload);
+  const refreshToken: string = await generateToken<TRefreshPayload>(refreshPayload);
 
   return { tokens: { accessToken, refreshToken }, payloads: { accessPayload, refreshPayload } };
 }
 
-async function generateToken(payload: TAccessPayload | TRefreshPayload): Promise<string> {
+async function generateToken<T extends TAccessPayload | TRefreshPayload>(
+  payload: T
+): Promise<string> {
   const token: string = await new jose.SignJWT(payload)
-    .setProtectedHeader({ alg: AuthEnv.AUTH_HASH_ALG })
+    .setProtectedHeader({ alg: ENV.AUTH_HASH_ALG })
     .sign(PrivateKeyObject);
 
   return token;
 }
 
-async function verifyToken(token: string): Promise<TRefreshPayload | TAccessPayload> {
+async function verifyToken<T extends TRefreshPayload | TAccessPayload>(token: string): Promise<T> {
   const options: jose.JWTVerifyOptions = {
-    algorithms: [AuthEnv.AUTH_HASH_ALG],
-    issuer: AuthEnv.AUTH_ISS
+    algorithms: [ENV.AUTH_HASH_ALG],
+    issuer: ENV.AUTH_ISS
   };
 
-  const payload: TRefreshPayload | TAccessPayload = (
-    await jose.jwtVerify(token, PublicKeyObject, options)
-  ).payload as TRefreshPayload | TAccessPayload;
+  const payload = (await jose.jwtVerify(token, PublicKeyObject, options)).payload as T;
 
   return payload;
 }
 
-export { generateTokens, verifyToken };
+export { generateTokens, verifyToken, generateDbToken };
