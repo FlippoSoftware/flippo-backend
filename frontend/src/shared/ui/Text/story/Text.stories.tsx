@@ -1,9 +1,9 @@
-import { Text } from "@atoms/Text";
+import Text from "../ui/Text";
 
-import { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta = {
-  title: "Atoms/Text",
+  title: "UIKit/Text",
   component: Text,
   tags: ["autodocs"]
 };
@@ -12,7 +12,7 @@ export default meta;
 
 type TextStory = StoryObj<typeof Text>;
 
-export const TextBody: TextStory = {
+export const TextBold: TextStory = {
   args: {
     children: "Flippo",
     fontSize: 20,

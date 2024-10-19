@@ -1,4 +1,4 @@
-import { HTMLAttributes } from "react";
+import type { ComponentProps, ElementType } from "react";
 
 enum FontWeight {
   ExtraLight = 200,
@@ -10,16 +10,21 @@ enum FontWeight {
   ExtraBold = 800
 }
 
-interface ITextProps
-  extends Omit<
-    HTMLAttributes<HTMLParagraphElement | HTMLSpanElement | HTMLHeadingElement>,
-    "children"
-  > {
-  children: string | number | Date | Symbol;
+type TTextOwnProps<E extends ElementType = ElementType> = {
   fontSize?: number | string | `${number}px` | `${number}rem` | `${number}em` | `${number}%`;
   fontWeight?: keyof typeof FontWeight | 100 | 200 | 300 | 400 | 500 | 600 | 700 | 800 | 900;
   lineHeight?: number | string | `${number}px` | `${number}rem` | `${number}em` | `${number}%`;
-  as?: keyof Pick<JSX.IntrinsicElements, "p" | "span" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6">;
-}
+  color?:
+    | "transparent"
+    | "currentColor"
+    | "unset"
+    | `--${string})`
+    | [number, number, number, number]
+    | string;
+  as?: E;
+};
 
-export { FontWeight, type ITextProps };
+type TTextProps<E extends ElementType> = TTextOwnProps<E> &
+  Omit<ComponentProps<E>, keyof TTextOwnProps>;
+
+export { FontWeight, type TTextProps };
