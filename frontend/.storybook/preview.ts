@@ -1,7 +1,7 @@
 import type { Preview } from "@storybook/react";
 import FlippoTheme from "./FlippoTheme";
 
-import "../src/components/settings/styles/global.scss";
+import "../src/settings/styles/global.scss";
 
 const preview: Preview = {
   parameters: {
