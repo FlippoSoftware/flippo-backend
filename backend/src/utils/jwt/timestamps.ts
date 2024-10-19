@@ -1,4 +1,5 @@
-import { TTimeFormat } from "@schemas/index.ts";
+import { type TTimeFormat } from "@schemas/index.ts";
+
 import epoch from "./epoch.ts";
 import stringToUnixSeconds from "./stringToUnixSeconds.ts";
 
