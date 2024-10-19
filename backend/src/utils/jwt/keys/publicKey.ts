@@ -1,8 +1,9 @@
-import { AuthEnv } from "@schemas/index.ts";
 import crypto from "crypto";
 
+import { ENV } from "@schemas/index.ts";
+
 const PublicKeyObject = crypto.createPublicKey({
-  key: AuthEnv.AUTH_PUBLIC_KEY.replace(/\\n/g, "\n"),
+  key: ENV.AUTH_PUBLIC_KEY.replace(/\\n/g, "\n"),
   format: "pem"
 });
 
