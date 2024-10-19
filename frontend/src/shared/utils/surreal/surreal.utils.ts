@@ -1,8 +1,8 @@
 import { Surreal } from "surrealdb";
 
-const endpoint = "http://localhost:3031/rpc";
-const namespace = "flippo";
-const database = "flippo";
+const ENDPOINT: string = "http://localhost:3031/rpc";
+const NAMESPACE: string = "flippo";
+const DATABASE: string = "flippo";
 
 let surreal: Surreal;
 
@@ -17,7 +17,7 @@ const initSurreal = async (
   await surreal.use({ namespace, database });
 
   if (typeof localStorage !== "undefined") {
-    const token = localStorage.getItem("token");
+    const token: string | null = localStorage.getItem("token");
     if (token)
       await surreal.authenticate(token).catch((e: unknown) => {
         console.warn(`Failed to authenticate: ${e}`);
@@ -27,7 +27,7 @@ const initSurreal = async (
 
 const getSurreal = (): Surreal => {
   if (!surreal) {
-    initSurreal(endpoint, namespace, database);
+    initSurreal(ENDPOINT, NAMESPACE, DATABASE);
   }
 
   return surreal;
