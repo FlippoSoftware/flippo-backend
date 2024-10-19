@@ -1,0 +1,30 @@
+// .primary:disabled {
+//   background-color: var(--brand-50);
+//   color: var(--neutral-white);
+// }
+
+// .secondary:disabled {
+//   background-color: var(--neutral-25);
+//   color: var(--neutral-80);
+// }
+
+// .outlined:disabled {
+//   border: 1.5px solid var(--neutral-30);
+//   color: var(--neutral-70);
+// }
+
+// .label:disabled {
+//   color: var(--neutral-60);
+// }
+
+// .link:disabled {
+//   color: var(--neutral-30);
+// }
+
+.primary:disabled,
+.label:disabled,
+.outlined:disabled,
+.label:disabled,
+.link:disabled {
+  cursor: not-allowed;
+}
