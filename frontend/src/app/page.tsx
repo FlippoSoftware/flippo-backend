@@ -1,26 +1,78 @@
 "use client";
 
-import { Text } from "@atoms/Text";
+import axios from "axios";
+import { usePathname, useRouter } from "next/navigation";
+import { useContext } from "react";
 
-const Home = () => {
-  const get = async () => {
-    try {
-      const data = await fetch("/api/auth");
-      console.log(data);
-    } catch (error) {
-      console.error("Error fetching: ", error);
-      return null;
-    }
-  };
+import { AppEnv } from "@env/app.env";
+import { AuthContext } from "@modules/Auth";
+import { Button } from "@ui/Button";
+
+function Home() {
+  const { session, setSession } = useContext(AuthContext);
+  const router = useRouter();
+  const pathname = usePathname();
+
   return (
     <main>
-      <Text>{"Flippo project!"}</Text>
-      <button onClick={get}>{"wipe check"}</button>
-      <a href='https://accounts.google.com/o/oauth2/v2/auth?redirect_uri=http%3A%2F%2Flocalhost:3032%2Fapi%2Fauth%2Fgoogle&prompt=consent&response_type=code&client_id=56332811871-78hk7pi2gn9fi4aqlhtoidhtr464oagu.apps.googleusercontent.com&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email+https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile&access_type=offline'>
-        Ну давай, работай!
-      </a>
+      {session ? (
+        <h1>
+          {"Hello, "}
+          {session.name}
+          {"!"}
+        </h1>
+      ) : (
+        <h1>{"Welcome to Flippo!"}</h1>
+      )}
+
+      {session ? (
+        <Button
+          kind={"outlined"}
+          size={"large"}
+          onClick={async () => {
+            try {
+              await axios.post(
+                AppEnv.NEXT_PUBLIC_API_BASE_URL + "/auth/refresh_token/signout",
+                {},
+                {
+                  withCredentials: true
+                }
+              );
+            } catch (error: any) {
+              console.error(error.message);
+            } finally {
+              setSession(null);
+            }
+          }}
+        >
+          {"SignOut"}
+        </Button>
+      ) : (
+        <Button
+          kind={"primary"}
+          size={"large"}
+          onClick={() => router.push(`/auth?urlCallback=${pathname}`)}
+        >
+          {"SignIn & SignUp"}
+        </Button>
+      )}
+
+      <Button
+        kind={"primary"}
+        size={"large"}
+        onClick={async () => {
+          const response = await axios.get(
+            AppEnv.NEXT_PUBLIC_API_BASE_URL + "/auth/refresh_token/refresh",
+            {
+              withCredentials: true
+            }
+          );
+        }}
+      >
+        {"Refresh\r"}
+      </Button>
     </main>
   );
-};
+}
 
 export default Home;
