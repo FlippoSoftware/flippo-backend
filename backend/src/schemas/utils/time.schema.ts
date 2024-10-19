@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 const REG =
-  /^(\+|\-)? ?(\d+|\d+\.\d+) ?(seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)&/i;
+  /^(\+|-)? ?(\d+|\d+\.\d+) ?(seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)$/i;
 
 const TimeFormatSchema =
-  z.custom<`${"+" | "-" | ""}${number}${"seconds" | "secs" | "s" | "minutes" | "mins" | "m" | "hours" | "hrs" | "h" | "days" | "d" | "weeks" | "w" | "years" | "yrs" | "y"}`>(
-    (val) => {
+  z.custom<`${"+" | "-" | ""}${string}${"seconds" | "secs" | "s" | "minutes" | "mins" | "m" | "hours" | "hrs" | "h" | "days" | "d" | "weeks" | "w" | "years" | "yrs" | "y"}`>(
+    (val: string) => {
       return typeof val === "string" ? REG.test(val) : false;
     },
     {

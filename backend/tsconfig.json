@@ -6,6 +6,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
 
     /* Language and Environment */
     "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
@@ -22,8 +23,8 @@
     "paths": {
       "@utils/*": ["src/utils/*"],
       "@controller/*": ["src/controller/*"],
-      "@jwt/*": ["src/jwt/*"],
-      "@middelware/*": ["src/middelware/*"],
+      "@jwt/*": ["src/utils/jwt/*"],
+      "@middleware/*": ["src/middleware/*"],
       "@dao/*": ["src/dao/*"],
       "@schemas/*": ["src/schemas/*"],
       "@service/*": ["src/service/*"]
@@ -43,7 +44,7 @@
     /* Completeness */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["**/*.ts"],
+  "include": ["./src/**/*.ts", "register.js", "loader.js", "eslint.config.mjs"],
   "exclude": ["node_modules"],
   "ts-node": {
     "esm": true,

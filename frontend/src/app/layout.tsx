@@ -1,4 +1,8 @@
+import { AuthSession } from "@modules/Auth";
+
 import type { Metadata } from "next";
+
+import "@settings/styles/global.scss";
 
 export const metadata: Metadata = {
   title: "Flippo",
@@ -6,16 +10,21 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({
-  children
+  children,
+  modal
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang={"en"}>
-      <head>
-        <script src='https://accounts.google.com/gsi/client' async defer />
-      </head>
-      <body>{children}</body>
+      <head></head>
+      <body>
+        <AuthSession>
+          {modal}
+          {children}
+        </AuthSession>
+      </body>
     </html>
   );
 }

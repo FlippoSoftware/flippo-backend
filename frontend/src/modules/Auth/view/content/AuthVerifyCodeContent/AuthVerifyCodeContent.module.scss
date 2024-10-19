@@ -1,0 +1,46 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+  gap: 12px;
+
+  text-align: center;
+
+  & > .textBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  & > .emailBlock {
+    height: 37px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    color: var(--neutral-70);
+  }
+}
+
+.verifyBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 16px;
+
+  width: 100%;
+}
+
+.separator {
+  width: 100%;
+  border-radius: 1000px;
+  border: 1.5px solid var(--neutral-20);
+
+  margin: 0;
+}
+
+.backButton {
+  width: 100%;
+}

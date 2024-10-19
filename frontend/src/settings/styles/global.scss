@@ -1,0 +1,103 @@
+@import "./variables/colors.scss";
+@import "./variables/borders.scss";
+
+@font-face {
+  font-family: "VelaSans";
+  src: url("fonts/vela-sans/VelaSans-Regular.ttf") format("truetype");
+}
+
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100vh;
+  scroll-behavior: smooth;
+
+  @extend .colors, .borders;
+}
+
+:where(ul, ol):where([class]) {
+  padding-left: 0;
+  list-style: none;
+}
+
+body {
+  font-family: "VelaSans";
+
+  overflow-x: hidden;
+
+  min-height: 100%;
+  line-height: 1.5;
+
+  margin: 0;
+  padding: 0;
+
+  background-color: var(--neutral-14);
+
+  &::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    width: 0px;
+    background-color: var(--neutral-14);
+    border-radius: var(--border-full);
+  }
+}
+
+body,
+:where(blockquote, figure):where([class]) {
+  margin: 0;
+}
+
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl):where([class]) {
+  margin-block: 0;
+}
+
+a,
+span {
+  all: unset;
+}
+
+:where(dd[class]) {
+  margin-left: 0;
+}
+
+:where(fieldset[class]) {
+  margin-left: 0;
+  padding: 0;
+  border: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
+
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
+}
+
+svg *[stroke] {
+  stroke: currentColor;
+}
+
+svg * {
+  transition-property: fill, stroke;
+}

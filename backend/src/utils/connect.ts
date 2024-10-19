@@ -1,20 +1,20 @@
 import { Surreal } from "surrealdb";
-import config from "config";
 import logger from "@utils/logger.ts";
+import { ENV } from "@schemas/index.ts";
 
-const endpoint: string = config.get("surrealDB.endpoint");
-const namespace: string = config.get("surrealDB.namespace");
-const database: string = config.get("surrealDB.database");
+const endpoint = ENV.SURREALDB_ENDPOINT;
+const namespace = ENV.SURREALDB_NS;
+const database = ENV.SURREALDB_DB;
 
-const rootUsername: string = config.get("surrealDB.rootUsername");
-const rootPassword: string = config.get("surrealDB.rootPassword");
+const rootUsername = ENV.SURREALDB_USER;
+const rootPassword = ENV.SURREALDB_PASS;
 
 let surreal: Surreal;
 
-const initSurreal = async (): Promise<void> => {
-  surreal = new Surreal();
-
+const connectSurrealDB = async (): Promise<void> => {
   try {
+    surreal = new Surreal();
+
     await surreal.connect(endpoint);
     await surreal.use({ namespace, database });
     await surreal.signin({
@@ -22,17 +22,17 @@ const initSurreal = async (): Promise<void> => {
       password: rootPassword
     });
     logger.info("SurrealDB connected!");
-  } catch (error: unknown) {
-    logger.error("Error connecting to SurrealDB.");
+  } catch (error: any) {
+    logger.error(`Error connecting to SurrealDB: ${error}`);
   }
 };
 
 const getSurreal = (): Surreal => {
-  if (!surreal) {
-    initSurreal();
+  if (!surreal.connection) {
+    connectSurrealDB();
   }
 
   return surreal;
 };
 
-export { getSurreal, initSurreal };
+export { getSurreal, connectSurrealDB };
