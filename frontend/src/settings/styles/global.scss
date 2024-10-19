@@ -7,7 +7,6 @@
 }
 
 *,
-*::focus,
 *::after,
 *::before {
   box-sizing: border-box;
@@ -43,7 +42,7 @@ body {
   }
 
   &::-webkit-scrollbar-thumb {
-    width: px;
+    width: 0px;
     background-color: var(--neutral-14);
     border-radius: var(--border-full);
   }
@@ -58,8 +57,9 @@ body,
   margin-block: 0;
 }
 
-a {
-  text-decoration: none;
+a,
+span {
+  all: unset;
 }
 
 :where(dd[class]) {
@@ -82,11 +82,18 @@ textarea,
 select,
 button {
   font: inherit;
+
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: none;
+  }
 }
 
-svg *[fill] {
-  fill: currentColor;
-}
 svg *[stroke] {
   stroke: currentColor;
 }
