@@ -9,4 +9,4 @@ interface IGoogleUserResult {
   locale: string;
 }
 
-export { IGoogleUserResult };
+export type { IGoogleUserResult };

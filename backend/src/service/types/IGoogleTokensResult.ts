@@ -1,10 +1,7 @@
-interface IGoogleTokensResult {
-  access_token: string;
+import { type ITokensResult } from "./ITokensResult.ts";
+
+interface IGoogleTokensResult extends ITokensResult {
   id_token: string;
-  token_type: string;
-  expires_in: Number;
-  scope: string;
-  refresh_token: string;
 }
 
-export { IGoogleTokensResult };
+export type { IGoogleTokensResult };
