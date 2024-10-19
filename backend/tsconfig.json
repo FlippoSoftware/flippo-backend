@@ -6,6 +6,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
 
     /* Language and Environment */
     "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
@@ -43,7 +44,7 @@
     /* Completeness */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["**/*.ts", "src/router/routersts"],
+  "include": ["./src/**/*.ts", "register.js", "loader.js", "eslint.config.mjs"],
   "exclude": ["node_modules"],
   "ts-node": {
     "esm": true,
