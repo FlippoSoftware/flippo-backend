@@ -1,0 +1,25 @@
+.modal {
+  padding: 32px;
+
+  max-width: 420px;
+
+  background-color: var(--neutral-16);
+  border-radius: var(--border-field);
+
+  color: var(--neutral-white);
+  letter-spacing: 1px;
+
+  box-shadow: 0 40px 104px 14px rgba($color: #000000, $alpha: 0.35);
+
+  transition: max-height 0.3s ease;
+
+  .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    gap: 24px;
+    width: 100%;
+  }
+}
