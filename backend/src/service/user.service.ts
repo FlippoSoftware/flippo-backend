@@ -1,58 +1,67 @@
 import {
   createUser,
   deleteUser,
-  fetchUserById,
-  fetchUserByProviderId,
+  findUserById,
+  findUserByProviderId,
   updateUser
 } from "@dao/user.dao.ts";
-import { TCreateUser, TUser, TUserID } from "@schemas/db/user.schema.ts";
-import { TConnectionData } from "@schemas/index.ts";
-import { TokenService } from "./refreshToken.service.ts";
+import { type TConnectionData, type TCreateUser, type TUser } from "@schemas/index.ts";
 import { ApiError } from "src/exceptions/api.error.ts";
-import { deleteRefreshToken } from "@dao/refreshToken.dao.ts";
-class UserService {
-  static async signUp(
-    userData: TCreateUser["body"],
-    connectionData: Omit<TConnectionData, "date">
-  ) {
-    const candidate = await fetchUserByProviderId(userData.providersID[0]);
-    if (candidate) {
-      const tokens = await TokenService.generate(candidate.id, connectionData);
-      return { user: candidate, tokens };
-    }
+import { type TRefreshPayload } from "@utils/jwt/types/TAuthPayload.ts";
 
+import { TokenService } from "./token.service.ts";
+
+class UserService {
+  static async signUp(userData: TCreateUser, connectionData: Omit<TConnectionData, "date">) {
     const user = await createUser(userData);
     if (!user) throw ApiError.ServiceUnavailable("Failed to create a user.");
 
-    const tokens = await TokenService.generate(user.id, connectionData);
+    const tokens = await TokenService.generateAccessRefreshTokens(user.id, connectionData);
+    return { user, tokens };
+  }
+
+  static async signIn(providerId: string, connectionData: Omit<TConnectionData, "date">) {
+    const user = await findUserByProviderId(providerId);
+    if (!user) return { user: undefined, tokens: undefined };
+
+    const tokens = await TokenService.generateAccessRefreshTokens(user.id, connectionData);
 
     return { user, tokens };
   }
 
   static async signOut(refreshToken: string) {
-    const token = await deleteRefreshToken(refreshToken);
-    if (!token) throw ApiError.ServiceUnavailable("Failed to delete token.");
+    const verificationResult = await TokenService.verifyToken<TRefreshPayload>(refreshToken);
+    if (!verificationResult) throw ApiError.BadRequest("Refresh token not found.");
 
-    return token;
+    const isDeleted = await TokenService.deleteRefreshToken(verificationResult.payload.jti);
+    if (!isDeleted) throw ApiError.BadRequest("Failed to delete token.");
+
+    return true;
   }
 
-  static async getUserById(userID: TUserID) {
-    const user = await fetchUserById(userID);
+  static async getUserById(userId: string) {
+    const user = await findUserById(userId);
+
+    return user;
+  }
+
+  static async getUserByProviderId(providerId: string) {
+    const user = await findUserByProviderId(providerId);
 
     return user;
   }
 
   static async updateUser(
-    userID: TUserID,
+    userId: string,
     userData: Partial<Omit<TUser, "id" | "created" | "updated">>
   ) {
-    const user = await updateUser(userID, userData);
+    const user = await updateUser(userId, userData);
 
     return user;
   }
 
-  static async deleteUser(userID: TUserID) {
-    const user = await deleteUser(userID);
+  static async deleteUser(userId: string) {
+    const user = await deleteUser(userId);
 
     return user;
   }
