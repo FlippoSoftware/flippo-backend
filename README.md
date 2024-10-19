@@ -57,8 +57,8 @@
 
 1. Веб-технологии:
 
-- Frontend: HTML5, NextJS, SCSS, React, MobX;
-- Backend: NodeJS, Express, jose;
+- Frontend: HTML5, NextJS, SCSS, React, MobX or Zustand, react-hook-form, axios;
+- Backend: NodeJS, Express, jose, nodemailer;
 - База данных: SurrealDB;
 - Общие: TypeScript, Zod.
 
