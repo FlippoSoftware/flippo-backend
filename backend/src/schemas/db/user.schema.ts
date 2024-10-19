@@ -1,28 +1,30 @@
 import { z } from "zod";
-import { record } from "./record.schema.ts";
 import { providerId } from "@schemas/utils/providerId.schema.ts";
+
+import { record } from "./record.schema.ts";
 
 const UserRoleSchema = z.union([z.literal("admin"), z.literal("user"), z.literal("premium")]);
 type TUserRole = z.infer<typeof UserRoleSchema>;
 
-const UserIDSchema = record("user");
-type TUserID = z.infer<typeof UserIDSchema>;
+const UserIdSchema = record("user");
+type TUserId = z.infer<typeof UserIdSchema>;
 
-const ProviderIDSchema = z.union([
+const ProviderIdSchema = z.union([
   providerId("google"),
   providerId("vkontakte"),
-  providerId("email")
+  providerId("email"),
+  providerId("yandex")
 ]);
-type TProviderID = z.infer<typeof ProviderIDSchema>;
+type TProviderId = z.infer<typeof ProviderIdSchema>;
 
 const UserSchema = z.object({
-  id: UserIDSchema,
-  name: z.string(),
-  surname: z.string(),
+  id: UserIdSchema,
+  name: z.string().optional(),
+  surname: z.string().optional(),
   patronymic: z.string().optional(),
   username: z.string().optional(),
-  email: z.string().email(),
-  providersID: z.array(ProviderIDSchema),
+  email: z.string().email().optional(),
+  providersId: z.array(ProviderIdSchema),
   image: z.string().url().optional(),
   role: UserRoleSchema,
   created: z.coerce.date(),
@@ -31,12 +33,10 @@ const UserSchema = z.object({
 
 type TUser = z.infer<typeof UserSchema>;
 
-const CreateUserSchema = z.object({
-  body: UserSchema.omit({
-    id: true,
-    created: true,
-    updated: true
-  })
+const CreateUserSchema = UserSchema.omit({
+  id: true,
+  created: true,
+  updated: true
 });
 
 type TCreateUser = z.infer<typeof CreateUserSchema>;
@@ -44,10 +44,10 @@ type TCreateUser = z.infer<typeof CreateUserSchema>;
 export {
   UserRoleSchema,
   type TUserRole,
-  UserIDSchema,
-  type TUserID,
-  ProviderIDSchema,
-  type TProviderID,
+  UserIdSchema,
+  type TUserId,
+  ProviderIdSchema,
+  type TProviderId,
   UserSchema,
   type TUser,
   CreateUserSchema,
