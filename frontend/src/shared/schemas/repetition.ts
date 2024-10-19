@@ -1,5 +1,6 @@
-import { record } from "./record.schema";
 import { z } from "zod";
+
+import { record } from "./record.schema";
 
 const RepetitionSchema = z.object({
   id: record("repetition"),

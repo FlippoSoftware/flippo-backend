@@ -1,4 +1,4 @@
-import { IIconProps } from "./types/IIconProps";
+import type { IIconProps } from "./types/IIconProps";
 
 interface FavoriteIconProps extends IIconProps {
   type?: "default" | "filled";
@@ -11,19 +11,19 @@ const FavoriteTypes = {
     "M12 20.3249C11.7667 20.3249 11.5293 20.2832 11.288 20.1999C11.0467 20.1166 10.834 19.9832 10.65 19.7999L8.925 18.2249C7.15833 16.6082 5.56233 15.0042 4.137 13.4129C2.71167 11.8216 1.99933 10.0672 2 8.1499C2 6.58324 2.525 5.2749 3.575 4.2249C4.625 3.1749 5.93333 2.6499 7.5 2.6499C8.38333 2.6499 9.21667 2.83724 10 3.2119C10.7833 3.58657 11.45 4.09924 12 4.7499C12.55 4.0999 13.2167 3.58757 14 3.2129C14.7833 2.83824 15.6167 2.65057 16.5 2.6499C18.0667 2.6499 19.375 3.1749 20.425 4.2249C21.475 5.2749 22 6.58324 22 8.1499C22 10.0666 21.2917 11.8249 19.875 13.4249C18.4583 15.0249 16.85 16.6332 15.05 18.2499L13.35 19.7999C13.1667 19.9832 12.9543 20.1166 12.713 20.1999C12.4717 20.2832 12.234 20.3249 12 20.3249Z"
 };
 
-const FavoriteIcon = (props: FavoriteIconProps) => {
+function FavoriteIcon(props: FavoriteIconProps) {
   const { isDefaultFill, type = "default", ...otherProps } = props;
 
   return (
     <svg
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
+      viewBox={"0 0 24 24"}
+      xmlns={"http://www.w3.org/2000/svg"}
       fill={isDefaultFill ? "currentColor" : "--neutral-80"}
       {...otherProps}
     >
       <path d={FavoriteTypes[type]} />
     </svg>
   );
-};
+}
 
 export { FavoriteIcon };

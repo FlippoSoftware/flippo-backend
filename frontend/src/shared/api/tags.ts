@@ -1,9 +1,10 @@
 "use client";
 
-import { TagSchema, TTag } from "@schemas/index";
 import { z } from "zod";
+
+import { TagSchema, type TTag } from "@shared/schemas/tag";
+import { record } from "@shared/schemas/record";
 import { getSurreal } from "@shared/utils/surreal/surreal.utils";
-import { record } from "@lib/schemas/db/record";
 
 async function fetchTags() {
   const tags = await getSurreal()?.select<TTag>("tag");

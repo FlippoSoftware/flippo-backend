@@ -1,4 +1,4 @@
-import { IIconProps } from "./types/IIconProps";
+import type { IIconProps } from "./types/IIconProps";
 
 interface FolderIconProps extends IIconProps {
   type?: "default" | "stack";
@@ -11,19 +11,19 @@ const FolderTypes = {
     "M3 21C2.45 21 1.97933 20.8043 1.588 20.413C1.19667 20.0217 1.00067 19.5507 1 19V6H3V19H20V21H3ZM7 17C6.45 17 5.97933 16.8043 5.588 16.413C5.19667 16.0217 5.00067 15.5507 5 15V4C5 3.45 5.196 2.97933 5.588 2.588C5.98 2.19667 6.45067 2.00067 7 2H12L14 4H21C21.55 4 22.021 4.196 22.413 4.588C22.805 4.98 23.0007 5.45067 23 6V15C23 15.55 22.8043 16.021 22.413 16.413C22.0217 16.805 21.5507 17.0007 21 17H7ZM7 15H21V6H13.175L11.175 4H7V15Z"
 };
 
-const FolderIcon = (props: FolderIconProps) => {
+function FolderIcon(props: FolderIconProps) {
   const { isDefaultFill, type = "default", ...otherProps } = props;
 
   return (
     <svg
-      viewBox='0 0 24 24'
-      xmlns='http://www.w3.org/2000/svg'
+      viewBox={"0 0 24 24"}
+      xmlns={"http://www.w3.org/2000/svg"}
       fill={isDefaultFill ? "currentColor" : "--neutral-80"}
       {...otherProps}
     >
       <path d={FolderTypes[type]} />
     </svg>
   );
-};
+}
 
 export { FolderIcon };

@@ -1,9 +1,12 @@
 "use client";
 
-import { TagSchema, TSet, TTag, TSetTo } from "@schemas/index";
 import { z } from "zod";
+
+import { type TSetTo } from "@shared/schemas/setTo";
+import { TagSchema, type TTag } from "@shared/schemas/tag";
+import { type TSet } from "@shared/schemas/set";
+import { record } from "@shared/schemas/record";
 import { getSurreal } from "@shared/utils/surreal/surreal.utils";
-import { record } from "@lib/schemas/db/record";
 
 async function assignTag({ tag, set }: { tag: TTag["id"]; set: TSet["id"] }) {
   tag = record("tag").parse(tag);
@@ -48,42 +51,4 @@ async function assignedTags(set: TSet["id"]) {
     .filter(({ id }, index, arr) => index == arr.findIndex((item) => item.id == id));
 }
 
-async function assignAccess({ set, access }: { set: TSet["id"]; access: TAccess["id"] }) {
-  set = record("set").parse(set);
-  access = record("access").parse(access);
-
-  const [result] = await getSurreal().query<[TSetTo[]]>(
-    /* surrealql */ `
-            RELATE ONLY $set->set_to->$access;
-        `,
-    { set, access }
-  );
-  return result && result.length > 0;
-}
-
-async function unassignAccess({ set, access }: { set: TSet["id"]; access: TAccess["id"] }) {
-  set = record("set").parse(set);
-  access = record("access").parse(access);
-
-  const [result] = await getSurreal().query<[TSetTo[]]>(
-    /* surrealql */ `
-            DELETE $set->set_to WHERE out = $access RETURN BEFORE;
-        `,
-    { set, access }
-  );
-  return result && result.length > 0;
-}
-
-async function assignedAccesses(set: TSet["id"]) {
-  set = record("set").parse(set);
-
-  const [result] = await getSurreal().query<[TAccess[]]>(
-    /* surrealql */ `
-          $set->set_to->access.*
-        `,
-    { set }
-  );
-  return z.array(AccessSchema).parse(result ?? []);
-}
-
-export { assignTag, unassignTag, assignedTags, assignAccess, unassignAccess, assignedAccesses };
+export { assignTag, unassignTag, assignedTags };

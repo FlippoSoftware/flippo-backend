@@ -11,7 +11,7 @@ const record = <Table extends string = string>(table?: Table) => {
     },
     {
       message: ["Must be a record", table && `Table must be: "${table}"`]
-        .filter((a) => a)
+        .filter((a: string | undefined) => a)
         .join("; ")
     }
   );

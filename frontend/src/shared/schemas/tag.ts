@@ -1,5 +1,6 @@
-import { record } from "./record.schema";
 import { z } from "zod";
+
+import { record } from "./record.schema";
 
 const TagSchema = z.object({
   id: record("tag"),

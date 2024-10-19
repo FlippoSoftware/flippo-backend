@@ -1,5 +1,6 @@
-import { record } from "./record.schema";
 import { z } from "zod";
+
+import { record } from "./record.schema";
 
 const StateType = z.union([
   z.literal("none"),

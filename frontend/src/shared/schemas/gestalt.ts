@@ -1,5 +1,6 @@
-import { record } from "./record.schema";
 import { z } from "zod";
+
+import { record } from "./record.schema";
 
 const GestaltType = z.union([z.literal("list"), z.literal("random")]);
 type TGestaltType = z.infer<typeof GestaltType>;

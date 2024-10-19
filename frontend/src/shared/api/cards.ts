@@ -1,9 +1,10 @@
 "use client";
 
-import { CardSchema, TCard } from "@schemas/index";
 import { z } from "zod";
+
+import { CardSchema, type TCard } from "@shared/schemas/card";
+import { record } from "@shared/schemas/record";
 import { getSurreal } from "@shared/utils/surreal/surreal.utils";
-import { record } from "@lib/schemas/db/record";
 
 async function fetchCards() {
   const cards = await getSurreal().select<TCard>("card");

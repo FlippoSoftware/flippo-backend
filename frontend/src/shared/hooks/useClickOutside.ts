@@ -1,5 +1,6 @@
-import { RefObject, useEffect } from "react";
+import { useEffect } from "react";
 
+import type { RefObject } from "react";
 const useClickOutside = (ref: RefObject<any>, callback: () => void): void => {
   useEffect(() => {
     const listener = (event: MouseEvent) => {
@@ -11,7 +12,7 @@ const useClickOutside = (ref: RefObject<any>, callback: () => void): void => {
     return () => {
       document.removeEventListener("mousedown", listener);
     };
-  }, [ref]);
+  }, [ref, callback]);
 };
 
 export { useClickOutside };
