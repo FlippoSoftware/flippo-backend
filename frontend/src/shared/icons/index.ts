@@ -7,6 +7,7 @@ export { CaptiveIcon } from "./CaptiveIcon";
 export { ChevronIcon } from "./ChevronIcon";
 export { ClockLoaderIcon } from "./ClockLoaderIcon";
 export { CodeBlockIcon } from "./CodeBlockIcon";
+export { ErrorIcon } from "./ErrorIcon";
 export { DatasetIcon } from "./DatasetIcon";
 export { DeleteIcon } from "./DeleteIcon";
 export { DragIcon } from "./DragIcon";
