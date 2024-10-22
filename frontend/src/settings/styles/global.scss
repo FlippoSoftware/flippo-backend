@@ -13,7 +13,6 @@
 }
 
 html {
-  height: 100vh;
   scroll-behavior: smooth;
 
   @extend .colors, .borders;
@@ -26,6 +25,9 @@ html {
 
 body {
   font-family: "VelaSans";
+
+  height: 100vh;
+  width: 100vw;
 
   overflow-x: hidden;
 
