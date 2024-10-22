@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { AuthContext } from "@modules/Auth/ui/AuthContext/AuthSession";
 import { Text } from "@ui/Text";
 import { AuthSchema } from "@modules/Auth/store/auth.schema";
-import { CheckIcon } from "@icons/CheckIcon";
+import { CheckIcon } from "@icons/SuccessIcon";
 import { Button } from "@ui/Button";
 import { ErrorIcon } from "@icons/ErrorIcon";
 

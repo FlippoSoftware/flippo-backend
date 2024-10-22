@@ -4,7 +4,7 @@ export { AttachIcon } from "./AttachIcon";
 export { BoldIcon } from "./BoldIcon";
 export { BookMarkIcon } from "./BookMarkIcon";
 export { CaptiveIcon } from "./CaptiveIcon";
-export { CheckIcon } from "./CheckIcon";
+export { CheckIcon } from "./SuccessIcon";
 export { ChevronIcon } from "./ChevronIcon";
 export { ClockLoaderIcon } from "./ClockLoaderIcon";
 export { CodeBlockIcon } from "./CodeBlockIcon";
