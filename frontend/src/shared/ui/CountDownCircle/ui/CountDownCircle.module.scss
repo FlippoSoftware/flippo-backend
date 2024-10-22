@@ -1,0 +1,26 @@
+.countDown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+
+  width: fit-content;
+  aspect-ratio: 1;
+
+  aspect-ratio: 1;
+  color: var(--neutral-90);
+
+  .counter {
+    position: absolute;
+    font-weight: 700;
+  }
+
+  svg {
+    display: flex;
+    transform: scale(-1, 1);
+    align-self: center;
+    overflow: visible;
+    margin: auto 0;
+    rotate: 90deg;
+  }
+}
