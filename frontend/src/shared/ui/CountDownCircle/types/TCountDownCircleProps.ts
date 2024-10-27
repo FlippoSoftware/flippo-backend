@@ -5,6 +5,7 @@ type TCountDownCircleProps = {
   onComplete?: () => void;
   strokeLinecap?: "butt" | "round" | "square" | "inherit" | undefined;
   className?: string;
+  styleEmptyBar?: string;
 };
 
 export type { TCountDownCircleProps };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import clsx from "clsx";
 
 import { type TCountDownCircleProps } from "../types/TCountDownCircleProps";
@@ -12,7 +12,8 @@ function CountDownCircle(props: TCountDownCircleProps) {
     strokeWidth = 3,
     onComplete,
     strokeLinecap = "round",
-    className = ""
+    className = "",
+    styleEmptyBar = ""
   } = props;
 
   const [startingTime] = useState(Date.now());
@@ -20,7 +21,6 @@ function CountDownCircle(props: TCountDownCircleProps) {
 
   const radius = size / 2;
   const circumference = size * Math.PI;
-  const [countDown, setCountDown] = useState(time);
 
   const second = countDown / 1000 < 0.2 ? 0 : Math.ceil(countDown / 1000).toString();
   const strokeDashoffset = circumference - (countDown / duration) * circumference;
@@ -48,6 +48,15 @@ function CountDownCircle(props: TCountDownCircleProps) {
       <label className={st.counter}>{second}</label>
       <div className={st.circleContainer}>
         <svg width={size} height={size} fill={"none"} xmlns={"http://www.w3.org/2000/svg"}>
+          <circle
+            cx={radius}
+            cy={radius}
+            r={radius}
+            fill={"none"}
+            strokeWidth={strokeWidth}
+            strokeDasharray={circumference}
+            className={styleEmptyBar ? styleEmptyBar : st.emptyBar}
+          />
           <circle
             cx={radius}
             cy={radius}

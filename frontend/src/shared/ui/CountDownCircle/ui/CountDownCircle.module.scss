@@ -22,5 +22,9 @@
     overflow: visible;
     margin: auto 0;
     rotate: 90deg;
+
+    .emptyBar {
+      stroke: var(--bg-3-hover);
+    }
   }
 }
