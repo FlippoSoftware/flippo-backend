@@ -7,7 +7,14 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const nextConfig = {
-  sassOptions: { includePaths: [path.join(__dirname, "styles")] },
+  sassOptions: {
+    includePaths: [
+      path.join(__dirname, "styles"),
+      path.join(__dirname, "src/settings/styles/"),
+      path.join(__dirname, "node_modules")
+    ],
+    loadPaths: ["./src/settings/styles/"]
+  },
   async headers() {
     return [
       {
