@@ -18,9 +18,10 @@
     "clsx": "^2.1.1",
     "effector": "^23.2.3",
     "effector-react": "^23.2.1",
-    "next": "15.0.0-rc.0",
-    "react": "19.0.0-rc-09111202-20241011",
-    "react-dom": "19.0.0-rc-09111202-20241011",
+    "framer-motion": "^11.11.10",
+    "next": "15.0.1",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
     "react-hook-form": "^7.53.0",
     "surrealdb": "1.0.0-beta.21",
     "zod": "^3.23.8"
@@ -39,8 +40,8 @@
     "@storybook/test": "^8.3.5",
     "@storybook/theming": "^8.3.5",
     "@types/node": "^20.16.11",
-    "@types/react": "npm:types-react@rc",
-    "@types/react-dom": "npm:types-react-dom@rc",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
     "eslint": "^8.57.1",
@@ -59,12 +60,8 @@
     "storybook": "^8.3.5",
     "stylelint": "^16.10.0",
     "stylelint-config-standard-scss": "^13.1.0",
-    "typescript": "^5.6.3",
+    "typescript": "5.7.0-dev.20241027",
     "typescript-plugin-css-modules": "^5.1.0"
-  },
-  "overrides": {
-    "@types/react": "npm:types-react@rc",
-    "@types/react-dom": "npm:types-react-dom@rc"
   },
   "browserslist": [
     ">0.3%",
