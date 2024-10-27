@@ -20,7 +20,7 @@
 1. Регистрация и авторизация пользователей:
 
 - Регистрация через email;
-- Вход через социальные сети (Google, VK).
+- Вход через социальные сети (Google, VK, Yandex ID).
 
 2. Профиль пользователя:
 
@@ -57,7 +57,7 @@
 
 1. Веб-технологии:
 
-- Frontend: HTML5, NextJS, SCSS, React, MobX or Zustand, react-hook-form, axios;
+- Frontend: HTML5, NextJS, SCSS, React, Effector, react-hook-form, axios, storybook;
 - Backend: NodeJS, Express, jose, nodemailer;
 - База данных: SurrealDB;
 - Общие: TypeScript, Zod.
