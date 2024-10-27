@@ -7,25 +7,31 @@ import st from "./CountDownCircle.module.scss";
 
 function CountDownCircle(props: TCountDownCircleProps) {
   const {
-    time = 5000,
-    size,
-    strokeWidth = 4,
+    duration = 5000,
+    size = 27,
+    strokeWidth = 3,
     onComplete,
     strokeLinecap = "round",
     className = ""
   } = props;
 
+  const [startingTime] = useState(Date.now());
+  const [countDown, setCountDown] = useState(duration);
+
   const radius = size / 2;
   const circumference = size * Math.PI;
   const [countDown, setCountDown] = useState(time);
 
-  const second = Math.ceil(countDown / 1000).toString();
-  const strokeDashoffset = circumference - (countDown / time) * circumference;
+  const second = countDown / 1000 < 0.2 ? 0 : Math.ceil(countDown / 1000).toString();
+  const strokeDashoffset = circumference - (countDown / duration) * circumference;
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (countDown > 0) {
-        setCountDown(countDown - 10);
+      const elapsed = Date.now() - startingTime;
+      const progress = duration - elapsed;
+
+      if (progress > 0) {
+        setCountDown(progress);
       } else {
         clearInterval(interval);
         onComplete && onComplete();
@@ -35,7 +41,7 @@ function CountDownCircle(props: TCountDownCircleProps) {
     return () => {
       clearInterval(interval);
     };
-  }, [countDown, onComplete]);
+  }, [countDown, onComplete, duration, startingTime]);
 
   return (
     <div className={clsx(st.countDown, className)}>
@@ -59,4 +65,4 @@ function CountDownCircle(props: TCountDownCircleProps) {
   );
 }
 
-export default CountDownCircle;
+export default memo(CountDownCircle);
