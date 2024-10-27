@@ -1,3 +1,5 @@
+"use client";
+
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
@@ -10,7 +12,7 @@ import { useInputUsername } from "@modules/Auth/vm/useInputUsername";
 import { UsernameFromSchema, type TUsernameFrom } from "@modules/Auth/types/TUsernameForm";
 import { Loader } from "@ui/Loader";
 
-import st from "./AuthInputUsername.module.scss";
+import st from "./AuthInputUsernameContent.module.scss";
 
 function AuthInputUsernameContent(props: TContentProps) {
   const { changeState } = props;

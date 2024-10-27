@@ -1,6 +1,6 @@
 {
   "parser": "@typescript-eslint/parser",
-  "plugins": ["@typescript-eslint", "react", "prettier"],
+  "plugins": ["@typescript-eslint", "react", "prettier", "effector"],
   "parserOptions": { "project": "./tsconfig.json" },
   "extends": [
     "eslint:recommended",
@@ -10,7 +10,8 @@
     "plugin:react-hooks/recommended",
     "plugin:storybook/recommended",
     "plugin:prettier/recommended",
-    "next/core-web-vitals"
+    "next/core-web-vitals",
+    "plugin:effector/react"
   ],
   "rules": {
     "prettier/prettier": ["warn", { "endOfLine": "auto" }, { "usePrettierrc": true }],

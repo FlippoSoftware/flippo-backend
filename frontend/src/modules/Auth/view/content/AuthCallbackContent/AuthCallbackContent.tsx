@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { AuthContext } from "@modules/Auth/ui/AuthContext/AuthSession";
 import { Text } from "@ui/Text";
 import { AuthSchema } from "@modules/Auth/store/auth.schema";
-import { CheckIcon } from "@icons/CheckIcon";
+import { SuccessIcon } from "@icons/SuccessIcon";
 import { Button } from "@ui/Button";
 import { ErrorIcon } from "@icons/ErrorIcon";
 
@@ -40,7 +40,7 @@ function AuthCallbackContent(props: TContentProps) {
     return (
       <div className={st.content}>
         <div className={st.icon}>
-          <CheckIcon width={100} height={100} type={"circleFilled"} />
+          <SuccessIcon width={100} height={100} type={"circleFilled"} />
         </div>
         <Text<"h1"> as={"h1"}>
           {"Welcome to "}
@@ -56,7 +56,7 @@ function AuthCallbackContent(props: TContentProps) {
       <Text<"h1"> as={"h1"}>{"Auth status"}</Text>
       <div className={st.content}>
         <div className={st.error}>
-          <ErrorIcon width={100} height={100} />
+          <ErrorIcon type={"circleFilled"} width={100} height={100} />
           <Text<"h3"> as={"h3"}>{`ERROR: ${data.error}`}</Text>
         </div>
         <div className={st.button_container}>

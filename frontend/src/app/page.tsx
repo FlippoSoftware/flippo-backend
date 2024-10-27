@@ -7,6 +7,7 @@ import { useContext } from "react";
 import { AppEnv } from "@env/app.env";
 import { AuthContext } from "@modules/Auth";
 import { Button } from "@ui/Button";
+import { ToastContainer } from "@widgets/ToastContainer";
 
 function Home() {
   const { session, setSession } = useContext(AuthContext);
@@ -15,6 +16,7 @@ function Home() {
 
   return (
     <main>
+      <ToastContainer toastCountOnScreen={4} />
       {session ? (
         <h1>
           {"Hello, "}
