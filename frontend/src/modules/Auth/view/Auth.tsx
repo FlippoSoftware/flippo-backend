@@ -1,39 +1,28 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
 
+import { useAuth } from "../vm/useAuth";
+
 import st from "./Auth.module.scss";
-import AuthMainContent from "./content/AuthMainContent/AuthMainContent";
-import AuthVerifyCodeContent from "./content/AuthVerifyCodeContent/AuthVerifyCodeContent";
-import AuthCallbackContent from "./content/AuthCallbackContent/AuthCallbackContent";
-import AuthInputUsernameContent from "./content/AuthInputUsernameContent/AuthInputUsernameContent";
+import AuthorizationMethodContent from "./content/AuthorizationMethodContent/AuthorizationMethodContent";
+import VerificationCodeContent from "./content/VerificationCodeContent/VerificationCodeContent";
+import OauthCallbackContent from "./content/OauthCallbackContent/OauthCallbackContent";
+import InputUsernameContent from "./content/InputUsernameContent/InputUsernameContent";
 
-import type { TAuthProps } from "../types/TAuthProps";
-import type { TState } from "../types/TState";
-
-function Auth(props: TAuthProps) {
-  const { type } = props;
-  const [kind, setKind] = useState(type);
-
-  const authRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {}, [authRef]);
-
-  const changeState = (state: TState) => {
-    setKind(state);
-  };
+function Auth() {
+  const { modalRef, modalContent, onModalAuthClose } = useAuth();
 
   return (
-    <div ref={authRef} className={st.modal}>
+    <div ref={modalRef} className={st.modal}>
       <div className={clsx(st.content)}>
         {
           {
-            main: <AuthMainContent changeState={changeState} />,
-            callback: <AuthCallbackContent changeState={changeState} />,
-            verifyCode: <AuthVerifyCodeContent changeState={changeState} />,
-            inputUsername: <AuthInputUsernameContent changeState={changeState} />
-          }[kind]
+            authorizationMethod: <AuthorizationMethodContent />,
+            verificationCode: <VerificationCodeContent />,
+            inputUsername: <InputUsernameContent />,
+            oauthCallback: <OauthCallbackContent />
+          }[modalContent]
         }
       </div>
     </div>

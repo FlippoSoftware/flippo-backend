@@ -5,7 +5,7 @@ type TFormInputProps = {
   type: "text" | "password" | "email";
   placeholder: string;
   showLabel?: boolean;
-  errorMessage?: string;
+  errorMessage?: string | null;
 } & TUnstyledInputProps<"input">;
 
 export { type TFormInputProps };

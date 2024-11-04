@@ -1,6 +1,6 @@
-import type { TEmailProviders } from "../types/TEmail";
+import type { TEmailProviderNames } from "../types/TEmail";
 
-const EmailDomains: { [key in TEmailProviders]: string[] } = {
+const EmailDomains: { [key in TEmailProviderNames]: string[] } = {
   gmail: ["@gmail.com"],
   outlook: ["@outlook.com", "@hotmail.com", "@live.com"],
   yahoo: ["@yahoo.com", "@yahoo.co.uk", "@ymail.com"],
@@ -11,7 +11,7 @@ const EmailDomains: { [key in TEmailProviders]: string[] } = {
   aol: ["@aol.com"]
 };
 
-const RedirectEmail: { [key in TEmailProviders]: string } = {
+const RedirectEmail: { [key in TEmailProviderNames]: string } = {
   gmail: "https://mail.google.com",
   outlook: "https://outlook.live.com/owa",
   yahoo: "https://mail.yahoo.com",
@@ -22,15 +22,20 @@ const RedirectEmail: { [key in TEmailProviders]: string } = {
   aol: "https://mail.aol.com/"
 };
 
-function getEmailProviders(email: string): { redirectURL: string; name: TEmailProviders } | null {
+type TEmailProvider = { redirectURL: string; name: TEmailProviderNames };
+
+function getEmailProvider(email: string): TEmailProvider | null {
   for (const [key, value] of Object.entries(EmailDomains)) {
     const isInclude = value.some((domain: string) => email.endsWith(domain));
     if (isInclude) {
-      return { redirectURL: RedirectEmail[key as TEmailProviders], name: key as TEmailProviders };
+      return {
+        redirectURL: RedirectEmail[key as TEmailProviderNames],
+        name: key as TEmailProviderNames
+      };
     }
   }
 
   return null;
 }
 
-export { getEmailProviders };
+export { getEmailProvider, type TEmailProvider };

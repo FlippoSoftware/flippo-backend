@@ -2,7 +2,6 @@
 
 import { type MouseEvent, useEffect, useMemo, useRef, memo } from "react";
 import clsx from "clsx";
-
 import { Text } from "@ui/Text";
 import { Button, IconButton } from "@ui/Button";
 import { Separator } from "@ui/Separator";

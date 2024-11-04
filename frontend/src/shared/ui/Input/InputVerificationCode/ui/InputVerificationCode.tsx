@@ -10,6 +10,7 @@ import {
   forwardRef
 } from "react";
 import clsx from "clsx";
+import { unknown } from "zod";
 
 import { UnstyledInput } from "@ui/Input";
 import { Text } from "@ui/Text";
@@ -28,11 +29,10 @@ function InputVerificationCode(props: TInputVerificationCodeProps, ref: Ref<TVer
     autoFocus = true,
     length = 4,
     onChange = () => null,
-    onCompleted = () => ({
-      ok: false,
-      error: "",
-      callback: () => {}
-    }),
+    success = false,
+    errorMessage = null,
+    onCompleted = () => unknown,
+    isBeingChecked = false,
     placeholder = ".",
     type = "number",
     value: defaultValue = "",
@@ -47,11 +47,6 @@ function InputVerificationCode(props: TInputVerificationCodeProps, ref: Ref<TVer
   const [values, setValues] = useState<string[]>(fillValues(defaultValue));
   const [focusIndex, setFocusIndex] = useState<number>(-1);
   const [readOnly, setReadOnly] = useState<boolean[]>(fillReadOnly());
-
-  const defaultError = "Неверный код.";
-  const [error, setError] = useState<string>("");
-
-  const [isCheckingCode, setIsCheckingCode] = useState<boolean>(false);
 
   const inputRefs = useMemo(
     () => new Array(length).fill(null).map(() => createRef<HTMLInputElement>()),
@@ -97,12 +92,12 @@ function InputVerificationCode(props: TInputVerificationCodeProps, ref: Ref<TVer
     const stringifiedValues = nextValues.join("");
     const isCompleted = stringifiedValues.length === length;
 
+    onChange(stringifiedValues);
+
     if (isCompleted) {
       codeCheck(stringifiedValues);
       return;
     }
-
-    onChange(stringifiedValues);
   };
 
   const focusInput = useCallback(
@@ -166,8 +161,6 @@ function InputVerificationCode(props: TInputVerificationCodeProps, ref: Ref<TVer
     if (eventKey === "Backspace" || eventKey === "Delete") {
       event.preventDefault();
 
-      if (error) setError("");
-
       if (inputRefs[focusIndex].current?.value === "") {
         setValue("", index - 1);
         focusInput(index - 1);
@@ -191,6 +184,8 @@ function InputVerificationCode(props: TInputVerificationCodeProps, ref: Ref<TVer
 
     setValues(fillValues(nextValue));
 
+    onChange(nextValue);
+
     const isCompleted = nextValue.length === length;
 
     if (isCompleted) {
@@ -204,19 +199,7 @@ function InputVerificationCode(props: TInputVerificationCodeProps, ref: Ref<TVer
   };
 
   const codeCheck = async (code: string) => {
-    setIsCheckingCode(true);
-
-    const result = await onCompleted(code);
-    if (!result.ok && result.error) {
-      setError(result.error);
-    } else if (!result.ok) {
-      setError(defaultError);
-    } else if (result.ok && result.callback) {
-      await result.callback();
-    }
-
-    setIsCheckingCode(false);
-    return;
+    await onCompleted(code);
   };
 
   const onInputClick = (event: MouseEvent<HTMLDivElement | HTMLInputElement>) => {
@@ -251,7 +234,7 @@ function InputVerificationCode(props: TInputVerificationCodeProps, ref: Ref<TVer
           <UnstyledInput
             as={"input"}
             autoComplete={"one-time-code"}
-            className={clsx(st.verifyInputSlot, error && st.invalid)}
+            className={clsx(st.verifyInputSlot, errorMessage && st.invalid, success && st.success)}
             key={`verifyInputSlot-${index}`}
             ref={ref}
             value={values[index]}
@@ -266,13 +249,17 @@ function InputVerificationCode(props: TInputVerificationCodeProps, ref: Ref<TVer
         ))}
       </div>
       <div
-        className={clsx(st.status, (error || isCheckingCode) && st.showStatus, error && st.error)}
+        className={clsx(
+          st.status,
+          (errorMessage || isBeingChecked) && st.showStatus,
+          errorMessage && st.error
+        )}
       >
-        {error ? (
+        {errorMessage ? (
           <Text<"p"> as={"p"} fontSize={13} fontWeight={"Semibold"}>
-            {error}
+            {errorMessage}
           </Text>
-        ) : isCheckingCode ? (
+        ) : isBeingChecked ? (
           <Loader loader={"spinner"} />
         ) : null}
       </div>

@@ -1,9 +1,9 @@
-import { createStore, createApi, createEvent, sample } from "effector";
+import { createStore, createEvent, sample } from "effector";
 
 import { type TNotificationKind, type TToastProps } from "../types/ToastProps";
 
-type TToastCreate = Omit<TToastProps, "id" | "kind" | "onClose">;
-type TToastStore = Omit<TToastProps, "onClose">;
+export type TToastCreate = Omit<TToastProps, "id" | "kind" | "onClose">;
+export type TToastStore = Omit<TToastProps, "onClose">;
 
 const defaultStatusIconSize: { [key in TNotificationKind]: number } = {
   success: 20,
@@ -28,7 +28,7 @@ const createUUID = () => {
   });
 };
 
-const deleteNotification = createEvent<string>();
+export const deleteNotification = createEvent<string>();
 
 const composeNotification = (
   kind: TNotificationKind,
@@ -44,7 +44,12 @@ const composeNotification = (
   };
 };
 
-const $notifications = createStore<TToastStore[]>([]);
+export const $notifications = createStore<TToastStore[]>([]);
+
+export const createSuccessNotification = createEvent<TToastCreate>();
+export const createWaringNotification = createEvent<TToastCreate>();
+export const createErrorNotification = createEvent<TToastCreate>();
+export const createTimerNotification = createEvent<TToastCreate>();
 
 sample({
   clock: deleteNotification,
@@ -53,24 +58,30 @@ sample({
   target: $notifications
 });
 
-const ToastApi = createApi($notifications, {
-  success: (state, newNotification: TToastCreate) => [
-    ...state,
-    composeNotification("success", newNotification)
-  ],
-  warning: (state, newNotification: TToastCreate) => [
-    ...state,
-    composeNotification("warning", newNotification)
-  ],
-  error: (state, newNotification: TToastCreate) => [
-    ...state,
-    composeNotification("error", newNotification)
-  ],
-  timer: (state, newNotification: TToastCreate) => [
-    ...state,
-    composeNotification("timer", newNotification)
-  ],
-  delete: (state, notificationId: string) => state.filter((n) => n.id !== notificationId)
+sample({
+  clock: createSuccessNotification,
+  source: $notifications,
+  fn: (state, notification) => [...state, composeNotification("success", notification)],
+  target: $notifications
 });
 
-export { $notifications, deleteNotification, ToastApi };
+sample({
+  clock: createWaringNotification,
+  source: $notifications,
+  fn: (state, notification) => [...state, composeNotification("warning", notification)],
+  target: $notifications
+});
+
+sample({
+  clock: createErrorNotification,
+  source: $notifications,
+  fn: (state, notification) => [...state, composeNotification("error", notification)],
+  target: $notifications
+});
+
+sample({
+  clock: createTimerNotification,
+  source: $notifications,
+  fn: (state, notification) => [...state, composeNotification("timer", notification)],
+  target: $notifications
+});

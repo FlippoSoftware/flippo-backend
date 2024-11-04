@@ -1,4 +1,4 @@
-const EmailProviders = [
+const EmailProviderNames = [
   "gmail",
   "outlook",
   "yahoo",
@@ -8,6 +8,6 @@ const EmailProviders = [
   "yandex",
   "aol"
 ] as const;
-type TEmailProviders = (typeof EmailProviders)[number];
+type TEmailProviderNames = (typeof EmailProviderNames)[number];
 
-export { type TEmailProviders };
+export { type TEmailProviderNames };
