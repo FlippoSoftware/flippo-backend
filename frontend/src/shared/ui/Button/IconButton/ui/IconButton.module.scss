@@ -1,4 +1,4 @@
-@import "mixins/displayFlex.scss";
+@use "mixins/displayFlex.scss" as display;
 
 @mixin sizeButton($sb, $si) {
   width: $sb;
@@ -27,7 +27,7 @@
 }
 
 .iconButton {
-  @include displayFlex(row, center, center);
+  @include display.displayFlex(row, center, center);
 
   border-radius: 50%;
 

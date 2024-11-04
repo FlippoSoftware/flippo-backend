@@ -1,7 +1,7 @@
-@import "mixins/_displayFlex.scss";
+@use "mixins/_displayFlex.scss" as display;
 
 @mixin alignToast() {
-  @include displayFlex(row, center, center, 12px);
+  @include display.displayFlex(row, center, center, 12px);
 }
 
 .toast {

@@ -1,15 +1,15 @@
-@import "mixins/displayFlex.scss";
+@use "mixins/displayFlex.scss" as display;
 
 .portal {
   position: absolute;
   inset: 0;
 
-  @include displayFlex(column, end, center, 0);
+  @include display.displayFlex(column, end, center, 0);
   pointer-events: none;
 
   .container {
     pointer-events: none;
-    @include displayFlex(column, end, center, 10px);
+    @include display.displayFlex(column, end, center, 10px);
     padding: 0 0 24px 0;
 
     position: relative;
