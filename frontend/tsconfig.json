@@ -35,17 +35,17 @@
       "@utils/*": ["src/shared/utils/*"],
       "@*": ["./src/*"],
       "@widgets/*": ["src/widgets/*"],
-      "@settings/*": ["src/settings/*"]
+      "@settings/*": ["src/settings/*"],
+      "@i18n/*": ["src/i18n/*"]
     }
   },
   "include": [
     "next-env.d.ts",
+    "next.config.mjs",
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "src/lib/functions/import_surreal_ql.js",
-    "src/lib/utils/auth/providers/google.ts",
-    "src/settings/styles/scss.d.ts"
+    "src/settings/**/*.d.ts"
   ],
   "exclude": ["node_modules"]
 }

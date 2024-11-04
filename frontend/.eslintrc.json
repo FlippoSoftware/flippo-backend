@@ -1,7 +1,7 @@
 {
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint", "react", "prettier", "effector"],
-  "parserOptions": { "project": "./tsconfig.json" },
+  "parserOptions": { "project": "./frontend/tsconfig.json" },
   "extends": [
     "eslint:recommended",
     "plugin:@typescript-eslint/eslint-recommended",
@@ -14,6 +14,18 @@
     "plugin:effector/react"
   ],
   "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "next/link",
+        "message": "Please import from `@i18n/routing` instead."
+      },
+      {
+        "name": "next/navigation",
+        "importNames": ["redirect", "permanentRedirect", "useRouter", "usePathname"],
+        "message": "Please import from `@i18n/routing` instead."
+      }
+    ],
     "prettier/prettier": ["warn", { "endOfLine": "auto" }, { "usePrettierrc": true }],
     "react/jsx-filename-extension": [1, { "extensions": [".ts", ".tsx"] }],
     "react/function-component-definition": [
@@ -101,5 +113,6 @@
     "browser": true,
     "amd": true,
     "node": true
-  }
+  },
+  "ignorePatterns": ["next.config.mjs", "src/settings/**/*.d.ts"]
 }
