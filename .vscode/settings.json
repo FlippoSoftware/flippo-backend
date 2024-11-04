@@ -1,8 +1,4 @@
 {
-  "typescript.tsdk": "./frontend/node_modules/typescript/lib",
-  "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
-  ]
+  "typescript.tsdk": "frontend\\node_modules\\typescript\\lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true
 }
