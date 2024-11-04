@@ -2,7 +2,7 @@
 
 import { useUnit } from "effector-react";
 import { createPortal } from "react-dom";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { $notifications, deleteNotification } from "../store/ToastContainerStorage";
@@ -16,6 +16,7 @@ const NOTIFICATION_CONTAINER_ID = "notification-container-id";
 function ToastNotificationContainer(props: TToastContainerProps) {
   const { toastCountOnScreen } = props;
   const [notificationStore, deleteToast] = useUnit([$notifications, deleteNotification]);
+  const [portalRef, setPortalRef] = useState<HTMLElement | null>(null);
 
   const onClose = useCallback((id: string) => deleteToast(id), [deleteToast]);
 
@@ -34,6 +35,12 @@ function ToastNotificationContainer(props: TToastContainerProps) {
     );
   });
 
+  useEffect(() => {
+    if (typeof window !== "undefined") setPortalRef(document.body);
+  }, []);
+
+  if (!portalRef) return <></>;
+
   return (
     <>
       {createPortal(
@@ -42,7 +49,7 @@ function ToastNotificationContainer(props: TToastContainerProps) {
             <AnimatePresence mode={"popLayout"}>{notifications}</AnimatePresence>
           </div>
         </div>,
-        document.body,
+        portalRef,
         NOTIFICATION_CONTAINER_ID
       )}
     </>
