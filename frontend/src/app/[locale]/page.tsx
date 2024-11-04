@@ -1,22 +1,20 @@
 "use client";
 
 import axios from "axios";
-import { usePathname, useRouter } from "next/navigation";
 import { useContext } from "react";
-
+import { useUnit } from "effector-react";
+import { useTranslations } from "next-intl";
 import { AppEnv } from "@env/app.env";
-import { AuthContext } from "@modules/Auth";
+import { AuthContext, modalAuthOpen } from "@modules/Auth";
 import { Button } from "@ui/Button";
-import { ToastContainer } from "@widgets/ToastContainer";
 
 function Home() {
   const { session, setSession } = useContext(AuthContext);
-  const router = useRouter();
-  const pathname = usePathname();
+  const onModalAuthOpen = useUnit(modalAuthOpen);
+  const t = useTranslations("RootLayout");
 
   return (
     <main>
-      <ToastContainer toastCountOnScreen={4} />
       {session ? (
         <h1>
           {"Hello, "}
@@ -24,7 +22,7 @@ function Home() {
           {"!"}
         </h1>
       ) : (
-        <h1>{"Welcome to Flippo!"}</h1>
+        <h1>{t("title")}</h1>
       )}
 
       {session ? (
@@ -50,11 +48,7 @@ function Home() {
           {"SignOut"}
         </Button>
       ) : (
-        <Button
-          kind={"primary"}
-          size={"large"}
-          onClick={() => router.push(`/auth?urlCallback=${pathname}`)}
-        >
+        <Button kind={"primary"} size={"large"} onClick={onModalAuthOpen}>
           {"SignIn & SignUp"}
         </Button>
       )}
@@ -63,12 +57,9 @@ function Home() {
         kind={"primary"}
         size={"large"}
         onClick={async () => {
-          const response = await axios.get(
-            AppEnv.NEXT_PUBLIC_API_BASE_URL + "/auth/refresh_token/refresh",
-            {
-              withCredentials: true
-            }
-          );
+          await axios.get(AppEnv.NEXT_PUBLIC_API_BASE_URL + "/auth/refresh_token/refresh", {
+            withCredentials: true
+          });
         }}
       >
         {"Refresh\r"}
