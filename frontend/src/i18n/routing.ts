@@ -1,13 +1,27 @@
 import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
+import { getLocale } from "@utils/getLocale.utils";
+import { RedirectType } from "next/navigation";
+import {
+  INTERNATIONALIZATION_COOKIE_LIFETIME,
+  INTERNATIONALIZATION_COOKIE_NAME,
+  INTERNATIONALIZATION_DEFAULT_LOCALE,
+  INTERNATIONALIZATION_LOCALES
+} from "@shared/constants/internationalization.constant";
 
 export const routing = defineRouting({
-  locales: ["en", "ru"],
-  defaultLocale: "en",
+  locales: INTERNATIONALIZATION_LOCALES,
+  defaultLocale: INTERNATIONALIZATION_DEFAULT_LOCALE,
   localeCookie: {
-    name: "FLIPPO_USER_LOCALE",
-    maxAge: 60 * 60 * 24 * 356
+    name: INTERNATIONALIZATION_COOKIE_NAME,
+    maxAge: INTERNATIONALIZATION_COOKIE_LIFETIME
   }
 });
 
 export const { Link, redirect, usePathname, useRouter } = createNavigation(routing);
+
+export const redirectWithLocale = (href: string, type: RedirectType = RedirectType.push) => {
+  const locale = getLocale();
+
+  redirect({ href, locale }, type);
+};
