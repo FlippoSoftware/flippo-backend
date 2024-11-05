@@ -1,9 +1,8 @@
 import axios from "axios";
-
-import { AppEnv } from "@env/app.env";
+import { ENV } from "@env/app.env";
 
 const api = axios.create({
-  baseURL: AppEnv.NEXT_PUBLIC_API_BASE_URL,
+  baseURL: ENV.API_BASE_URL,
   withCredentials: true
 });
 
@@ -16,7 +15,7 @@ api.interceptors.response.use(
     if (originalRequest && !originalRequest._isRetry) {
       originalRequest._isRetry = true;
       try {
-        await axios.get(`${AppEnv.NEXT_PUBLIC_API_BASE_URL}/auth/refresh_token/refresh`, {
+        await axios.get(`${ENV.API_BASE_URL}/auth/refresh_token/refresh`, {
           withCredentials: true
         });
 

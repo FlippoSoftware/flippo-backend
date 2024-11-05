@@ -2,7 +2,7 @@
 
 import { createContext, useEffect, useState } from "react";
 
-import { AppEnv } from "@env/app.env";
+import { ENV } from "@env/app.env";
 import { api } from "@utils/api.utils";
 
 import type { Dispatch, ReactNode } from "react";
@@ -19,7 +19,7 @@ function AuthSession(props: { children: ReactNode }) {
   useEffect(() => {
     // const auth = async () => {
     //   try {
-    //     const result = await api.get(AppEnv.NEXT_PUBLIC_API_BASE_URL + ":80/api/auth", {
+    //     const result = await api.get(ENV.NEXT_PUBLIC_API_BASE_URL + ":80/api/auth", {
     //       withCredentials: true
     //     });
     //     if (result.data) setSession(result.data);

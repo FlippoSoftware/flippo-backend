@@ -1,27 +1,27 @@
 import { z } from "zod";
 
-const untestedAppEnv = {
-  NEXT_PUBLIC_APP_BASE_URL: process.env.NEXT_PUBLIC_APP_BASE_URL,
-  NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
-  NEXT_PUBLIC_GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-  NEXT_PUBLIC_VK_CLIENT_ID: process.env.NEXT_PUBLIC_VK_CLIENT_ID,
-  NEXT_PUBLIC_YANDEX_CLIENT_ID: process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID
+const uncheckEnv = {
+  APP_BASE_URL: process.env.NEXT_PUBLIC_APP_BASE_URL,
+  API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  GOOGLE_CLIENT_ID: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
+  VK_CLIENT_ID: process.env.NEXT_PUBLIC_VK_CLIENT_ID,
+  YANDEX_CLIENT_ID: process.env.NEXT_PUBLIC_YANDEX_CLIENT_ID,
+  SURREALDB_ENDPOINT: process.env.NEXT_PUBLIC_SURREALDB_ENDPOINT,
+  SURREALDB_NS: process.env.NEXT_PUBLIC_SURREALDB_NS,
+  SURREALDB_DB: process.env.NEXT_PUBLIC_SURREALDB_DB,
+  SURREALDB_AC: process.env.NEXT_PUBLIC_SURREALDB_AC
 };
 
 const AppEnvSchema = z.object({
-  NEXT_PUBLIC_APP_BASE_URL: z.string().url("Invalid url"),
-  NEXT_PUBLIC_API_BASE_URL: z.string().url("Invalid url"),
-  NEXT_PUBLIC_GOOGLE_CLIENT_ID: z.string(),
-  NEXT_PUBLIC_VK_CLIENT_ID: z.string(),
-  NEXT_PUBLIC_YANDEX_CLIENT_ID: z.string()
+  APP_BASE_URL: z.string().url("Invalid url"),
+  API_BASE_URL: z.string().url("Invalid url"),
+  GOOGLE_CLIENT_ID: z.string(),
+  VK_CLIENT_ID: z.string(),
+  YANDEX_CLIENT_ID: z.string(),
+  SURREALDB_ENDPOINT: z.string().url("Invalid url"),
+  SURREALDB_NS: z.string(),
+  SURREALDB_DB: z.string(),
+  SURREALDB_AC: z.string()
 });
 
-const AppEnv = AppEnvSchema.parse(untestedAppEnv);
-
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv extends z.infer<typeof AppEnvSchema> {}
-  }
-}
-
-export { AppEnv };
+export const ENV = AppEnvSchema.parse(uncheckEnv);

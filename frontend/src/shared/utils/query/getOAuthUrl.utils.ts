@@ -1,4 +1,4 @@
-import { AppEnv } from "@shared/env/app.env";
+import { ENV } from "@shared/env/app.env";
 import { match } from "@shared/utils/match.utils";
 import { addQueryParams } from "@shared/utils/query/addQueryParams.utils";
 
@@ -32,13 +32,12 @@ const oauthScopeRecord: Record<TAuthProvider, string> = {
 };
 
 const oauthClientIdRecord: Record<TAuthProvider, string> = {
-  google: AppEnv.NEXT_PUBLIC_GOOGLE_CLIENT_ID,
-  vkontakte: AppEnv.NEXT_PUBLIC_VK_CLIENT_ID,
-  yandexID: AppEnv.NEXT_PUBLIC_YANDEX_CLIENT_ID
+  google: ENV.GOOGLE_CLIENT_ID,
+  vkontakte: ENV.VK_CLIENT_ID,
+  yandexID: ENV.YANDEX_CLIENT_ID
 };
 
-const getOAuthRedirectUri = (provider: TAuthProvider) =>
-  `${AppEnv.NEXT_PUBLIC_API_BASE_URL}/oauth/${provider}`;
+const getOAuthRedirectUri = (provider: TAuthProvider) => `${ENV.API_BASE_URL}/oauth/${provider}`;
 
 function getOAuthUrl({
   provider,

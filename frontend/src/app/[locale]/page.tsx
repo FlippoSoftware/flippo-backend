@@ -4,7 +4,7 @@ import axios from "axios";
 import { useContext } from "react";
 import { useUnit } from "effector-react";
 import { useTranslations } from "next-intl";
-import { AppEnv } from "@env/app.env";
+import { ENV } from "@env/app.env";
 import { AuthContext, modalAuthOpen } from "@modules/Auth";
 import { Button } from "@ui/Button";
 
@@ -32,7 +32,7 @@ function Home() {
           onClick={async () => {
             try {
               await axios.post(
-                AppEnv.NEXT_PUBLIC_API_BASE_URL + "/auth/refresh_token/signout",
+                ENV.API_BASE_URL + "/auth/refresh_token/signout",
                 {},
                 {
                   withCredentials: true
@@ -57,7 +57,7 @@ function Home() {
         kind={"primary"}
         size={"large"}
         onClick={async () => {
-          await axios.get(AppEnv.NEXT_PUBLIC_API_BASE_URL + "/auth/refresh_token/refresh", {
+          await axios.get(ENV.API_BASE_URL + "/auth/refresh_token/refresh", {
             withCredentials: true
           });
         }}
