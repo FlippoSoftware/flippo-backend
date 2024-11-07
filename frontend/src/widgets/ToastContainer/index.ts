@@ -8,3 +8,4 @@ export {
   type TToastCreate,
   type TToastStore
 } from "./store/ToastContainerStorage";
+export { errorToastDisplay } from "./utils";

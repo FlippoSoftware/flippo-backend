@@ -2,6 +2,7 @@
   padding: 32px;
 
   max-width: 420px;
+  width: 100%;
 
   background-color: var(--neutral-16);
   border-radius: var(--border-field);
@@ -21,5 +22,9 @@
 
     gap: 24px;
     width: 100%;
+  }
+
+  &:focus {
+    outline: none;
   }
 }

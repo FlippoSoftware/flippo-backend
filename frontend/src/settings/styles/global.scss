@@ -1,6 +1,5 @@
-@import "./variables/colors.scss";
-@import "./variables/borders.scss";
-@import "./mixins/displayFlex.scss";
+@use "./variables/colors.scss";
+@use "./variables/borders.scss";
 
 @font-face {
   font-family: "VelaSans";

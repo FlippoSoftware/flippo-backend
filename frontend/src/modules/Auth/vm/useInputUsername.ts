@@ -1,23 +1,49 @@
 import { useUnit } from "effector-react";
+import { useEffect, useRef } from "react";
 
 import {
-  $username,
-  $usernameError,
-  $submitted,
+  $usernameInput,
+  $usernameInputError,
+  $userRegistration,
+  $modalAuthDisabled,
+  usernameInputRefChanged,
   usernameSubmitted,
-  usernameChanged
+  usernameInputChanged
 } from "../model/store/inputUsername.store";
 
 const useInputUsername = () => {
-  const [username, usernameError, submitted, onUsernameChanged, onUsernameSubmitted] = useUnit([
-    $username,
-    $usernameError,
-    $submitted,
-    usernameChanged,
-    usernameSubmitted
+  const [
+    usernameInput,
+    usernameInputError,
+    userRegistration,
+    modalAuthDisabled,
+    onUsernameInputChanged,
+    onUsernameSubmitted,
+    onUsernameInputRefChanged
+  ] = useUnit([
+    $usernameInput,
+    $usernameInputError,
+    $userRegistration,
+    $modalAuthDisabled,
+    usernameInputChanged,
+    usernameSubmitted,
+    usernameInputRefChanged
   ]);
+  const usernameInputRef = useRef<HTMLInputElement | null>(null);
 
-  return { username, usernameError, submitted, onUsernameChanged, onUsernameSubmitted };
+  useEffect(() => {
+    if (usernameInputRef.current) onUsernameInputRefChanged(usernameInputRef.current);
+  }, [onUsernameInputRefChanged]);
+
+  return {
+    usernameInput,
+    usernameInputError,
+    usernameInputRef,
+    userRegistration,
+    modalAuthDisabled,
+    onUsernameInputChanged,
+    onUsernameSubmitted
+  };
 };
 
 export { useInputUsername };

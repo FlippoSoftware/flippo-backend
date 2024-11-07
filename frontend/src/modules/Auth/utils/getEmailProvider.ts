@@ -1,4 +1,4 @@
-import type { TEmailProviderNames } from "../types/TEmail";
+import type { TEmailProviderNames } from "../types/TEmailProviderNames";
 
 const EmailDomains: { [key in TEmailProviderNames]: string[] } = {
   gmail: ["@gmail.com"],
@@ -22,9 +22,9 @@ const RedirectEmail: { [key in TEmailProviderNames]: string } = {
   aol: "https://mail.aol.com/"
 };
 
-type TEmailProvider = { redirectURL: string; name: TEmailProviderNames };
+export type TEmailProvider = { redirectURL: string; name: TEmailProviderNames };
 
-function getEmailProvider(email: string): TEmailProvider | null {
+export function getEmailProvider(email: string): TEmailProvider | null {
   for (const [key, value] of Object.entries(EmailDomains)) {
     const isInclude = value.some((domain: string) => email.endsWith(domain));
     if (isInclude) {
@@ -37,5 +37,3 @@ function getEmailProvider(email: string): TEmailProvider | null {
 
   return null;
 }
-
-export { getEmailProvider, type TEmailProvider };

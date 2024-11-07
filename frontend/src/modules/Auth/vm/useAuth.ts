@@ -1,14 +1,10 @@
 import { useUnit } from "effector-react";
 import { useEffect, useRef } from "react";
 
-import { $modalContent, modalAuthClear, modalAuthClose } from "../model/store/auth.store";
+import { $modalAuthContent, modalAuthClear } from "../model/store/auth.store";
 
 const useAuth = () => {
-  const [modalContent, onModalAuthClear, onModalAuthClose] = useUnit([
-    $modalContent,
-    modalAuthClear,
-    modalAuthClose
-  ]);
+  const [modalContent, onModalAuthClear] = useUnit([$modalAuthContent, modalAuthClear]);
 
   const modalRef = useRef<HTMLDivElement | null>(null);
 
@@ -20,7 +16,7 @@ const useAuth = () => {
     };
   }, [onModalAuthClear]);
 
-  return { modalRef, modalContent, onModalAuthClose };
+  return { modalRef, modalContent };
 };
 
 export { useAuth };

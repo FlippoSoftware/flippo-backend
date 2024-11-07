@@ -3,6 +3,7 @@
 import { clsx } from "clsx";
 
 import { useAuth } from "../vm/useAuth";
+import { type TAuthModalProps } from "../types/TAuthModalProps";
 
 import st from "./Auth.module.scss";
 import AuthorizationMethodContent from "./content/AuthorizationMethodContent/AuthorizationMethodContent";
@@ -10,11 +11,12 @@ import VerificationCodeContent from "./content/VerificationCodeContent/Verificat
 import OauthCallbackContent from "./content/OauthCallbackContent/OauthCallbackContent";
 import InputUsernameContent from "./content/InputUsernameContent/InputUsernameContent";
 
-function Auth() {
-  const { modalRef, modalContent, onModalAuthClose } = useAuth();
+function Auth(props: TAuthModalProps) {
+  const { type } = props;
+  const { modalRef, modalContent } = useAuth();
 
   return (
-    <div ref={modalRef} className={st.modal}>
+    <div ref={modalRef} tabIndex={-1} className={st.modal}>
       <div className={clsx(st.content)}>
         {
           {
@@ -22,7 +24,7 @@ function Auth() {
             verificationCode: <VerificationCodeContent />,
             inputUsername: <InputUsernameContent />,
             oauthCallback: <OauthCallbackContent />
-          }[modalContent]
+          }[type] //modalContent]
         }
       </div>
     </div>
