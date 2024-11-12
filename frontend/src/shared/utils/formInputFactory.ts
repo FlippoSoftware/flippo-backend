@@ -55,7 +55,7 @@ export type TNamedManipulationTools<
  * @property {EventCallable<void>} ${name}InputFocused
  * @property {EventCallable<T>} ${name}Changed
  *
- * @property {StoreWritable<"empty" | "invalid" | null>} ${name}Error
+ * @property {StoreWritable<TInputError>} ${name}Error
  * @property {EventCallable<void>} ${name}ErrorClear
  * @property {EventCallable<void>} ${name}InputFocusedDueError
  * @property {EventCallable<void>} ${name}InputValidated
@@ -77,6 +77,7 @@ export function formInputFactory<T, Prefix extends string>({
   name: string;
   initValue: T;
 }): TNamedManipulationTools<T, Prefix, TManipulationTools<T>>;
+
 export function formInputFactory<T, Prefix extends string>({
   name,
   source
@@ -84,6 +85,7 @@ export function formInputFactory<T, Prefix extends string>({
   name: string;
   source: StoreWritable<T>;
 }): TNamedManipulationTools<T, Prefix, TManipulationTools<T>>;
+
 export function formInputFactory<T, Prefix extends string>({
   name,
   initValue,
@@ -93,6 +95,7 @@ export function formInputFactory<T, Prefix extends string>({
   initValue: T;
   schema: ZodSchema;
 }): TNamedManipulationTools<T, Prefix, TAdvancedManipulationTools<T>>;
+
 export function formInputFactory<T, Prefix extends string>({
   name,
   source,
@@ -118,34 +121,39 @@ export function formInputFactory<T, Prefix extends string>({
   | TNamedManipulationTools<T, Prefix, TAdvancedManipulationTools<T>> {
   if (!source) {
     if (typeof initValue === "undefined")
-      throw TypeError("initValue must not be undefined if source is undefined");
+      throw TypeError('"initValue" must not be undefined if source is undefined');
     source = createStore<T>(initValue);
   }
+  // Start of model description $input
   const $input = source;
 
   const inputChanged = createEvent<T>();
-
-  const $inputRef = createStore<null | HTMLInputElement>(null);
-
-  const inputRefChanged = createEvent<HTMLInputElement>();
   const inputBlur = createEvent();
   const inputFocus = createEvent();
-
   const inputFocusedFx = createEffect<HTMLInputElement, void>((input) => {
     input.focus();
   });
+  // End of model description $input
+
+  // Start of model description $inputRef
+  const $inputRef = createStore<null | HTMLInputElement>(null);
+
+  const inputRefChanged = createEvent<HTMLInputElement>();
+  // End of model description $inputRef
 
   $input.on(inputChanged, (_, input) => input);
   $inputRef.on(inputRefChanged, (_, input) => input);
 
   const extensionsTools = schema
     ? (() => {
+        // Start of model description $inputError
         const $inputError = createStore<TInputError>(null);
 
         const inputValidate = createEvent();
         const inputCompletedValidate = createEvent<TInputError>();
         const inputErrorClear = createEvent();
         const inputFocusedDueError = createEvent();
+        // End of model description $inputError
 
         $inputError.reset(inputChanged, inputErrorClear);
 
