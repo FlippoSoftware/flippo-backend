@@ -18,7 +18,8 @@ const nextConfig = {
       path.join(__dirname, "node_modules")
     ],
     loadPaths: ["./src/settings/styles/"],
-    implementation: "sass-embedded"
+    implementation: "sass-embedded",
+    silenceDeprecations: ["legacy-js-api"]
   },
   async headers() {
     return [
