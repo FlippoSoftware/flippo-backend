@@ -1,6 +1,6 @@
 import { createStore, createEvent, sample } from "effector";
 
-import { type TNotificationKind, type TToastProps } from "../types/ToastProps";
+import { type TNotificationKind, type TToastProps } from "../types/TToastProps";
 
 export type TToastCreate = Omit<TToastProps, "id" | "kind" | "onClose">;
 export type TToastStore = Omit<TToastProps, "onClose">;

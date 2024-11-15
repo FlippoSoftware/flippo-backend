@@ -1,7 +1,7 @@
-import * as messageByKey from "@utils/messageByKey.utils";
+import * as messageByKey from "@shared/i18n/messageByKey.utils";
 import { attach, createEvent, sample } from "effector";
 
-import { createErrorNotification, type TToastCreate } from "../store/ToastContainerStorage";
+import { createErrorNotification, type TToastCreate } from "../models/ToastContainerStorage";
 
 const errorMessageByKeyFx = attach({ effect: messageByKey.errorMessageByKeyFx });
 export const errorToastDisplay = createEvent<{ key: string; namespace?: string }>();

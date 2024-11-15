@@ -8,7 +8,7 @@ import { Separator } from "@ui/Separator";
 import { ErrorIcon, WarningIcon, SuccessIcon, CloseIcon } from "@icons/index";
 import { CountDownCircle } from "@ui/CountDownCircle";
 
-import { type TNotificationKind, type TToastProps } from "../types/ToastProps";
+import { type TNotificationKind, type TToastProps } from "../types/TToastProps";
 
 import st from "./Toast.module.scss";
 

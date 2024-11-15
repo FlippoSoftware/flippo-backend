@@ -7,5 +7,5 @@ export {
   createTimerNotification,
   type TToastCreate,
   type TToastStore
-} from "./store/ToastContainerStorage";
+} from "./models/ToastContainerStorage";
 export { errorToastDisplay } from "./utils";

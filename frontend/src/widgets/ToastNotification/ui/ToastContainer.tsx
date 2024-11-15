@@ -5,8 +5,8 @@ import { createPortal } from "react-dom";
 import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 
-import { $notifications, deleteNotification } from "../store/ToastContainerStorage";
-import { type TToastContainerProps } from "../types/ToastContainerProps";
+import { $notifications, deleteNotification } from "../models/ToastContainerStorage";
+import { type TToastContainerProps } from "../types/TToastContainerProps";
 
 import ToastNotification from "./Toast";
 import st from "./ToastContainer.module.scss";
