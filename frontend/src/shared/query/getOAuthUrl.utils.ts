@@ -1,6 +1,6 @@
 import { ENV } from "@shared/env/app.env";
 import { match } from "@shared/utils/match.utils";
-import { addQueryParams } from "@shared/utils/query/addQueryParams.utils";
+import { addQueryParams } from "@shared/query/addQueryParams.utils";
 
 const authProviders = ["google", "vkontakte", "yandexID"] as const;
 type TAuthProvider = (typeof authProviders)[number];

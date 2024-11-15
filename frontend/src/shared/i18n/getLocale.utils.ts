@@ -3,7 +3,7 @@ import {
   INTERNATIONALIZATION_COOKIE_NAME,
   INTERNATIONALIZATION_LOCALES,
   type TInternationalizationLocales
-} from "@shared/constants/internationalization.constant";
+} from "@shared/i18n/internationalization.constant";
 
 const localesUnion = INTERNATIONALIZATION_LOCALES.join("|");
 
