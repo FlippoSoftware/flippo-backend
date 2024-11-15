@@ -11,6 +11,9 @@
     flex-direction: column;
     padding: 5px 0;
 
+    align-self: center;
+    width: 100%;
+
     &.spacing-4 {
       padding: 5px 4px;
     }
@@ -44,7 +47,7 @@
   }
 
   &.vertical {
-    flex-direction: row;
+    display: inline-flex;
     padding: 0 5px;
 
     &.spacing-4 {
