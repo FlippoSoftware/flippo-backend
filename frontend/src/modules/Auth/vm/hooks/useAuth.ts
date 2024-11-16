@@ -1,7 +1,7 @@
 import { useUnit } from "effector-react";
 import { useEffect, useRef } from "react";
 
-import { $modalAuthContent, modalAuthClear } from "../model/store/auth.store";
+import { $modalAuthContent, modalAuthClear } from "../models/auth.store";
 
 const useAuth = () => {
   const [modalContent, onModalAuthClear] = useUnit([$modalAuthContent, modalAuthClear]);

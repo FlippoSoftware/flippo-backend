@@ -3,7 +3,9 @@ import { reset } from "patronum";
 import { type TModalContent } from "@modules/Auth/types/TModalContent";
 import { redirectWithLocale } from "@i18n/routing";
 
+// #region model description "auth modal"
 export const $modalAuthContent = createStore<TModalContent>("authorizationMethod");
+
 export const modalAuthTo = createEvent<TModalContent>();
 export const modalAuthToAuthorizationMethod = createEvent();
 export const modalAuthToVerificationCode = createEvent();
@@ -16,8 +18,6 @@ const modalAuthOpenFx = createEffect(async () => {
   localStorage.setItem("callbackUrl", callbackUrl);
 });
 
-export const $redirectsToModalAuth = modalAuthOpenFx.pending;
-
 export const modalAuthClose = createEvent();
 const modalAuthCloseFx = createEffect<void, string>(async () => {
   const callbackUrl = localStorage.getItem("callbackUrl");
@@ -28,8 +28,14 @@ const modalAuthCloseFx = createEffect<void, string>(async () => {
 
 export const modalAuthClear = createEvent();
 
-export const $email = createStore<string>("");
+export const $modalWindowOpens = modalAuthOpenFx.pending;
+// #endregion
 
+// #region model description $email
+export const $email = createStore<string>("");
+// #endregion
+
+// #region of logic "auth modal"
 reset({ clock: [modalAuthClose, modalAuthClear], target: [$email, $modalAuthContent] });
 
 $modalAuthContent.on(modalAuthTo, (value) => value);
@@ -59,3 +65,4 @@ sample({
     }
   }
 });
+// #endregion

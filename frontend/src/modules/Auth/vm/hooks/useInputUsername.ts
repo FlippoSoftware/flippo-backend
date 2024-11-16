@@ -9,7 +9,7 @@ import {
   usernameInputRefChanged,
   usernameSubmitted,
   usernameInputChanged
-} from "../model/store/inputUsername.store";
+} from "../models/inputUsername.store";
 
 const useInputUsername = () => {
   const [

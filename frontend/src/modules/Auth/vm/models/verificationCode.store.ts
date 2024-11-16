@@ -1,9 +1,9 @@
 import { createEffect, createEvent, createStore, sample, split } from "effector";
 import { and, not, or, reset } from "patronum";
-import { $session } from "@shared/stores/session.store";
+import { $session } from "@shared/models/session.store";
 import { type TVerifyInputHandler } from "@ui/Input/InputVerificationCode/types/TInputVerificationCode";
 import { getEmailProvider, type TEmailProvider } from "@modules/Auth/utils/getEmailProvider";
-import { errorToastDisplay } from "@widgets/ToastContainer";
+import { errorToastDisplay } from "@widgets/ToastNotification";
 
 import { TIMEOUT_IN_MILLISECONDS, TIMEOUT_IN_MINUTES } from "../../constant";
 import { checkVerificationCodeFx, signInWithEmailFx, requestVerificationCodeFx } from "../api";
@@ -18,6 +18,7 @@ import {
 
 export const $emailProvider = createStore<TEmailProvider | null>(null);
 
+// #region of model description $verificationCode
 export const $verificationCode = createStore<string>("");
 export const $verificationCodeError = createStore<null | string>(null);
 export const verificationCodeChanged = createEvent<string>();
@@ -30,6 +31,11 @@ export const inputFocusedFx = createEffect(() => {
   if (input) input.focus();
 });
 
+export const $resendCodeDisabled = createStore(false);
+export const resendCode = createEvent();
+// #endregion
+
+// #region of model description timer
 export const $timeView = createStore<{ minutes: number; seconds: number }>({
   minutes: TIMEOUT_IN_MINUTES,
   seconds: 0
@@ -68,10 +74,9 @@ const timerClearFx = createEffect(() => {
   const timer = $timer.getState();
   if (timer) clearInterval(timer);
 });
+// #endregion
 
-export const $resendCodeDisabled = createStore(false);
-export const resendCode = createEvent();
-
+// #region of model description status
 export const $checkVerificationCodeProcess = checkVerificationCodeFx.pending;
 export const $signInProcess = signInWithEmailFx.pending;
 export const $modalDisabled = or(
@@ -83,6 +88,7 @@ export const $modalDisabled = or(
 export const verificationCodeContentMounted = createEvent();
 
 const throwAnError = createEvent<string>();
+// #endregion
 
 $verificationCodeError.reset(verificationCodeChanged);
 
@@ -127,6 +133,7 @@ sample({
 sample({ clock: timerStart, fn: () => true, target: [timerStartFx, $resendCodeDisabled] });
 sample({ clock: timerEnd, fn: () => false, target: [timerClearFx, $resendCodeDisabled] });
 
+// #region of logic check verification code
 sample({
   clock: verificationCodeSubmitted,
   source: { code: $verificationCode, email: $email },
@@ -165,7 +172,9 @@ sample({
   fn: (error) => ({ key: error, namespace: "auth.verificationCodeContent" }),
   target: errorToastDisplay
 });
+// #endregion
 
+// #region of logic resend code
 sample({
   clock: resendCode,
   source: $email,
@@ -183,3 +192,4 @@ sample({
   fn: (error) => ({ key: error, namespace: "auth.verificationCodeContent" }),
   target: errorToastDisplay
 });
+// #endregion

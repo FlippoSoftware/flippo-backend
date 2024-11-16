@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { useUnit } from "effector-react";
-
 import {
   $checkVerificationCodeProcess,
   $emailProvider,
@@ -15,8 +14,8 @@ import {
   verificationCodeChanged,
   verificationCodeContentMounted,
   verificationCodeSubmitted
-} from "@modules/Auth/model/store/verificationCode.store";
-import { $email, modalAuthToAuthorizationMethod } from "@modules/Auth/model/store/auth.store";
+} from "@modules/Auth/vm/models/verificationCode.store";
+import { $email, modalAuthToAuthorizationMethod } from "@modules/Auth/vm/models/auth.store";
 import { type TVerifyInputHandler } from "@ui/Input/InputVerificationCode/types/TInputVerificationCode";
 
 const useVerificationCodeContent = () => {

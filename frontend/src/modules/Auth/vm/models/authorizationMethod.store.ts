@@ -1,17 +1,18 @@
-import { createEffect, createEvent, createStore, sample, type StoreWritable } from "effector";
-import { not, and, every, or, reset } from "patronum";
+import { createEffect, createEvent, createStore, sample } from "effector";
+import { not, and, or, reset } from "patronum";
 import { z } from "zod";
-import { getOAuthUrl, type TAuthProvider } from "@utils/query/getOAuthUrl.utils";
-import { errorToastDisplay } from "@widgets/ToastContainer/index";
+import { getOAuthUrl, type TAuthProvider } from "@shared/query/getOAuthUrl.utils";
+import { errorToastDisplay } from "@widgets/ToastNotification/index";
 import { redirectWithLocale } from "@i18n/routing";
-import { formInputFactory } from "@utils/formInputFactory";
+import { formInputFactory } from "@shared/models/formInputFactory";
 
 import { requestPkceFx, requestVerificationCodeFx, type TPkceResponse } from "../api";
 
 import { $email, modalAuthClear, modalAuthClose, modalAuthToVerificationCode } from "./auth.store";
-import { $inputRef } from "./verificationCode.store";
 
+// #region of model description $emailInput
 const EmailFieldSchema = z.string().min(1, "empty").email("invalid");
+
 export const {
   $emailInput,
   $emailInputRef,
@@ -28,10 +29,14 @@ export const {
   source: $email,
   schema: EmailFieldSchema
 });
-export const emailSubmitted = createEvent();
 
+export const emailSubmitted = createEvent();
+// #endregion
+
+// #region of model description oauthRedirect
 export const $provider = createStore<null | TAuthProvider>(null);
 export const $codeChallenge = createStore<null | string>(null);
+
 export const oauthRedirect = createEvent<TAuthProvider>();
 export const completeOauthRedirectFx = createEffect<
   { provider: TAuthProvider; codeChallenge: string },
@@ -41,10 +46,13 @@ export const completeOauthRedirectFx = createEffect<
 
   return redirectUrl;
 });
+// #endregion
 
+// #region of model description status
 export const $redirectPending = or(requestPkceFx.pending, completeOauthRedirectFx.pending);
 export const $emailPending = requestVerificationCodeFx.pending;
 export const $modalDisabled = or($emailPending, $redirectPending);
+// #endregion
 
 reset({
   clock: [
@@ -53,9 +61,10 @@ reset({
     modalAuthToVerificationCode,
     completeOauthRedirectFx.done
   ],
-  target: [$provider, $codeChallenge, $emailInputError, $emailInput, $inputRef]
+  target: [$provider, $codeChallenge, $emailInputError, $emailInput]
 });
 
+// #region of logic signin with email
 sample({
   clock: emailSubmitted,
   target: emailInputValidate
@@ -78,7 +87,9 @@ sample({
   fn: (error) => ({ key: error, namespace: "auth.authorizationMethodContent" }),
   target: errorToastDisplay
 });
+// #endregion
 
+// #region of logic signin with oauth
 sample({
   clock: oauthRedirect,
   filter: not($modalDisabled),
@@ -87,26 +98,13 @@ sample({
 
 sample({
   clock: requestPkceFx.doneData,
-  fn: (result: TPkceResponse) => {
+  source: $provider,
+  filter: (src, result) => !!src && !!result,
+  fn: (provider, result: TPkceResponse) => {
     const { codeChallenge } = result;
 
-    return codeChallenge;
+    return { provider: provider as TAuthProvider, codeChallenge };
   },
-  target: $codeChallenge
-});
-
-sample({
-  clock: requestPkceFx.failData,
-  fn: (error) => ({ key: error, namespace: "auth.authorizationMethodContent" }),
-  target: errorToastDisplay
-});
-
-sample({
-  source: {
-    provider: $provider as StoreWritable<TAuthProvider>,
-    codeChallenge: $codeChallenge as StoreWritable<string>
-  },
-  filter: every({ stores: [$provider, $codeChallenge], predicate: (value) => value !== null }),
   target: completeOauthRedirectFx
 });
 
@@ -122,3 +120,10 @@ sample({
     }
   }
 });
+
+sample({
+  clock: requestPkceFx.failData,
+  fn: (error) => ({ key: error, namespace: "auth.authorizationMethodContent" }),
+  target: errorToastDisplay
+});
+// #endregion

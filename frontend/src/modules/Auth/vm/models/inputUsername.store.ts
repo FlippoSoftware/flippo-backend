@@ -1,9 +1,9 @@
 import { createEvent, sample } from "effector";
 import { and, not, or, reset } from "patronum";
 import { z } from "zod";
-import { sessionChanged } from "@shared/stores/session.store";
-import { errorToastDisplay } from "@widgets/ToastContainer";
-import { formInputFactory } from "@utils/formInputFactory";
+import { sessionChanged } from "@shared/models/session.store";
+import { errorToastDisplay } from "@widgets/ToastNotification";
+import { formInputFactory } from "@shared/models/formInputFactory";
 
 import { signUpWithEmailFx } from "../api";
 
@@ -14,6 +14,7 @@ import {
   modalAuthToAuthorizationMethod
 } from "./auth.store";
 
+// #region of model description $usernameInput
 const UsernameFieldSchema = z.string().min(1, "empty").min(2, "size");
 
 export const {
@@ -34,10 +35,14 @@ export const {
 });
 
 export const usernameSubmitted = createEvent();
+// #endregion
 
+// #region of model description status
 export const $userRegistration = signUpWithEmailFx.pending;
 export const $modalAuthDisabled = or($userRegistration);
+// #endregion
 
+// #region of logic registration
 reset({
   clock: [modalAuthClose, modalAuthToAuthorizationMethod, modalAuthClear],
   target: [$usernameInput, $usernameInputError]
@@ -65,3 +70,4 @@ sample({
   fn: (error) => ({ key: error, namespace: "auth.inputUsernameContent" }),
   target: [errorToastDisplay, modalAuthToAuthorizationMethod]
 });
+// #endregion

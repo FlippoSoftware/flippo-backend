@@ -12,7 +12,7 @@ import {
   emailInputChanged,
   emailSubmitted,
   oauthRedirect
-} from "@modules/Auth/model/store/authorizationMethod.store";
+} from "@modules/Auth/vm/models/authorizationMethod.store";
 import { useEffect, useRef } from "react";
 
 const useAuthorizationMethodContent = () => {
@@ -52,7 +52,6 @@ const useAuthorizationMethodContent = () => {
     modalDisabled,
     redirectPending,
     emailPending,
-    onEmailInputRefChanged,
     onEmailInputBlur,
     onEmailInputChanged,
     onEmailSubmitted,

@@ -1,6 +1,6 @@
 import { createEffect } from "effector";
 import { requestFx } from "@shared/api/request.api";
-import { type TSession } from "@shared/stores/session.store";
+import { type TSession } from "@shared/models/session.store";
 
 export const requestVerificationCodeFx = createEffect<string, void, string>((email: string) => {
   return requestFx({
