@@ -1,10 +1,9 @@
 "use client";
 
 import { z } from "zod";
-
 import { FolderSchema, type TFolder } from "@shared/schemas/folder";
 import { record } from "@shared/schemas/record";
-import { getSurreal } from "@shared/utils/surreal/surreal.utils";
+import { getSurreal } from "@shared/surreal/surreal.utils";
 
 async function fetchFolders() {
   const folders = await getSurreal().select<TFolder>("folder");

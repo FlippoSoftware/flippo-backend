@@ -1,10 +1,9 @@
 "use client";
 
 import { z } from "zod";
-
 import { SetSchema, type TSet } from "@shared/schemas/set";
 import { record } from "@shared/schemas/record";
-import { getSurreal } from "@shared/utils/surreal/surreal.utils";
+import { getSurreal } from "@shared/surreal/surreal.utils";
 
 async function fetchSets() {
   const sets = await getSurreal().select<TSet>("set");

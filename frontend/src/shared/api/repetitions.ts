@@ -1,10 +1,9 @@
 "use client";
 
 import { z } from "zod";
-
 import { RepetitionSchema, type TRepetition } from "@shared/schemas/repetition";
 import { record } from "@shared/schemas/record";
-import { getSurreal } from "@shared/utils/surreal/surreal.utils";
+import { getSurreal } from "@shared/surreal/surreal.utils";
 
 async function fetchRepetitions() {
   const repetitions = await getSurreal().select<TRepetition>("repetition");

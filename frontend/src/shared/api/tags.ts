@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { TagSchema, type TTag } from "@shared/schemas/tag";
 import { record } from "@shared/schemas/record";
-import { getSurreal } from "@shared/utils/surreal/surreal.utils";
+import { getSurreal } from "@shared/surreal/surreal.utils";
 
 async function fetchTags() {
   const tags = await getSurreal()?.select<TTag>("tag");

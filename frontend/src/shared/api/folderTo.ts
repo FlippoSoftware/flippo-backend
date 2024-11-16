@@ -1,11 +1,10 @@
 "use client";
 
 import { z } from "zod";
-
 import { FolderToSchema, type TFolderTo } from "@shared/schemas/folderTo";
 import { type TFolder } from "@shared/schemas/folder";
 import { record } from "@shared/schemas/record";
-import { getSurreal } from "@shared/utils/surreal/surreal.utils";
+import { getSurreal } from "@shared/surreal/surreal.utils";
 
 async function assignFolder({ in: folder, out: set }: Pick<TFolderTo, "in" | "out">) {
   folder = record("folder").parse(folder);

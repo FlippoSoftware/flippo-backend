@@ -1,5 +1,5 @@
 import { createEffect } from "effector";
-import { type TSession } from "@shared/stores/session.store";
+import { type TSession } from "@shared/models/session.store";
 
 import { requestFx } from "./request.api";
 

@@ -1,10 +1,9 @@
 "use client";
 
 import { z } from "zod";
-
 import { GestaltType, GestaltState, GestaltSchema, type TGestalt } from "@shared/schemas/gestalt";
 import { record } from "@shared/schemas/record";
-import { getSurreal } from "@shared/utils/surreal/surreal.utils";
+import { getSurreal } from "@shared/surreal/surreal.utils";
 
 async function fetchGestalts() {
   const gestalts = await getSurreal().select<TGestalt>("repetition");

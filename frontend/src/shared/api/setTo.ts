@@ -1,12 +1,11 @@
 "use client";
 
 import { z } from "zod";
-
 import { type TSetTo } from "@shared/schemas/setTo";
 import { TagSchema, type TTag } from "@shared/schemas/tag";
 import { type TSet } from "@shared/schemas/set";
 import { record } from "@shared/schemas/record";
-import { getSurreal } from "@shared/utils/surreal/surreal.utils";
+import { getSurreal } from "@shared/surreal/surreal.utils";
 
 async function assignTag({ tag, set }: { tag: TTag["id"]; set: TSet["id"] }) {
   tag = record("tag").parse(tag);

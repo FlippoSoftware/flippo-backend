@@ -1,11 +1,10 @@
 "use client";
 
 import { z } from "zod";
-
 import { PublicationSchema, type TPublication } from "@shared/schemas/publication";
 import { SourceType } from "@shared/schemas/source";
 import { record } from "@shared/schemas/record";
-import { getSurreal } from "@shared/utils/surreal/surreal.utils";
+import { getSurreal } from "@shared/surreal/surreal.utils";
 
 async function fetchPublications() {
   const publications = await getSurreal().select<TPublication>("publication");
