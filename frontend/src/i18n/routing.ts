@@ -1,13 +1,13 @@
 import { defineRouting } from "next-intl/routing";
 import { createNavigation } from "next-intl/navigation";
-import { getLocale } from "@utils/getLocale.utils";
+import { getLocale } from "@shared/i18n/getLocale.utils";
 import { RedirectType } from "next/navigation";
 import {
   INTERNATIONALIZATION_COOKIE_LIFETIME,
   INTERNATIONALIZATION_COOKIE_NAME,
   INTERNATIONALIZATION_DEFAULT_LOCALE,
   INTERNATIONALIZATION_LOCALES
-} from "@shared/constants/internationalization.constant";
+} from "@shared/i18n/internationalization.constant";
 
 export const routing = defineRouting({
   locales: INTERNATIONALIZATION_LOCALES,

@@ -3,7 +3,7 @@ import { VKIcon } from "@icons/VKIcon";
 import { YandexIcon } from "@icons/YandexIcon";
 
 import type { ReactElement } from "react";
-import type { TAuthProvider } from "@utils/query/getOAuthUrl.utils";
+import type { TAuthProvider } from "@shared/query/getOAuthUrl.utils";
 
 const SIZE = { width: 24, height: 24 };
 

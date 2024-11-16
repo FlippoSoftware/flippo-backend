@@ -1,21 +1,20 @@
 "use client";
 
 import axios from "axios";
-import { useContext } from "react";
 import { useUnit } from "effector-react";
 import { useTranslations } from "next-intl";
 import { ENV } from "@env/app.env";
-import { AuthContext, modalAuthOpen } from "@modules/Auth";
+import { ModalAuth, modalAuthOpen } from "@modules/Auth";
 import { Button } from "@ui/Button";
+import { Separator } from "@ui/Separator";
 
 function Home() {
-  const { session, setSession } = useContext(AuthContext);
   const onModalAuthOpen = useUnit(modalAuthOpen);
   const t = useTranslations("RootLayout");
 
   return (
     <main>
-      {session ? (
+      {/* {session ? (
         <h1>
           {"Hello, "}
           {session.name}
@@ -47,11 +46,13 @@ function Home() {
         >
           {"SignOut"}
         </Button>
-      ) : (
-        <Button kind={"primary"} size={"large"} onClick={onModalAuthOpen}>
-          {"SignIn & SignUp"}
-        </Button>
-      )}
+      ) : ( */}
+      <Separator orientation={"vertical"} />
+
+      <Button kind={"primary"} size={"large"} onClick={onModalAuthOpen}>
+        {"SignIn & SignUp"}
+      </Button>
+      {/* )} */}
 
       <Button
         kind={"primary"}
@@ -64,6 +65,7 @@ function Home() {
       >
         {"Refresh\r"}
       </Button>
+      <ModalAuth type={"oauthCallback"} />
     </main>
   );
 }

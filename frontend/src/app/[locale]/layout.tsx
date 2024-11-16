@@ -1,8 +1,7 @@
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { ToastContainer } from "@widgets/ToastContainer";
-import { AuthSession } from "@modules/Auth";
+import { ToastContainer } from "@widgets/ToastNotification";
 
 import type { Metadata } from "next";
 
@@ -37,10 +36,8 @@ export default async function RootLayout({
       <body>
         <NextIntlClientProvider messages={messages}>
           <ToastContainer toastCountOnScreen={4} />
-          <AuthSession>
-            {modal}
-            {children}
-          </AuthSession>
+          {modal}
+          {children}
         </NextIntlClientProvider>
       </body>
     </html>
