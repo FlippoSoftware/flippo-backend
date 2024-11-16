@@ -136,6 +136,10 @@ button {
   }
 }
 
+svg {
+  vertical-align: middle;
+}
+
 svg *[stroke] {
   stroke: currentColor;
 }
