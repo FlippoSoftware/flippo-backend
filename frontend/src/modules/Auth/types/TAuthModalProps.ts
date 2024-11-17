@@ -1,7 +1,7 @@
 import type { TModalContent } from "./TModalContent";
 
 type TAuthModalProps = {
-  type: TModalContent;
+  type?: TModalContent;
 };
 
 export { type TAuthModalProps };

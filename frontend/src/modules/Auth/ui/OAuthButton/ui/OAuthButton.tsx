@@ -15,9 +15,7 @@ function OAuthButton(props: TOAuthButtonProps) {
     <UnstyledButton className={clsx(st.button, st[provider])} {...otherProps}>
       <div className={st.content}>
         <div className={st.icon}>{PROVIDER_ICONS[provider]}</div>
-        <Text<"span"> as={"span"} fontSize={16} fontWeight={"Bold"}>
-          {children}
-        </Text>
+        <Text<"span"> as={"span"}>{children}</Text>
       </div>
     </UnstyledButton>
   );

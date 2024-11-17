@@ -1,0 +1,26 @@
+@use "mixins/_display.scss" as display;
+@use "mixins/_font.scss" as font;
+
+.header {
+  @include display.display(flex, column, center, $gap: 8px);
+  @include font.title-3("default");
+
+  width: 100%;
+
+  text-align: center;
+
+  .hint {
+    @include font.label("weaker");
+    color: var(--text-5);
+  }
+}
+
+.usernameForm {
+  @include display.display(flex, column, center, $gap: 10px);
+
+  width: 100%;
+
+  &.invalidUsernameFrom {
+    gap: 24px;
+  }
+}

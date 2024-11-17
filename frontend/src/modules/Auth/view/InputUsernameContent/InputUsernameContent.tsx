@@ -4,7 +4,7 @@ import clsx from "clsx";
 import { FormInput } from "@ui/Input";
 import { ButtonWithLoading } from "@ui/Button";
 import { Text } from "@ui/Text";
-import { useInputUsername } from "@modules/Auth/vm/useInputUsername";
+import { useInputUsername } from "@modules/Auth/vm/hooks/useInputUsername";
 import { Loader } from "@ui/Loader";
 import { useTranslations } from "next-intl";
 
@@ -27,10 +27,8 @@ function InputUsernameContent() {
   ) : (
     <>
       <div className={st.header}>
-        <Text as={"h3"} fontWeight={"Semibold"}>
-          {t("title")}
-        </Text>
-        <Text as={"p"} fontSize={13} fontWeight={"Semibold"} className={st.info}>
+        <Text as={"h1"}>{t("title")}</Text>
+        <Text as={"p"} className={st.hint}>
           {t("hint")}
         </Text>
       </div>

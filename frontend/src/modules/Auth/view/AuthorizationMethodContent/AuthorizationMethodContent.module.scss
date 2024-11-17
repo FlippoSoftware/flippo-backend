@@ -1,0 +1,63 @@
+@use "mixins/_display.scss" as display;
+@use "mixins/_font.scss" as font;
+
+.header {
+  @include display.display(flex, column, center);
+  @include font.title-3("default");
+
+  .flippo {
+    color: var(--brand-30);
+  }
+
+  .status {
+    opacity: 0;
+    height: 0;
+
+    @include display.display(flex, row, center);
+
+    transition:
+      opacity 0.3s ease,
+      height 0.3s ease,
+      padding-top 0.3s ease;
+
+    .loader {
+      width: 24px;
+      aspect-ratio: 1;
+    }
+  }
+
+  .showStatus {
+    padding-top: 24px;
+    opacity: 1;
+
+    height: fit-content;
+  }
+}
+
+.buttonContainer {
+  @include display.display(flex, column, center, $gap: 10px);
+
+  width: 100%;
+
+  color: var(--text-2);
+}
+
+.separator {
+  @include display.display(flex, row, center, center, 16px);
+  @include font.label("default");
+
+  position: relative;
+
+  width: 100%;
+  color: var(--text-5);
+}
+
+.emailForm {
+  @include display.display(flex, column, center, $gap: 16px);
+
+  width: 100%;
+}
+
+.invalidEmailForm {
+  gap: 24px;
+}

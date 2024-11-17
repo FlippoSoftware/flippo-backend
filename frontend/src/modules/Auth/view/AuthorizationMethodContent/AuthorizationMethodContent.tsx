@@ -2,14 +2,15 @@
 
 import { clsx } from "clsx";
 import { Text } from "@ui/Text";
-import { authProviders, type TAuthProvider } from "@utils/query/getOAuthUrl.utils";
+import { authProviders, type TAuthProvider } from "@shared/query/getOAuthUrl.utils";
 import { FormInput } from "@ui/Input";
 import { ButtonWithLoading } from "@ui/Button";
 import { Loader } from "@ui/Loader";
 import { useTranslations } from "next-intl";
+import { Separator } from "@ui/Separator";
 
-import { useAuthorizationMethodContent } from "../../../vm/useAuthorizationMethodContent";
-import OAuthButton from "../../../ui/OAuthButton/ui/OAuthButton";
+import { useAuthorizationMethodContent } from "../../vm/hooks/useAuthorizationMethodContent";
+import OAuthButton from "../../ui/OAuthButton/ui/OAuthButton";
 
 import st from "./AuthorizationMethodContent.module.scss";
 
@@ -31,7 +32,7 @@ function AuthorizationMethodContent() {
   return (
     <>
       <div className={st.header}>
-        <Text<"h1"> as={"h1"} fontSize={29}>
+        <Text<"h1"> as={"h1"}>
           {t.rich("title", {
             span: (chunks) => <span className={st.flippo}>{chunks}</span>
           })}
@@ -54,11 +55,9 @@ function AuthorizationMethodContent() {
         ))}
       </div>
       <div className={st.separator}>
-        <hr className={st.line} />
-        <Text as={"span"} fontSize={13}>
-          {t("separator")}
-        </Text>
-        <hr className={st.line} />
+        <Separator orientation={"horizontal"} />
+        <Text as={"span"}>{t("separator")}</Text>
+        <Separator orientation={"horizontal"} />
       </div>
       <form
         className={clsx(st.emailForm, { [st.invalidEmailForm]: !!emailInputError })}

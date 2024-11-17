@@ -5,8 +5,9 @@ import { InputVerificationCode } from "@ui/Input";
 import { Text } from "@ui/Text";
 import { ArrowIcon } from "@icons/ArrowIcon";
 import { EmailIcon } from "@icons/EmailIcon";
-import { useVerificationCodeContent } from "@modules/Auth/vm/useVerificationCodeContent";
+import { useVerificationCodeContent } from "@modules/Auth/vm/hooks/useVerificationCodeContent";
 import { useTranslations } from "next-intl";
+import { Separator } from "@ui/Separator";
 
 import st from "./VerificationCodeContent.module.scss";
 
@@ -19,6 +20,8 @@ function VerificationCodeContent() {
     emailProvider,
     verificationCodeError,
     checkVerificationCodeProcess,
+    requestCodeProcess,
+    resendCodeDisabled,
     onVerificationCodeChanged,
     onResendCode,
     onModalToAuthorizationMethod,
@@ -31,10 +34,8 @@ function VerificationCodeContent() {
     <>
       <div className={st.header}>
         <div className={st.textBlock}>
-          <Text<"h1"> as={"h1"} fontSize={29} fontWeight={"Semibold"}>
-            {t("title")}
-          </Text>
-          <Text<"p"> as={"p"} fontSize={13} fontWeight={"ExtraBold"} color={"var(--neutral-50)"}>
+          <Text<"h1"> as={"h1"}>{t("title")}</Text>
+          <Text<"p"> as={"p"} className={st.hint}>
             {t("hint")}
           </Text>
         </div>
@@ -53,9 +54,7 @@ function VerificationCodeContent() {
             </Button>
           ) : (
             <div>
-              <Text<"span"> as={"span"} fontSize={14} fontWeight={"Semibold"}>
-                {email}
-              </Text>
+              <Text<"span"> as={"span"}>{email}</Text>
             </div>
           )}
         </div>
@@ -75,9 +74,9 @@ function VerificationCodeContent() {
           as={"button"}
           kind={"label"}
           size={"small"}
-          disabled={modalDisabled || !!timer}
+          disabled={modalDisabled || resendCodeDisabled}
           onClick={onResendCode}
-          isLoading={modalDisabled}
+          isLoading={requestCodeProcess}
         >
           {t("verificationCode.buttonResendCode")}
           {timer
@@ -87,7 +86,7 @@ function VerificationCodeContent() {
             : null}
         </ButtonWithLoading>
       </div>
-      <hr className={st.separator} />
+      <Separator orientation={"horizontal"} />
       <Button
         as={"button"}
         kind={"label"}

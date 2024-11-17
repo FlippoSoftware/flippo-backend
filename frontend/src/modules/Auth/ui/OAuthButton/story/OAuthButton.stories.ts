@@ -14,7 +14,8 @@ type OAuthButtonStory = StoryObj<typeof OAuthButton>;
 
 export const OAuthButtonGoogle: OAuthButtonStory = {
   args: {
-    provider: "google"
+    provider: "google",
+    as: "button"
   }
 };
 

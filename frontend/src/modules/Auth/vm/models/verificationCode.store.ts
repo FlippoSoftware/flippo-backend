@@ -79,10 +79,11 @@ const timerClearFx = createEffect(() => {
 // #region of model description status
 export const $checkVerificationCodeProcess = checkVerificationCodeFx.pending;
 export const $signInProcess = signInWithEmailFx.pending;
+export const $requestCodeProcess = requestVerificationCodeFx.pending;
 export const $modalDisabled = or(
   $checkVerificationCodeProcess,
   $signInProcess,
-  requestVerificationCodeFx.pending
+  $requestCodeProcess
 );
 
 export const verificationCodeContentMounted = createEvent();

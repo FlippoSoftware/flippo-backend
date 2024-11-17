@@ -7,6 +7,7 @@ import { ENV } from "@env/app.env";
 import { ModalAuth, modalAuthOpen } from "@modules/Auth";
 import { Button } from "@ui/Button";
 import { Separator } from "@ui/Separator";
+import { Link } from "@ui/Link";
 
 function Home() {
   const onModalAuthOpen = useUnit(modalAuthOpen);
@@ -65,7 +66,13 @@ function Home() {
       >
         {"Refresh\r"}
       </Button>
+      <Link href={"#"} variant={"neutral"}>
+        {'"bugi vugi"\r'}
+      </Link>
       <ModalAuth type={"oauthCallback"} />
+      <ModalAuth type={"authorizationMethod"} />
+      <ModalAuth type={"verificationCode"} />
+      <ModalAuth type={"inputUsername"} />
     </main>
   );
 }

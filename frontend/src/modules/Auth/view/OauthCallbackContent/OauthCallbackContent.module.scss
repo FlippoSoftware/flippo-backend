@@ -1,0 +1,52 @@
+@use "mixins/_display.scss" as display;
+@use "mixins/_font.scss" as font;
+
+.error {
+  fill: var(--error);
+  color: var(--error);
+  text-align: center;
+
+  @include display.display(flex, column, center, center, 16px);
+  @include font.title-3("default");
+
+  width: 100%;
+
+  svg {
+    width: 72px;
+    height: 72px;
+  }
+
+  & > div {
+    @include display.display(flex, column, center, center, 8px);
+
+    .errorMessage {
+      @include font.label("weaker");
+      color: var(--text-5);
+    }
+  }
+}
+
+.buttonContainer {
+  @include display.display($display: flex, $direction: column, $gap: 10px);
+
+  width: 100%;
+}
+
+.success {
+  fill: var(--success);
+  color: var(--success);
+
+  @include display.display(flex, column, space-between, center, 24px);
+  @include font.title-3("default");
+
+  width: fit-content;
+
+  .hint {
+    color: var(--text-primary);
+  }
+
+  svg {
+    width: 72px;
+    height: 72px;
+  }
+}
