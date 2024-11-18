@@ -1,0 +1,51 @@
+{
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "ESNext",
+    "useDefineForClassFields": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "composite": true,
+
+    /* Bundler mode */
+    "moduleResolution": "Bundler",
+    "allowImportingTsExtensions": true,
+    "isolatedModules": true,
+    "moduleDetection": "force",
+    "emitDeclarationOnly": true,
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "incremental": true,
+
+    /* Linting */
+    "strict": true,
+    "alwaysStrict": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true,
+    "noImplicitReturns": true,
+
+    "baseUrl": ".",
+    "paths": {
+      "@styles/*": ["src/settings/styles/*"],
+      "@ui/*": ["src/shared/ui/*"],
+      "@env/*": ["src/shared/env/*"],
+      "@hooks/*": ["src/shared/hooks/*"],
+      "@icons/*": ["src/shared/icons/*"],
+      "@schemas/*": ["src/shared/schemas/*"],
+      "@utils/*": ["src/shared/utils/*"],
+      "@*": ["./src/*"],
+      "@widgets/*": ["src/widgets/*"],
+      "@settings/*": ["src/settings/*"],
+      "@i18n/*": ["src/i18n/*"]
+    }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "src/settings/**/*.d.ts", ".storybook/**/*.ts", ".storybook/**/*.tsx"],
+  "exclude": ["node_modules", "eslint.config.js", "prettier.config.js", "stylelint.config.js"]
+}
