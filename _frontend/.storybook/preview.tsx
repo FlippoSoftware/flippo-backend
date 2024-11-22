@@ -1,5 +1,7 @@
 import type { Preview } from '@storybook/react';
 
+import '../src/settings/styles/global.scss';
+
 const preview: Preview = {
   parameters: {
     controls: {
@@ -7,8 +9,10 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/i
       }
-    }
-  }
+    },
+    layout: 'centered'
+  },
+  tags: ['autodocs']
 };
 
 export default preview;
