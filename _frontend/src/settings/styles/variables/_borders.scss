@@ -1,0 +1,27 @@
+$radius-2: 2px;
+$radius-4: 4px;
+$radius-8: 8px;
+$radius-12: 12px;
+$radius-16: 16px;
+$radius-24: 24px;
+$radius-32: 32px;
+$radius-40: 40px;
+$radius-48: 48px;
+$radius-56: 56px;
+$radius-64: 64px;
+$radius-infinity: 1000px;
+
+$border-button: 9999px;
+$border-card: 16px;
+$border-field: 24px;
+$border-full: 100%;
+
+.borders {
+  --radius-button: #{$radius-infinity};
+  --radius-input-field: #{$radius-infinity};
+  --radius-card: #{$radius-16};
+  --radius-menu: #{$radius-16};
+  --radius-menu-item: #{$radius-12};
+  --radius-popup: #{$radius-24};
+  --radius-zone: #{$radius-16};
+}
