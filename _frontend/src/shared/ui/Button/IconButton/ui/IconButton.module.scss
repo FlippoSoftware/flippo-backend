@@ -1,0 +1,94 @@
+@mixin sizeButton($sb, $si) {
+  width: $sb;
+  aspect-ratio: 1;
+
+  svg {
+    width: $si;
+    aspect-ratio: 1;
+  }
+}
+
+@mixin stateButton($state, $bg: null, $fill: null, $bw: 1.5px, $bc: null) {
+  &:#{$state} {
+    @if $bg {
+      background-color: $bg;
+    }
+
+    @if $fill {
+      fill: $fill;
+    }
+
+    @if $bc {
+      border: $bw solid $bc;
+    }
+  }
+}
+
+.iconButton {
+  display: grid;
+  justify-items: center;
+  align-items: center;
+
+  padding: 0;
+
+  border-radius: 50%;
+
+  svg {
+    align-self: center;
+  }
+
+  &.primary {
+    background-color: var(--brand);
+    fill: var(--text-white);
+
+    @include stateButton(hover, $bg: var(--brand-hover));
+    @include stateButton(active, $bg: var(--brand), $fill: var(--brand-light-hover));
+    @include stateButton(focus-visible, $bg: var(--brand), $fill: var(--text-white), $bc: var(--text-primary));
+    @include stateButton(disabled, $bg: var(--bg-2), $fill: var(--bg-3));
+  }
+
+  &.secondary {
+    background-color: var(--bg-3);
+    fill: var(--text-2);
+
+    @include stateButton(hover, $bg: var(--bg-3-hover), $fill: var(--text-white));
+    @include stateButton(focus-visible, $bc: var(--text-primary));
+    @include stateButton(disabled, $bg: var(--bg-2), $fill: var(--bg-3));
+  }
+
+  &.outlined {
+    background-color: transparent;
+    border: 1.5px solid var(--stroke);
+    fill: var(--text-3);
+
+    @include stateButton(hover, $fill: var(--text-white), $bc: var(--stroke-hover));
+    @include stateButton(focus-visible, $bc: var(--brand-light));
+    @include stateButton(disabled, $fill: var(--bg-3), $bc: var(--stroke-subtle));
+  }
+
+  &.label {
+    background-color: transparent;
+    fill: var(--text-4);
+
+    @include stateButton(hover, $bg: var(--bg-2-hover), $fill: var(--text-white));
+    @include stateButton(active, $bg: var(--bg-2));
+    @include stateButton(focus-visible, $bc: var(--brand-light));
+    @include stateButton(disabled, transparent, var(--text-disabled));
+  }
+
+  &.x-small {
+    @include sizeButton(24px, 18px);
+  }
+
+  &.small {
+    @include sizeButton(40px, 21px);
+  }
+
+  &.medium {
+    @include sizeButton(48px, 21px);
+  }
+
+  &.large {
+    @include sizeButton(56px, 32px);
+  }
+}
