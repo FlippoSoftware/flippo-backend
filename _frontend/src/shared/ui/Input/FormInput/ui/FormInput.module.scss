@@ -1,0 +1,43 @@
+@use 'mixins/_flex.scss' as flex;
+
+.inputGroup {
+  $ow: 1.5px;
+
+  @include flex.display(flex, column, center);
+
+  .errorWrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+
+    transition:
+      opacity 0.3s ease,
+      grid-template-rows 0.3s ease,
+      padding 0.3s ease;
+
+    &.show {
+      grid-template-rows: 1fr;
+      padding: 8px 20px 0 20px;
+      opacity: 1;
+    }
+
+    & > .error {
+      min-height: 0;
+      word-break: break-all;
+
+      -webkit-hyphens: manual;
+      hyphens: manual;
+
+      color: var(--error);
+    }
+  }
+
+  .invalid {
+    outline: $ow solid var(--error);
+
+    &:hover {
+      background: var(--bg-area-subtle);
+      outline: $ow solid var(--error-hover);
+    }
+  }
+}
