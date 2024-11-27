@@ -21,12 +21,10 @@ export default [
   pluginJs.configs.recommended,
   pluginReact.configs.flat?.recommended,
   ...fixupPluginRules(flatCompat.extends('plugin:react-hooks/recommended')),
-  //pluginPrettier,
   ...pluginStorybook.configs['flat/recommended'],
   pluginPerfectionist.configs['recommended-natural'],
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
-    //ignores: ['eslint.config.js', 'prettier.config.js', 'stylelint.config.js'],
     languageOptions: {
       globals: globals.browser,
       parser: tseslint.parser,
@@ -84,6 +82,7 @@ export default [
         }
       ],
       '@typescript-eslint/no-unused-vars': 'warn',
+      '@typescript-eslint/prefer-promise-reject-errors': 'off',
       '@typescript-eslint/typedef': [
         'warn',
         {
@@ -93,8 +92,11 @@ export default [
         }
       ],
       'default-param-last': 'off',
+      'effector/no-duplicate-on': 'off',
+      'no-redeclare': 'off',
       'no-unused-expressions': 'off',
       'no-unused-vars': 'off',
+      'perfectionist/sort-objects': ['warn', { ignorePattern: ['sample', 'split', 'attache', 'condition'] }],
       'prettier/prettier': ['warn', { endOfLine: 'auto' }, { usePrettierrc: true }],
       'react/function-component-definition': [
         1,
