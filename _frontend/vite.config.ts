@@ -25,7 +25,7 @@ export default defineConfig({
       '@': '/src',
       '@env': '/src/shared/env',
       '@hooks': '/src/shared/hooks',
-      '@i18n': '/src/i18n',
+      '@i18next': '/src/i18next',
       '@icons': '/src/shared/icons',
       '@schemas': '/src/shared/schemas',
       '@settings': '/src/settings',

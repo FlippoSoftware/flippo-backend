@@ -1,0 +1,14 @@
+{
+  "RootLayout": {
+    "title": "Welcome to Flippo!"
+  },
+  "success": {},
+  "warning": {},
+  "error": {
+    "400": "Invalid request.",
+    "401": "You are not logged in.",
+    "403": "Access denied.",
+    "404": "Resource not found.",
+    "500": "We're sorry, but something went wrong. Try again or later."
+  }
+}
