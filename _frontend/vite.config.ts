@@ -15,6 +15,7 @@ export default defineConfig({
       }
     }
   },
+  envPrefix: 'FLIPPO_',
   esbuild: {
     jsxInject: `import React from 'react'`
   },
