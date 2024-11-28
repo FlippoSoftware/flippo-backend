@@ -23,13 +23,21 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': '/src',
+      '@api': '/src/shared/api/*',
+      '@app': '/src/app',
       '@env': '/src/shared/env',
+      '@exceptions': '/src/shared/exceptions/*',
       '@hooks': '/src/shared/hooks',
-      '@i18next': '/src/i18next',
       '@icons': '/src/shared/icons',
+      '@models': '/src/shared/models/*',
+      '@modules': '/src/modules',
+      '@pages': '/src/pages',
+      '@query': '/src/shared/query/*',
       '@schemas': '/src/shared/schemas',
       '@settings': '/src/settings',
+      '@shared': '/src/shared',
       '@styles': '/src/settings/styles',
+      '@surreal': '/src/shared/surreal/*',
       '@ui': '/src/shared/ui',
       '@utils': '/src/shared/utils',
       '@widgets': '/src/widgets'

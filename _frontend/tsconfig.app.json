@@ -44,7 +44,15 @@
       "@*": ["./src/*"],
       "@widgets/*": ["src/widgets/*"],
       "@settings/*": ["src/settings/*"],
-      "@i18next/*": ["src/i18next/*"]
+      "@models/*": ["src/models/*"],
+      "@surreal/*": ["src/surreal/*"],
+      "@query/*": ["src/query/*"],
+      "@exceptions/*": ["src/exceptions/*"],
+      "@api/*": ["src/api/*"],
+      "@app/*": ["src/app/*"],
+      "@modules/*": ["src/modules/*"],
+      "@pages/*": ["src/pages/*"],
+      "@shared/*": ["src/shared/*"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/settings/**/*.d.ts", ".storybook/**/*.ts", ".storybook/**/*.tsx"],
