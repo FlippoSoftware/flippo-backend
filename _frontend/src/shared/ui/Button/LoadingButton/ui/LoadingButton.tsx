@@ -8,6 +8,7 @@ function LoadingButton(props: TLoadingButtonProps) {
   const { children, isLoading, loader = 'spinner', ...otherProps } = props;
   return (
     <Button
+      as={'button'}
       className={st[otherProps.variant]}
       disabled={isLoading}
       iconRight={isLoading ? <Loader loader={loader} /> : undefined}
