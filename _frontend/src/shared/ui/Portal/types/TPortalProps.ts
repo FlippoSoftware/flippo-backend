@@ -1,7 +1,11 @@
-import { type PropsWithChildren } from 'react';
+import { type PropsWithChildren, type RefObject } from 'react';
 
 type TPortalProps = PropsWithChildren<{
-  id: string;
+  targetId?: string;
+  targetRef?: RefObject<HTMLElement | null>;
 }>;
 
-export { type TPortalProps };
+type TPortalPropsWithId = PropsWithChildren<{ targetId?: string }>;
+type TPortalPropsWithContainerRef = PropsWithChildren<{ targetRef?: RefObject<HTMLElement> }>;
+
+export { type TPortalProps, type TPortalPropsWithContainerRef, type TPortalPropsWithId };
