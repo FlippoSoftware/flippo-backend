@@ -15,6 +15,15 @@ function Page() {
       >
         {'English'}
       </button>
+      <button
+        onClick={() => {
+          i18n.changeLanguage('ru').catch(() => {
+            'Fail change language';
+          });
+        }}
+      >
+        {'Русский'}
+      </button>
     </>
   );
 }

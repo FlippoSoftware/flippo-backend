@@ -1,4 +1,5 @@
 import { $i18n } from '@settings/i18next/i18next.config';
+import { ToastContainer } from '@widgets/ToastNotification';
 import { useUnit } from 'effector-react';
 import { type i18n } from 'i18next';
 import { type PropsWithChildren, useEffect } from 'react';
@@ -22,7 +23,12 @@ function InitApp(props: PropsWithChildren<object>) {
     return <p style={{ color: 'white', fontSize: '40px' }}>{'loading'}</p>;
   }
 
-  return <I18nextProvider i18n={i18n as i18n}>{children}</I18nextProvider>;
+  return (
+    <I18nextProvider i18n={i18n as i18n}>
+      {children}
+      <ToastContainer toastCountOnScreen={4} />
+    </I18nextProvider>
+  );
 }
 
 export default InitApp;

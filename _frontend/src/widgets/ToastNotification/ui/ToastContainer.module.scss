@@ -1,0 +1,29 @@
+@use 'mixins/_flex.scss' as flex;
+
+.portal {
+  position: absolute;
+  inset: 0;
+
+  @include flex.display(flex, column, end, center, 0);
+  pointer-events: none;
+
+  .container {
+    pointer-events: none;
+    @include flex.display(flex, column, end, center, 10px);
+    padding: 0 0 24px 0;
+
+    position: relative;
+
+    z-index: 100;
+
+    width: 512px;
+    height: fit-content;
+
+    position: fixed;
+    align-self: center;
+
+    & > * {
+      pointer-events: auto;
+    }
+  }
+}
