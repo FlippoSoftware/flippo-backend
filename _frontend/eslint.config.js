@@ -26,7 +26,7 @@ export default [
   {
     files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     languageOptions: {
-      globals: globals.browser,
+      globals: { ...globals.browser, NodeJS: true },
       parser: tseslint.parser,
       parserOptions: {
         project: ['./tsconfig.json', './tsconfig.app.json'],
