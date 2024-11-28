@@ -4,6 +4,7 @@ import i18next, { type i18n } from 'i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import { HMRPlugin } from 'i18next-hmr/plugin';
 import HttpBackend from 'i18next-http-backend';
+import { initReactI18next } from 'react-i18next';
 
 import {
   INTERNATIONALIZATION_COOKIE_LIFETIME,
@@ -46,10 +47,13 @@ const defaultI18nextInstance = i18next
       order: ['subdomain', 'path', 'navigator', 'cookie', 'localStorage', 'sessionStorage', 'querystring', 'htmlTag']
     },
     fallbackLng: INTERNATIONALIZATION_DEFAULT_LOCALE,
-    initImmediate: false,
     ns: ['translation', 'auth'],
+    react: {
+      useSuspense: true
+    },
     supportedLngs: INTERNATIONALIZATION_LOCALES
   })
+  .use(initReactI18next)
   .use(HttpBackend)
   .use(LanguageDetector);
 
@@ -64,6 +68,8 @@ if (import.meta.env.NODE_ENV !== 'production') {
 }
 
 const $i18nextInstance = createStore<i18n>(defaultI18nextInstance, { serialize: 'ignore' });
+
+export default defaultI18nextInstance;
 
 export const {
   $instance: $i18n,
