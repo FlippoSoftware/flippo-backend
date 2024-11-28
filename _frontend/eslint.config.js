@@ -73,6 +73,8 @@ export default [
       '@typescript-eslint/no-duplicate-type-constituents': 'error',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-namespace': 'off',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unused-expressions': [
         'error',
         {
