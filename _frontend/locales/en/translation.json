@@ -9,6 +9,10 @@
     "401": "You are not logged in.",
     "403": "Access denied.",
     "404": "Resource not found.",
-    "500": "We're sorry, but something went wrong. Try again or later."
+    "500": "We're sorry, but something went wrong. Try again or later.",
+    "unknown": "ERROR: It is unknown what happened"
+  },
+  "toastNotification": {
+    "cancelButton": "Cancel"
   }
 }
