@@ -124,7 +124,7 @@ $ow: 1.5px;
 }
 
 .label {
-  color: var(--text-3);
+  color: var(--text-4);
 
   @include stateButton(hover, var(--bg-2-hover), var(--text-white));
   @include stateButton(active, var(--bg-2), var(--text-4));
