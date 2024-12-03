@@ -1,7 +1,7 @@
-import { ENV } from '@env/app.env';
+import { ENV } from '@shared/env';
 import { Surreal } from 'surrealdb';
 
-import { getDbTokenCookie, removeDbTokenCookie } from './cookie.utils';
+import { getDbTokenCookie, removeDbTokenCookie } from './utils/cookie.utils';
 
 type TDbConfig = {
   database: string;
