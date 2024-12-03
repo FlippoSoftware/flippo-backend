@@ -34,25 +34,13 @@
 
     "baseUrl": ".",
     "paths": {
-      "@styles/*": ["src/settings/styles/*"],
-      "@ui/*": ["src/shared/ui/*"],
-      "@env/*": ["src/shared/env/*"],
-      "@hooks/*": ["src/shared/hooks/*"],
-      "@icons/*": ["src/shared/icons/*"],
-      "@schemas/*": ["src/shared/schemas/*"],
-      "@utils/*": ["src/shared/utils/*"],
-      "@*": ["./src/*"],
-      "@widgets/*": ["src/widgets/*"],
-      "@settings/*": ["src/settings/*"],
-      "@models/*": ["src/models/*"],
-      "@surreal/*": ["src/surreal/*"],
-      "@query/*": ["src/query/*"],
-      "@exceptions/*": ["src/exceptions/*"],
-      "@api/*": ["src/api/*"],
-      "@app/*": ["src/app/*"],
-      "@modules/*": ["src/modules/*"],
-      "@pages/*": ["src/pages/*"],
-      "@shared/*": ["src/shared/*"]
+      "@*": ["src/*/index.ts"],
+      "@app/*": ["src/app/*/index.ts"],
+      "@modules/*": ["src/modules/*/index.ts"],
+      "@pages/*": ["src/pages/*/index.ts"],
+      "@settings/*": ["src/settings/*/index.ts"],
+      "@shared/*": ["src/shared/*/index.ts"],
+      "@widgets/*": ["src/widgets/*/index.ts"]
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/settings/**/*.d.ts", ".storybook/**/*.ts", ".storybook/**/*.tsx"],
