@@ -1,4 +1,5 @@
 @use 'mixins/_flex.scss' as flex;
+@use 'mixins/_font.scss' as font;
 
 .inputGroup {
   $ow: 1.5px;
@@ -22,6 +23,8 @@
     }
 
     & > .error {
+      @include font.label('weaker');
+
       min-height: 0;
       word-break: break-all;
 
