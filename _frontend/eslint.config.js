@@ -98,7 +98,10 @@ export default [
       'no-redeclare': 'off',
       'no-unused-expressions': 'off',
       'no-unused-vars': 'off',
-      'perfectionist/sort-objects': ['warn', { ignorePattern: ['sample', 'split', 'attache', 'condition'] }],
+      'perfectionist/sort-objects': [
+        'warn',
+        { ignorePattern: ['sample', 'split', 'attache', 'condition', 'chainRoute'] }
+      ],
       'prettier/prettier': ['warn', { endOfLine: 'auto' }, { usePrettierrc: true }],
       'react/function-component-definition': [
         1,
