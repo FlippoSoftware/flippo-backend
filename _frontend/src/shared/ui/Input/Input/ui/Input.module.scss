@@ -4,6 +4,8 @@
 .input {
   $ow: 1.5px;
 
+  outline-color: transparent;
+
   @include flex.display(flex, row, $sideAxis: center);
   flex: 0 1 100%;
 
