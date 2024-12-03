@@ -1,0 +1,47 @@
+@use 'mixins/_flex.scss' as flex;
+@use 'mixins/_font.scss' as font;
+
+.contentWrapper {
+  @include flex.display(flex, column, $gap: var(--auth-gap));
+
+  width: var(--max-content-width);
+
+  .header {
+    @include flex.display(flex, column, $mainAxis: center, $gap: 12px);
+
+    text-align: center;
+
+    & > .textBlock {
+      @include flex.display(flex, column, $gap: 8px);
+
+      color: var(--text-primary);
+
+      .title {
+        @include font.title-3('default');
+      }
+
+      .hint {
+        @include font.label('weaker');
+        color: var(--text-5);
+      }
+    }
+
+    & > .emailBlock {
+      @include flex.display(flex, $mainAxis: center, $sideAxis: center);
+      @include font.bodyMinus('default');
+      height: 37px;
+
+      color: var(--text-2);
+    }
+  }
+
+  .verifyBlock {
+    @include flex.display(flex, column, center, center, 16px);
+
+    width: 100%;
+  }
+
+  .backButton {
+    width: 100%;
+  }
+}

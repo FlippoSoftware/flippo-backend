@@ -1,0 +1,30 @@
+@use 'mixins/_flex.scss' as flex;
+@use 'mixins/_effect.scss' as effect;
+
+.modal {
+  --auth-max-width: 420px;
+  --auth-padding: 32px;
+  --auth-gap: 24px;
+  --max-content-width: calc(var(--auth-max-width) - (2 * var(--auth-padding)));
+
+  max-width: var(--auth-max-width);
+  padding: var(--auth-padding);
+
+  overflow-y: hidden;
+
+  position: relative;
+  background-color: var(--bg-1);
+  border-radius: var(--radius-popup);
+
+  color: var(--text-primary);
+
+  @include effect.elevation-modal();
+
+  .content {
+    width: 100%;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

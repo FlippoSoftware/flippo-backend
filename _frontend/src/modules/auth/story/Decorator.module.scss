@@ -1,0 +1,31 @@
+@use 'mixins/_flex.scss' as flex;
+
+.manipulationContainer {
+  @include flex.display(flex, column, center, center);
+
+  height: 100vh;
+  width: 100%;
+
+  position: relative;
+
+  .experimentalContainer {
+    position: relative;
+
+    .experimental {
+      position: absolute;
+
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+    }
+
+    height: 100%;
+    width: 100%;
+  }
+
+  .switches {
+    @include flex.display(flex, row, center, center, 12px);
+    margin-bottom: 12px;
+  }
+}
