@@ -1,3 +1,4 @@
+import { Auth } from '@modules/auth';
 import { useTranslation } from 'react-i18next';
 
 function Page() {
@@ -6,6 +7,7 @@ function Page() {
   return (
     <>
       <p style={{ color: 'white', fontSize: '40px' }}>{t('RootLayout.title')}</p>
+      <Auth />
       <button
         onClick={() => {
           i18n.changeLanguage('en').catch(() => {

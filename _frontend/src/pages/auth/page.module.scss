@@ -1,0 +1,8 @@
+@use 'mixins/_flex.scss' as flex;
+
+.page {
+  @include flex.display(flex, row, center, center);
+
+  width: 100vw;
+  height: 100vh;
+}
