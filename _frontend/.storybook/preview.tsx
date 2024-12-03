@@ -2,6 +2,7 @@ import type { Preview } from '@storybook/react';
 
 import '../src/settings/styles/global.scss';
 
+import { ToastContainer } from '@widgets/ToastNotification';
 import { Suspense } from 'react';
 
 import i18n from '../src/settings/i18next/i18next.config';
@@ -12,6 +13,7 @@ const preview: Preview = {
   decorators: (Story) => (
     <Suspense fallback={'Loading...'}>
       <Story />
+      <ToastContainer toastCountOnScreen={4} />
     </Suspense>
   ),
   initialGlobals: {
