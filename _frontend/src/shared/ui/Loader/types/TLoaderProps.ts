@@ -1,6 +1,6 @@
 import { type HTMLAttributes } from 'react';
 
-type TLoadingKind = 'spinner';
+type TLoadingKind = 'dotsFade' | 'spinner';
 
 type TLoaderProps = {
   loader: TLoadingKind;

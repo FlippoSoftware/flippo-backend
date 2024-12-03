@@ -1,10 +1,12 @@
 import { type FC, Suspense } from 'react';
 
+import DotsFade from '../icons/DotsFadeIcon';
 import SpinnerIcon from '../icons/LoadingIcon';
 import { type TLoadingIconProps } from '../icons/types/TLoadingIconProps';
 import { type TLoaderProps, type TLoadingKind } from '../types/TLoaderProps';
 
 const Loaders: { [key in TLoadingKind]: FC<TLoadingIconProps> } = {
+  dotsFade: DotsFade,
   spinner: SpinnerIcon
 };
 
