@@ -1,9 +1,5 @@
-'use client';
-
-import { PublicationSchema, type TPublication } from '@shared/schemas/publication';
-import { record } from '@shared/schemas/record';
-import { SourceType } from '@shared/schemas/source';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { PublicationSchema, record, SourceType, type TPublication } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function fetchPublications() {

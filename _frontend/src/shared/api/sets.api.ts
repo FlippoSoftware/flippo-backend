@@ -1,8 +1,5 @@
-'use client';
-
-import { record } from '@shared/schemas/record';
-import { SetSchema, type TSet } from '@shared/schemas/set';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { record, SetSchema, type TSet } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function fetchSets() {

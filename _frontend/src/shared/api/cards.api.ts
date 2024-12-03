@@ -1,8 +1,5 @@
-'use client';
-
-import { CardSchema, type TCard } from '@shared/schemas/card';
-import { record } from '@shared/schemas/record';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { CardSchema, record, type TCard } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function fetchCards() {

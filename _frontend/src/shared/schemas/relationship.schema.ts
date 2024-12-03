@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { record } from './record.schema';
-import { SourceType } from './source';
+import { SourceType } from './source.schema';
 
 const ViewType = z.union([z.literal('like'), z.literal('person'), z.literal('publication'), z.literal('available')]);
 type TViewType = z.infer<typeof ViewType>;

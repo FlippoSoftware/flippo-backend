@@ -1,8 +1,5 @@
-'use client';
-
-import { FolderSchema, type TFolder } from '@shared/schemas/folder';
-import { record } from '@shared/schemas/record';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { FolderSchema, record, type TFolder } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function fetchFolders() {

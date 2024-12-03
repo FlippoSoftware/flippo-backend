@@ -1,10 +1,5 @@
-'use client';
-
-import { record } from '@shared/schemas/record';
-import { type TSet } from '@shared/schemas/set';
-import { type TSetTo } from '@shared/schemas/setTo';
-import { TagSchema, type TTag } from '@shared/schemas/tag';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { record, TagSchema, type TSet, type TSetTo, type TTag } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function assignTag({ set, tag }: { set: TSet['id']; tag: TTag['id'] }) {

@@ -1,9 +1,5 @@
-'use client';
-
-import { type TFolder } from '@shared/schemas/folder';
-import { FolderToSchema, type TFolderTo } from '@shared/schemas/folderTo';
-import { record } from '@shared/schemas/record';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { FolderToSchema, record, type TFolder, type TFolderTo } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function assignFolder({ in: folder, out: set }: Pick<TFolderTo, 'in' | 'out'>) {

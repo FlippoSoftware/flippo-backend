@@ -1,8 +1,5 @@
-'use client';
-
-import { GestaltSchema, GestaltState, GestaltType, type TGestalt } from '@shared/schemas/gestalt';
-import { record } from '@shared/schemas/record';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { GestaltSchema, GestaltState, GestaltType, record, type TGestalt } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function fetchGestalts() {

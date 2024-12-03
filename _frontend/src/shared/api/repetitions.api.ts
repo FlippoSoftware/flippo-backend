@@ -1,8 +1,5 @@
-'use client';
-
-import { record } from '@shared/schemas/record';
-import { RepetitionSchema, type TRepetition } from '@shared/schemas/repetition';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { record, RepetitionSchema, type TRepetition } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function fetchRepetitions() {

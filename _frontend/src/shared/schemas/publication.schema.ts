@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 import { record } from './record.schema';
-import { SourceType } from './source';
+import { SourceType } from './source.schema';
 
 const PublicationSchema = z.object({
   author: record('user'),

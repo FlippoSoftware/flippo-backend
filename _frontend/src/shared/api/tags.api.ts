@@ -1,8 +1,5 @@
-'use client';
-
-import { record } from '@shared/schemas/record';
-import { TagSchema, type TTag } from '@shared/schemas/tag';
-import { getDb } from '@shared/surreal/surreal.utils';
+import { record, TagSchema, type TTag } from '@shared/schemas';
+import { getDb } from '@shared/surreal';
 import { z } from 'zod';
 
 async function fetchTags() {
