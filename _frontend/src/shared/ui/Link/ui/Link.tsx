@@ -1,4 +1,4 @@
-import { ArrowIcon } from '@icons/ArrowIcon';
+import { ArrowIcon } from '@shared/icons';
 import clsx from 'clsx';
 
 import { type TLinkProps } from '../type/TLinkProps';

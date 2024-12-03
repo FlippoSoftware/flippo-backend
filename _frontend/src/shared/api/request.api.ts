@@ -1,4 +1,4 @@
-import { ENV } from '@env/app.env';
+import { ENV } from '@shared/env';
 import axios, { type AxiosError, type AxiosRequestConfig, type AxiosResponse } from 'axios';
 import { createEffect } from 'effector';
 

@@ -1,4 +1,4 @@
-type ContainerOptions = {
+export type ContainerOptions = {
   id: string;
   mountNode?: HTMLElement;
 };

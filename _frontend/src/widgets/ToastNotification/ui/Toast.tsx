@@ -1,9 +1,9 @@
 'use client';
 
-import { CloseIcon, ErrorIcon, SuccessIcon, WarningIcon } from '@icons/index';
-import { Button, IconButton } from '@ui/Button';
-import { CountDownCircle } from '@ui/CountDownCircle';
-import { Separator } from '@ui/Separator';
+import { CloseIcon, ErrorIcon, SuccessIcon, WarningIcon } from '@shared/icons/index';
+import { Button, IconButton } from '@shared/ui/Button';
+import { CountDownCircle } from '@shared/ui/CountDownCircle';
+import { Separator } from '@shared/ui/Separator';
 import clsx from 'clsx';
 import { type JSX, memo, type MouseEvent, useEffect, useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';

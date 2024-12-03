@@ -1,5 +1,5 @@
-import { type TButtonProps } from '@ui/Button/Button/types/TButtonProps';
-import { type TLoaderProps } from '@ui/Loader';
+import { type TButtonProps } from '@shared/ui/Button';
+import { type TLoaderProps } from '@shared/ui/Loader';
 
 type TLoadingButtonProps = {
   isLoading: boolean;

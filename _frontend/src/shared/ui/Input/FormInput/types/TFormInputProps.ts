@@ -1,4 +1,4 @@
-import { type TInputProps } from '@ui/Input/Input/types/TInputProps';
+import { type TInputProps } from '@shared/ui/Input';
 
 type TFormInputProps = {
   errorMessage?: null | string;

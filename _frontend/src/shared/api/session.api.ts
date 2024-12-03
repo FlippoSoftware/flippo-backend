@@ -1,4 +1,4 @@
-import { type TSession } from '@shared/models/session.store';
+import { type TSession } from '@settings/session';
 import { createEffect } from 'effector';
 
 import { requestFx } from './request.api';

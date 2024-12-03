@@ -1,4 +1,4 @@
-import { UnstyledButton } from '@ui/Button';
+import { UnstyledButton } from '@shared/ui/Button';
 import { clsx } from 'clsx';
 
 import type { TButtonProps } from '../types/TButtonProps';

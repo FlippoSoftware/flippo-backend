@@ -1,4 +1,4 @@
-import Input from '@ui/Input/Input/ui/Input';
+import { Input } from '@shared/ui/Input';
 import { clsx } from 'clsx';
 
 import type { TFormInputProps } from '../types/TFormInputProps';

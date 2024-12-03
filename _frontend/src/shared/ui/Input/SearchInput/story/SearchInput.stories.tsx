@@ -1,5 +1,5 @@
+import { StoryCombine, type TGroup, type TStoryCombineProps } from '@shared/ui/StoryCombine';
 import { type Meta, type StoryObj } from '@storybook/react';
-import { StoryCombine, type TGroup, type TStoryCombineProps } from '@ui/StoryCombine';
 import { type ChangeEvent, useState } from 'react';
 
 import { type TSearchInputProps } from '../types/TSearchInputProps';

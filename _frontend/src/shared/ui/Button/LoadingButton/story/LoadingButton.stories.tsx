@@ -1,12 +1,11 @@
-import { AddIcon } from '@icons/AddIcon';
+import { AddIcon } from '@shared/icons';
+import { StoryCombine, type TStoryCombineProps, type TVariantComponent } from '@shared/ui/StoryCombine';
 import { type Meta, type StoryObj } from '@storybook/react';
-import { StoryCombine, type TStoryCombineProps, type TVariantComponent } from '@ui/StoryCombine';
 
 import { type TLoadingButtonProps } from '../types/TLoadingButtonProps';
 import { default as LoadingButton } from '../ui/LoadingButton';
 
 const ARGS: Partial<TLoadingButtonProps> = {
-  as: 'button',
   children: 'Button',
   iconLeft: <AddIcon type={'default'} />,
   isLoading: true

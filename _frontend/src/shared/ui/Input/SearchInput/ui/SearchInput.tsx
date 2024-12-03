@@ -1,7 +1,7 @@
-import { CloseIcon } from '@icons/CloseIcon';
-import { SearchIcon } from '@icons/SearchIcon';
-import { IconButton } from '@ui/Button';
-import { type TIconButtonProps } from '@ui/Button/IconButton/types/TIconButtonProps';
+import { CloseIcon } from '@shared/icons';
+import { SearchIcon } from '@shared/icons';
+import { IconButton } from '@shared/ui/Button';
+import { type TIconButtonProps } from '@shared/ui/Button';
 
 import { type TInputProps } from '../../Input/types/TInputProps';
 import Input from '../../Input/ui/Input';

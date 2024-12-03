@@ -1,4 +1,4 @@
-import UnstyledButton from '@ui/Button/ui/UnstyledButton';
+import { UnstyledButton } from '@shared/ui/Button';
 import clsx from 'clsx';
 
 import { type TIconButtonProps } from '../types/TIconButtonProps';

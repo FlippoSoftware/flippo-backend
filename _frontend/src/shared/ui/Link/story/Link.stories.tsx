@@ -1,6 +1,6 @@
-import { AddIcon, EmailIcon } from '@icons/index';
+import { AddIcon, EmailIcon } from '@shared/icons';
+import { StoryCombine, type TGroup, type TStoryCombineProps } from '@shared/ui/StoryCombine';
 import { type Meta, type StoryObj } from '@storybook/react';
-import { StoryCombine, type TGroup, type TStoryCombineProps } from '@ui/StoryCombine';
 
 import { type TLinkProps } from '../type/TLinkProps';
 import { default as Link } from '../ui/Link';

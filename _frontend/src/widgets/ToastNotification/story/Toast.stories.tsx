@@ -1,5 +1,5 @@
+import { StoryCombine, type TGroup, type TStoryCombineProps } from '@shared/ui/StoryCombine';
 import { type Meta, type StoryObj } from '@storybook/react';
-import { StoryCombine, type TGroup, type TStoryCombineProps } from '@ui/StoryCombine';
 
 import { type TToastProps } from '../types/TToastProps';
 import { default as Toast } from '../ui/Toast';

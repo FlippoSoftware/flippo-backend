@@ -1,4 +1,4 @@
-import { type TUnstyledButtonProps } from '@ui/Button/types/TUnstyledButtonProps';
+import { type TUnstyledButtonProps } from '@shared/ui/Button';
 import { type ReactElement } from 'react';
 
 type TIconButtonProps = {

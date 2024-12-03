@@ -1,6 +1,6 @@
-import { SearchIcon } from '@icons/index';
+import { SearchIcon } from '@shared/icons';
+import { StoryCombine, type TGroup, type TStoryCombineProps } from '@shared/ui/StoryCombine';
 import { type Meta, type StoryObj } from '@storybook/react';
-import { StoryCombine, type TGroup, type TStoryCombineProps } from '@ui/StoryCombine';
 
 import { type TInputProps } from '../types/TInputProps';
 import { default as Input } from '../ui/Input';

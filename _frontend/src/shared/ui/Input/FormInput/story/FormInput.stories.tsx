@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { StoryCombine, type TGroup, type TStoryCombineProps } from '@ui/StoryCombine';
+import { StoryCombine, type TGroup, type TStoryCombineProps } from '@shared/ui/StoryCombine';
 import { useState } from 'react';
 
 import { type TFormInputProps } from '../types/TFormInputProps';

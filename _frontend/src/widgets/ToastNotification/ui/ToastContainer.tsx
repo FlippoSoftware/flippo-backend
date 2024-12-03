@@ -1,6 +1,6 @@
 'use client';
 
-import { Portal } from '@ui/Portal';
+import { Portal } from '@shared/ui/Portal';
 import { useUnit } from 'effector-react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useCallback, useEffect, useRef } from 'react';

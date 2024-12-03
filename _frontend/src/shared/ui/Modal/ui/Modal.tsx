@@ -1,6 +1,6 @@
 'use client';
 
-import { createContainer, Portal } from '@ui/Portal';
+import { createContainer, Portal } from '@shared/ui/Portal';
 import { clsx } from 'clsx';
 import { useEffect, useRef, useState } from 'react';
 

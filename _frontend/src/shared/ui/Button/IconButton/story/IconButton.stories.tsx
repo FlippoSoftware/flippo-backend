@@ -1,6 +1,6 @@
-import { AddIcon } from '@icons/AddIcon';
+import { AddIcon } from '@shared/icons';
+import { StoryCombine, type TStoryCombineProps, type TVariantComponent } from '@shared/ui/StoryCombine';
 import { type Meta, type StoryObj } from '@storybook/react';
-import { StoryCombine, type TStoryCombineProps, type TVariantComponent } from '@ui/StoryCombine';
 
 import { type TIconButtonProps } from '../types/TIconButtonProps';
 import { default as IconButton } from '../ui/IconButton';
