@@ -11,6 +11,13 @@ import st from './Decorator.module.scss';
 
 const meta: Meta = {
   component: Auth,
+  parameters: {
+    docs: {
+      description: {
+        component: 'A module designed to handle the authorization flow'
+      }
+    }
+  },
   title: 'Modules/Auth/Auth'
 };
 

@@ -7,37 +7,27 @@ import { type TOAuthButtonProps } from '../types/TOAuthButtonProps';
 import OAuthButton from '../ui/OAuthButton';
 import st from './Decorator.module.scss';
 
-function Decorator(Story: any) {
-  return (
-    <div className={st.decorator}>
-      <Story />
-    </div>
-  );
-}
-
-function OAuthButtonWithTranslation(props: TOAuthButtonProps) {
-  const { provider } = props;
-  const { t } = useTranslation('auth', { keyPrefix: 'authorizationMethodContent.oauth.buttonOauth' });
-
-  return <OAuthButton {...props}>{t(provider as any)}</OAuthButton>;
-}
-
 const meta: Meta<TOAuthButtonProps> = {
   argTypes: {
     provider: {
-      control: {
-        options: ['google', 'vkontakte', 'yandex'],
-        type: 'select'
-      }
+      control: 'select',
+      options: ['google', 'vkontakte', 'yandex']
     }
   },
   component: OAuthButtonWithTranslation,
+  parameters: {
+    docs: {
+      description: {
+        component: 'The button to switch to OAuth authorization'
+      }
+    }
+  },
   title: 'Modules/Auth/ui/OAuthButton'
 };
 
 export default meta;
 
-type OAuthButtonStory = StoryObj<typeof OAuthButton>;
+type OAuthButtonStory = StoryObj<typeof OAuthButtonWithTranslation>;
 
 export const OAuthButtonGoogle: OAuthButtonStory = {
   args: {
@@ -78,3 +68,18 @@ const GROUPS: TStoryCombineProps<TOAuthButtonProps> = {
     }
   ]
 };
+
+function Decorator(Story: any) {
+  return (
+    <div className={st.decorator}>
+      <Story />
+    </div>
+  );
+}
+
+function OAuthButtonWithTranslation(props: TOAuthButtonProps) {
+  const { provider } = props;
+  const { t } = useTranslation('auth', { keyPrefix: 'authorizationMethodContent.oauth.buttonOauth' });
+
+  return <OAuthButton {...props}>{t(provider as any)}</OAuthButton>;
+}

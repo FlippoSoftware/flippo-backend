@@ -11,6 +11,13 @@ import st from './Decorator.module.scss';
 
 const meta: Meta = {
   component: AuthCallback,
+  parameters: {
+    docs: {
+      description: {
+        component: 'Part of the authorization module designed for callback after OAuth authorization'
+      }
+    }
+  },
   title: 'Modules/Auth/AuthCallback'
 };
 
