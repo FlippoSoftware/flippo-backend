@@ -7,8 +7,8 @@ import { type JSX } from 'react';
 import { OauthStatus } from '../../../models/oauthCallback.model';
 import { useOauthCallback } from '../../../vm/useOauthCallback';
 import st from '../../styles/Auth.module.scss';
+import { Pending } from '../Pending/Pending';
 import { Fail } from './Fail/Fail';
-import { Pending } from './Pending/Pending';
 import { Success } from './Success/Success';
 
 const CONTENT_MAP: { [key in OauthStatus]: JSX.Element } = {
