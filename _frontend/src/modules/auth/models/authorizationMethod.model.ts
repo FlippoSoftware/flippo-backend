@@ -1,7 +1,7 @@
 import { router } from '@settings/routing';
 import { createFormInput } from '@shared/factories';
 import { getOAuthUrl, type TAuthProvider } from '@shared/query';
-import { displayRequestError } from '@widgets/ToastNotification';
+import { displayRequestError, type TTranslationOptions } from '@widgets/ToastNotification';
 import { type HistoryPushParams } from 'atomic-router';
 import { createEffect, createEvent, createStore, sample } from 'effector';
 import { and, not, or, reset } from 'patronum';
@@ -74,6 +74,7 @@ sample({
 
 sample({
   clock: requestVerificationCodeFx.failData,
+  fn: (error): TTranslationOptions => [`error.${error}` as any],
   target: displayRequestError
 });
 // #endregion
@@ -107,6 +108,7 @@ sample({
 
 sample({
   clock: requestPkceFx.failData,
+  fn: (error): TTranslationOptions => [`error.${error}` as any],
   target: displayRequestError
 });
 // #endregion

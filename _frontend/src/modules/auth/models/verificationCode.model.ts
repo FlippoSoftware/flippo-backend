@@ -1,7 +1,7 @@
 import { $t } from '@settings/i18next';
 import * as sessionApi from '@settings/session';
 import { type TVerifyInputHandler } from '@shared/ui/Input';
-import { displayRequestError } from '@widgets/ToastNotification';
+import { displayRequestError, displayRequestSuccess, type TTranslationOptions } from '@widgets/ToastNotification';
 import { attach, createEffect, createEvent, createStore, sample, split } from 'effector';
 import { and, not, or, reset } from 'patronum';
 
@@ -191,12 +191,15 @@ sample({
 
 sample({
   clock: sessionValidateFx.done,
-  target: authClose
+  fn: (): TTranslationOptions<'auth'> => {
+    return ['success.authorizedAgain', { ns: 'auth' }];
+  },
+  target: [displayRequestSuccess, authClose]
 });
 
 sample({
   clock: sessionValidateFx.failData,
-  fn: () => 'invalid_session',
+  fn: (): TTranslationOptions<'auth'> => ['verificationCodeContent.error.invalidSession', { ns: 'auth' }],
   target: displayRequestError
 });
 
@@ -211,6 +214,7 @@ split({
 
 sample({
   clock: throwAnError,
+  fn: (error): TTranslationOptions => [`error.${error}` as any],
   target: displayRequestError
 });
 // #endregion
@@ -230,6 +234,7 @@ sample({
 
 sample({
   clock: requestVerificationCodeFx.failData,
+  fn: (error): TTranslationOptions => [`error.${error}` as any],
   target: displayRequestError
 });
 // #endregion
