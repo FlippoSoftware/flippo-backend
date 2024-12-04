@@ -1,7 +1,0 @@
-@mixin display($display: flex, $direction: row, $mainAxis: normal, $sideAxis: normal, $gap: 0) {
-  display: $display;
-  flex-direction: $direction;
-  justify-content: $mainAxis;
-  align-items: $sideAxis;
-  gap: $gap;
-}
