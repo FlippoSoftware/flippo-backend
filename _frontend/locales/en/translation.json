@@ -10,7 +10,8 @@
     "403": "Access denied.",
     "404": "Resource not found.",
     "500": "We're sorry, but something went wrong. Try again or later.",
-    "unknown": "ERROR: It is unknown what happened"
+    "unknown": "ERROR: It is unknown what happened",
+    "invalid_session": "Invalid session data"
   },
   "toastNotification": {
     "cancelButton": "Cancel"
