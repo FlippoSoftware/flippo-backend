@@ -5,7 +5,9 @@ import { EmailIcon } from '@shared/icons';
 import { Button, LoadingButton } from '@shared/ui/Button';
 import { InputVerificationCode } from '@shared/ui/Input';
 import { Link } from '@shared/ui/Link';
+import { Loader } from '@shared/ui/Loader';
 import { Separator } from '@shared/ui/Separator';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 
 import { useVerificationCode } from '../../../../vm/useVerificationCode';
@@ -13,6 +15,7 @@ import st from './VerificationCodeContent.module.scss';
 
 function VerificationCodeContent() {
   const {
+    checkVerificationCodeProcess,
     email,
     emailProvider,
     modalDisabled,
@@ -48,9 +51,7 @@ function VerificationCodeContent() {
               {email}
             </Link>
           ) : (
-            <div>
-              <span>{email}</span>
-            </div>
+            <span>{email}</span>
           )}
         </div>
       </div>
@@ -64,6 +65,16 @@ function VerificationCodeContent() {
           placeholder={''}
           ref={verifyInputRef}
         />
+        <div className={clsx(st.status, (!!verificationCodeError || checkVerificationCodeProcess) && st.showStatus)}>
+          {verificationCodeError ? (
+            <span className={st.errorMessage}>{verificationCodeError}</span>
+          ) : checkVerificationCodeProcess ? (
+            <span className={st.pending}>
+              <Loader loader={'spinner'} />
+              {t('verificationCode.status.check')}
+            </span>
+          ) : null}
+        </div>
         <LoadingButton
           disabled={modalDisabled || resendCodeDisabled}
           isLoading={requestCodeProcess}

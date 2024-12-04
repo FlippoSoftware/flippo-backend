@@ -5,6 +5,7 @@ import { createEvent, fork, sample, scopeBind } from 'effector';
 import { Provider } from 'effector-react';
 
 import { $authContent, $authEmail } from '../models/auth.model';
+import { $checkVerificationCodeProcess, verificationCodeErrorChanged } from '../models/verificationCode.model';
 import { type TAuthContent } from '../types/TAuthContent';
 import { default as Auth } from '../view/ui/Auth/Auth';
 import st from './Decorator.module.scss';
@@ -33,17 +34,48 @@ export const AuthCode: AuthStory = {
   render: () => <StoryCombine {...CODE_GROUPS} />
 };
 
-const CODE_GROUPS: TStoryCombineProps<{ email: string } & { variant: TAuthContent }> = {
+const CODE_GROUPS: TStoryCombineProps<{
+  checking?: boolean;
+  email: string;
+  error?: null | string;
+  variant: TAuthContent;
+}> = {
   args: {
     variant: 'verificationCode'
   },
-  component: WithEmail,
+  component: WithCode,
   groups: [
     {
       name: 'Verification code content',
       variants: [
-        { components: [{ email: '20vinipuh02@gmail.com' }], name: 'Familiar email provider' },
-        { components: [{ email: 'flippo.verify.code@flippo.com' }], name: 'Unknown email provider' }
+        {
+          components: [{ email: '20vinipuh02@gmail.com' }],
+          name: 'Familiar email provider'
+        },
+        {
+          components: [{ email: 'flippo.verify.code@flippo.com' }],
+          name: 'Unknown email provider'
+        },
+        {
+          components: [{ email: '20vinforeofrklmvjvurvoirnvjeiuvlernvipuh02@gmail.com' }],
+          name: 'Overflow email local'
+        },
+        {
+          components: [{ email: '20vinvipuh02@gmaivjirnvirbvfbvjuejvvsbsahvdlewbcwl.com' }],
+          name: 'Overflow email domain'
+        },
+        {
+          components: [
+            {
+              email:
+                '20vinvjvirjoijrvfjnrgtnrknkvtjnrvktrtkgghrotprkgmlipuh02@gmaivjirnvirbvfbvjuejvvsbsahvdlewbcwl.com'
+            }
+          ],
+          name: 'Overflow email local and domain'
+        },
+        { components: [{ email: '20vinipuh02@gmail.com', error: '400' }], name: 'Invalid code' },
+        { components: [{ email: '20vinipuh02@gmail.com', error: '410' }], name: 'Expired code' },
+        { components: [{ checking: true, email: '20vinipuh02@gmail.com' }], name: 'Pending' }
       ]
     }
   ]
@@ -112,15 +144,20 @@ function WithVariant(props: { variant: TAuthContent }) {
   );
 }
 
-function WithEmail(props: { email: string } & { variant: TAuthContent }) {
-  const { email, variant } = props;
+function WithCode(props: { checking?: boolean; email: string; error?: null | string; variant: TAuthContent }) {
+  const { checking = false, email, error = null, variant } = props;
 
   const scopeStory = fork({
     values: [
       [$authEmail, email],
-      [$authContent, variant]
+      [$authContent, variant],
+      [$checkVerificationCodeProcess, checking]
     ]
   });
+
+  const errorBind = scopeBind(verificationCodeErrorChanged, { scope: scopeStory });
+
+  errorBind(error);
 
   return (
     <Provider value={scopeStory}>
