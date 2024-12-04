@@ -16,6 +16,7 @@
 .anchor {
   @include flex.display(inline-flex, row, center, center, 12px);
   @include font.bodyMinus('default');
+  width: 100%;
 
   cursor: pointer;
 
@@ -26,6 +27,8 @@
     aspect-ratio: 1;
 
     fill: currentColor;
+
+    flex: 0 0 auto;
   }
 
   &.neutral {
@@ -38,5 +41,20 @@
 
   .text {
     @include flex.display(flex, row, center, center, 6px);
+    overflow: hidden;
+
+    & > span {
+      width: 100%; // Занимает всю доступную ширину внутри родителя
+      display: block;
+      text-overflow: ellipsis; // Добавляем многоточие для обрезанного текста
+      overflow: hidden; // Прячем выходящий текст
+      white-space: nowrap; // Запрещаем перенос строк
+
+      flex: 1 1 auto;
+    }
+
+    svg {
+      flex-shrink: 0;
+    }
   }
 }
