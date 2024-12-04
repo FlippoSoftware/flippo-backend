@@ -1,13 +1,16 @@
-import { $session } from '@settings/session';
+import { $t } from '@settings/i18next';
+import * as sessionApi from '@settings/session';
 import { type TVerifyInputHandler } from '@shared/ui/Input';
 import { displayRequestError } from '@widgets/ToastNotification';
-import { createEffect, createEvent, createStore, sample, split } from 'effector';
+import { attach, createEffect, createEvent, createStore, sample, split } from 'effector';
 import { and, not, or, reset } from 'patronum';
 
 import { checkVerificationCodeFx, requestVerificationCodeFx, signInWithEmailFx } from '../api';
 import { TIMEOUT_IN_MILLISECONDS, TIMEOUT_IN_MINUTES } from '../constant';
 import { getEmailProvider, type TEmailProvider } from '../utils/getEmailProvider';
 import { $authEmail, authClose, authToAuthorizationMethod, authToInputUsername } from './auth.model';
+
+const sessionValidateFx = attach({ effect: sessionApi.sessionValidateFx });
 
 export const $emailProvider = createStore<null | TEmailProvider>(null);
 export const $truncatedEmail = $authEmail.map((email) => {
@@ -37,6 +40,7 @@ export const $verificationCode = createStore<string>('');
 export const $verificationCodeError = createStore<null | string>(null);
 export const verificationCodeChanged = createEvent<string>();
 export const verificationCodeSubmitted = createEvent();
+export const verificationCodeErrorChanged = createEvent<null | string>();
 
 export const $inputRef = createStore<null | TVerifyInputHandler>(null);
 export const inputRefChanged = createEvent<TVerifyInputHandler>();
@@ -89,7 +93,7 @@ const timerClearFx = createEffect<NodeJS.Timeout | null, void>((timer) => {
 // #endregion
 
 // #region of model description status
-export const $checkVerificationCodeProcess = checkVerificationCodeFx.pending;
+export const $checkVerificationCodeProcess = createStore<boolean>(false);
 export const $signInProcess = signInWithEmailFx.pending;
 export const $requestCodeProcess = requestVerificationCodeFx.pending;
 export const $modalDisabled = or($checkVerificationCodeProcess, $signInProcess, $requestCodeProcess);
@@ -115,6 +119,7 @@ $verificationCode.on(verificationCodeChanged, (_, code) => code);
 $inputRef.on(inputRefChanged, (_, inputRef) => inputRef);
 $timer.on(timerChanged, (_, timer) => timer);
 $timeView.on(timeViewChanged, (_, timeView) => timeView);
+$checkVerificationCodeProcess.on(checkVerificationCodeFx.pending, (_, value) => value);
 
 sample({
   clock: verificationCodeContentMounted,
@@ -163,14 +168,36 @@ split({
   source: checkVerificationCodeFx.failData,
   match: (value) => (['400', '410'].includes(value) ? 'verificationCodeError' : 'error'),
   cases: {
-    verificationCodeError: $verificationCodeError,
+    verificationCodeError: verificationCodeErrorChanged,
     error: [throwAnError, authToAuthorizationMethod]
   }
 });
 
 sample({
+  clock: verificationCodeErrorChanged,
+  source: $t,
+  filter: (t, error) => !!t && !!error,
+  fn: (t, error) => {
+    const code = error === '400' ? 'invalid' : 'expired';
+    return t(`verificationCodeContent.verificationCode.inputError.${code}`, { ns: 'auth' });
+  },
+  target: $verificationCodeError
+});
+
+sample({
   clock: signInWithEmailFx.doneData,
-  target: [$session, authClose]
+  target: sessionValidateFx
+});
+
+sample({
+  clock: sessionValidateFx.done,
+  target: authClose
+});
+
+sample({
+  clock: sessionValidateFx.failData,
+  fn: () => 'invalid_session',
+  target: displayRequestError
 });
 
 split({
