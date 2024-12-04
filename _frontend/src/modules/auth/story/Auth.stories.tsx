@@ -5,7 +5,11 @@ import { createEvent, fork, sample, scopeBind } from 'effector';
 import { Provider } from 'effector-react';
 
 import { $authContent, $authEmail } from '../models/auth.model';
-import { $checkVerificationCodeProcess, verificationCodeErrorChanged } from '../models/verificationCode.model';
+import {
+  $checkVerificationCodeProcess,
+  timerStart,
+  verificationCodeErrorChanged
+} from '../models/verificationCode.model';
 import { type TAuthContent } from '../types/TAuthContent';
 import { default as Auth } from '../view/ui/Auth/Auth';
 import st from './Decorator.module.scss';
@@ -31,6 +35,10 @@ export const AuthMethod: AuthStory = {
 };
 
 export const AuthCode: AuthStory = {
+  render: () => <WithCode email={'20vinipuh02@gmail.com'} />
+};
+
+export const AuthCodeStoryCombine: AuthStory = {
   render: () => <StoryCombine {...CODE_GROUPS} />
 };
 
@@ -38,11 +46,7 @@ const CODE_GROUPS: TStoryCombineProps<{
   checking?: boolean;
   email: string;
   error?: null | string;
-  variant: TAuthContent;
 }> = {
-  args: {
-    variant: 'verificationCode'
-  },
   component: WithCode,
   groups: [
     {
@@ -144,20 +148,22 @@ function WithVariant(props: { variant: TAuthContent }) {
   );
 }
 
-function WithCode(props: { checking?: boolean; email: string; error?: null | string; variant: TAuthContent }) {
-  const { checking = false, email, error = null, variant } = props;
+function WithCode(props: { checking?: boolean; email: string; error?: null | string }) {
+  const { checking = false, email, error = null } = props;
 
   const scopeStory = fork({
     values: [
       [$authEmail, email],
-      [$authContent, variant],
+      [$authContent, 'verificationCode'],
       [$checkVerificationCodeProcess, checking]
     ]
   });
 
   const errorBind = scopeBind(verificationCodeErrorChanged, { scope: scopeStory });
+  const timerBind = scopeBind(timerStart, { scope: scopeStory });
 
   errorBind(error);
+  timerBind();
 
   return (
     <Provider value={scopeStory}>
