@@ -16,6 +16,10 @@
       &:placeholder-shown {
         outline: 1.5px solid var(--stroke);
       }
+
+      &.invalid {
+        outline-color: var(--error-hover);
+      }
     }
   }
 
