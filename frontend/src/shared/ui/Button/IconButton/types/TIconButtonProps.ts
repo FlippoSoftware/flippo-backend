@@ -1,11 +1,10 @@
-import { type ReactElement } from "react";
-
-import { type TUnstyledButtonProps } from "@ui/Button/types/TUnstyledButtonProps";
+import { type TUnstyledButtonProps } from '@shared/ui/Button';
+import { type ReactElement } from 'react';
 
 type TIconButtonProps = {
-  kind: "primary" | "secondary" | "outlined" | "label";
-  size: "x-small" | "small" | "medium" | "large";
-  icon: ReactElement<HTMLOrSVGElement>;
-} & TUnstyledButtonProps<"button">;
+  children: ReactElement<HTMLOrSVGElement>;
+  size: 'large' | 'medium' | 'small' | 'x-small';
+  variant: 'label' | 'outlined' | 'primary' | 'secondary';
+} & Omit<TUnstyledButtonProps<'button'>, 'as' | 'children'>;
 
 export type { TIconButtonProps };

@@ -1,80 +1,31 @@
-"use client";
+import { useTranslation } from 'react-i18next';
 
-import axios from "axios";
-import { usePathname, useRouter } from "next/navigation";
-import { useContext } from "react";
-
-import { AppEnv } from "@env/app.env";
-import { AuthContext } from "@modules/Auth";
-import { Button } from "@ui/Button";
-import { ToastContainer } from "@widgets/ToastContainer";
-
-function Home() {
-  const { session, setSession } = useContext(AuthContext);
-  const router = useRouter();
-  const pathname = usePathname();
+function Page() {
+  const { i18n, t } = useTranslation();
 
   return (
-    <main>
-      <ToastContainer toastCountOnScreen={4} />
-      {session ? (
-        <h1>
-          {"Hello, "}
-          {session.name}
-          {"!"}
-        </h1>
-      ) : (
-        <h1>{"Welcome to Flippo!"}</h1>
-      )}
-
-      {session ? (
-        <Button
-          kind={"outlined"}
-          size={"large"}
-          onClick={async () => {
-            try {
-              await axios.post(
-                AppEnv.NEXT_PUBLIC_API_BASE_URL + "/auth/refresh_token/signout",
-                {},
-                {
-                  withCredentials: true
-                }
-              );
-            } catch (error: any) {
-              console.error(error.message);
-            } finally {
-              setSession(null);
-            }
-          }}
-        >
-          {"SignOut"}
-        </Button>
-      ) : (
-        <Button
-          kind={"primary"}
-          size={"large"}
-          onClick={() => router.push(`/auth?urlCallback=${pathname}`)}
-        >
-          {"SignIn & SignUp"}
-        </Button>
-      )}
-
-      <Button
-        kind={"primary"}
-        size={"large"}
-        onClick={async () => {
-          const response = await axios.get(
-            AppEnv.NEXT_PUBLIC_API_BASE_URL + "/auth/refresh_token/refresh",
-            {
-              withCredentials: true
-            }
-          );
+    <>
+      <p style={{ color: 'white', fontSize: '40px' }}>{t('RootLayout.title')}</p>
+      <button
+        onClick={() => {
+          i18n.changeLanguage('en').catch(() => {
+            'Fail change language';
+          });
         }}
       >
-        {"Refresh\r"}
-      </Button>
-    </main>
+        {'English'}
+      </button>
+      <button
+        onClick={() => {
+          i18n.changeLanguage('ru').catch(() => {
+            'Fail change language';
+          });
+        }}
+      >
+        {'Русский'}
+      </button>
+    </>
   );
 }
 
-export default Home;
+export default Page;

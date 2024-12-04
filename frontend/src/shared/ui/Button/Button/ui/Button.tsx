@@ -1,24 +1,19 @@
-import { clsx } from "clsx";
+import { UnstyledButton } from '@shared/ui/Button';
+import { clsx } from 'clsx';
 
-import { UnstyledButton } from "@ui/Button";
-import Text from "@ui/Text/ui/Text";
-import { ArrowIcon } from "@icons/ArrowIcon";
+import type { TButtonProps } from '../types/TButtonProps';
 
-import st from "./Button.module.scss";
+import st from './Button.module.scss';
 
-import type { TButtonProps } from "../types/TButtonProps";
-
-function Button<E extends "button" | "a">(props: TButtonProps<E>) {
-  const { kind, size, iconLeft, iconRight, children, className, ...otherProps } = props;
+function Button<E extends 'a' | 'button'>(props: TButtonProps<E>) {
+  const { children, className, iconLeft, iconRight, size, variant, ...otherProps } = props;
 
   return (
-    <UnstyledButton className={clsx(st.button, st[kind], st[size], className)} {...otherProps}>
+    <UnstyledButton className={clsx(st.button, st[variant], st[size], className)} {...(otherProps as any)}>
       <div className={st.content}>
-        {iconLeft}
-        <Text<"span"> as={"span"} fontWeight={"Semibold"} lineHeight={"150%"}>
-          {children}
-        </Text>
-        {kind === "link" ? <ArrowIcon type={"link"} /> : iconRight}
+        {iconLeft ? iconLeft : null}
+        <span className={st.text}>{children}</span>
+        {iconRight ? iconRight : null}
       </div>
     </UnstyledButton>
   );

@@ -1,29 +1,21 @@
-"use client";
+'use client';
 
-import { useEffect, useRef, useState } from "react";
-import { clsx } from "clsx";
+import { createContainer, Portal } from '@shared/ui/Portal';
+import { clsx } from 'clsx';
+import { useEffect, useRef, useState } from 'react';
 
-import { default as Portal, createContainer } from "../../Portal/Portal";
+import { type TModalProps } from '../types/TModalProps';
+import st from './Modal.module.scss';
 
-import st from "./Modal.module.scss";
-
-const MODAL_CONTAINER_ID = "modal-container-id";
-
-type ModalProps = {
-  children: React.ReactNode | React.ReactNode[];
-  onClose?: () => void;
-  className?: string;
-};
-
-function Modal(props: ModalProps) {
-  const { onClose = () => {}, children, className } = props;
+function Modal(props: TModalProps) {
+  const { children, className, modalId, onClose = () => {} } = props;
   const rootRef = useRef<HTMLDivElement>(null);
   const [isMounted, setMounted] = useState(false);
 
   useEffect(() => {
-    createContainer({ id: MODAL_CONTAINER_ID });
+    createContainer({ id: modalId });
     setMounted(true);
-  }, []);
+  }, [modalId]);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -34,22 +26,22 @@ function Modal(props: ModalProps) {
     };
 
     const handleEscPress = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         onClose();
       }
     };
 
-    window.addEventListener("click", handleClickOutside);
-    window.addEventListener("keydown", handleEscPress);
+    window.addEventListener('click', handleClickOutside);
+    window.addEventListener('keydown', handleEscPress);
 
     return () => {
-      window.removeEventListener("click", handleClickOutside);
-      window.removeEventListener("keydown", handleEscPress);
+      window.removeEventListener('click', handleClickOutside);
+      window.removeEventListener('keydown', handleEscPress);
     };
   }, [onClose]);
 
   return isMounted ? (
-    <Portal id={MODAL_CONTAINER_ID}>
+    <Portal targetId={modalId}>
       <div className={clsx(st.wrap, className)} ref={rootRef}>
         {children}
       </div>

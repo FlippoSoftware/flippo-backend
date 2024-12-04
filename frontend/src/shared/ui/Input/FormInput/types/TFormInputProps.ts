@@ -1,11 +1,7 @@
-import type { TUnstyledInputProps } from "@ui/Input/types/TInputProps";
+import { type TInputProps } from '@shared/ui/Input';
 
 type TFormInputProps = {
-  id: string;
-  type: "text" | "password" | "email";
-  placeholder: string;
-  showLabel?: boolean;
-  errorMessage?: string;
-} & TUnstyledInputProps<"input">;
+  errorMessage?: null | string;
+} & TInputProps;
 
 export { type TFormInputProps };

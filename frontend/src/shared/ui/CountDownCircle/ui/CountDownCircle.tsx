@@ -1,19 +1,18 @@
-import { memo, useEffect, useState } from "react";
-import clsx from "clsx";
+import clsx from 'clsx';
+import { memo, useEffect, useState } from 'react';
 
-import { type TCountDownCircleProps } from "../types/TCountDownCircleProps";
-
-import st from "./CountDownCircle.module.scss";
+import { type TCountDownCircleProps } from '../types/TCountDownCircleProps';
+import st from './CountDownCircle.module.scss';
 
 function CountDownCircle(props: TCountDownCircleProps) {
   const {
+    className = '',
+    classNameEmptyBar = '',
     duration = 5000,
-    size = 27,
-    strokeWidth = 3,
     onComplete,
-    strokeLinecap = "round",
-    className = "",
-    styleEmptyBar = ""
+    size = 27,
+    strokeLinecap = 'round',
+    strokeWidth = 3
   } = props;
 
   const [startingTime] = useState(Date.now());
@@ -33,6 +32,7 @@ function CountDownCircle(props: TCountDownCircleProps) {
       if (progress > 0) {
         setCountDown(progress);
       } else {
+        setCountDown(0);
         clearInterval(interval);
         onComplete && onComplete();
       }
@@ -47,26 +47,26 @@ function CountDownCircle(props: TCountDownCircleProps) {
     <div className={clsx(st.countDown, className)}>
       <label className={st.counter}>{second}</label>
       <div className={st.circleContainer}>
-        <svg width={size} height={size} fill={"none"} xmlns={"http://www.w3.org/2000/svg"}>
+        <svg fill={'none'} height={size} width={size} xmlns={'http://www.w3.org/2000/svg'}>
           <circle
+            className={classNameEmptyBar ? classNameEmptyBar : st.emptyBar}
             cx={radius}
             cy={radius}
+            fill={'none'}
             r={radius}
-            fill={"none"}
-            strokeWidth={strokeWidth}
             strokeDasharray={circumference}
-            className={styleEmptyBar ? styleEmptyBar : st.emptyBar}
+            strokeWidth={strokeWidth}
           />
           <circle
             cx={radius}
             cy={radius}
+            fill={'none'}
             r={radius}
-            fill={"none"}
-            stroke={"currentColor"}
-            strokeWidth={strokeWidth}
-            strokeLinecap={strokeLinecap}
+            stroke={'currentColor'}
             strokeDasharray={circumference}
             strokeDashoffset={strokeDashoffset}
+            strokeLinecap={strokeLinecap}
+            strokeWidth={strokeWidth}
           />
         </svg>
       </div>

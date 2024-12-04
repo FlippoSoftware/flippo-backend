@@ -1,46 +1,45 @@
-@import "./variables/colors.scss";
-@import "./variables/borders.scss";
-@import "./mixins/displayFlex.scss";
+@use './variables/_colors.scss';
+@use './variables/_borders.scss';
 
 @font-face {
-  font-family: "VelaSans";
-  src: url("fonts/vela-sans/VelaSans-ExtraLight.ttf") format("truetype");
+  font-family: 'VelaSans';
+  src: url('fonts/vela-sans/VelaSans-ExtraLight.ttf') format('truetype');
   font-weight: 200;
 }
 
 @font-face {
-  font-family: "VelaSans";
-  src: url("fonts/vela-sans/VelaSans-Light.ttf") format("truetype");
+  font-family: 'VelaSans';
+  src: url('fonts/vela-sans/VelaSans-Light.ttf') format('truetype');
   font-weight: 300;
 }
 
 @font-face {
-  font-family: "VelaSans";
-  src: url("fonts/vela-sans/VelaSans-Regular.ttf") format("truetype");
+  font-family: 'VelaSans';
+  src: url('fonts/vela-sans/VelaSans-Regular.ttf') format('truetype');
   font-weight: 400;
 }
 
 @font-face {
-  font-family: "VelaSans";
-  src: url("fonts/vela-sans/VelaSans-Medium.ttf") format("truetype");
+  font-family: 'VelaSans';
+  src: url('fonts/vela-sans/VelaSans-Medium.ttf') format('truetype');
   font-weight: 500;
 }
 
 @font-face {
-  font-family: "VelaSans";
-  src: url("fonts/vela-sans/VelaSans-SemiBold.ttf") format("truetype");
+  font-family: 'VelaSans';
+  src: url('fonts/vela-sans/VelaSans-SemiBold.ttf') format('truetype');
   font-weight: 600;
 }
 
 @font-face {
-  font-family: "VelaSans";
-  src: url("fonts/vela-sans/VelaSans-Bold.ttf") format("truetype");
+  font-family: 'VelaSans';
+  src: url('fonts/vela-sans/VelaSans-Bold.ttf') format('truetype');
   font-weight: 700;
 }
 
 @font-face {
-  font-family: "VelaSans";
-  src: url("fonts/vela-sans/VelaSans-ExtraBold.ttf") format("truetype");
+  font-family: 'VelaSans';
+  src: url('fonts/vela-sans/VelaSans-ExtraBold.ttf') format('truetype');
   font-weight: 800;
 }
 
@@ -56,13 +55,13 @@ html {
   @extend .colors, .borders;
 }
 
-:where(ul, ol):where([class]) {
+:where(ul, ol) {
   padding-left: 0;
   list-style: none;
 }
 
 body {
-  font-family: "VelaSans";
+  font-family: 'VelaSans';
 
   height: 100vh;
   width: 100vw;
@@ -75,16 +74,26 @@ body {
   margin: 0;
   padding: 0;
 
-  background-color: var(--neutral-14);
+  background: var(--bg-0);
 
   &::-webkit-scrollbar {
-    width: 12px;
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: inherit;
   }
 
   &::-webkit-scrollbar-thumb {
     width: 0px;
-    background-color: var(--neutral-14);
-    border-radius: var(--border-full);
+    background: var(--stroke);
+    border-radius: var(--radius-popup);
+
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      background: var(--stroke-hover);
+    }
   }
 }
 
@@ -93,8 +102,8 @@ body,
   margin: 0;
 }
 
-:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl):where([class]) {
-  margin-block: 0;
+:where(h1, h2, h3, h4, h5, h6, p, ul, ol, dl) {
+  margin: 0;
 }
 
 a,
@@ -124,14 +133,10 @@ button {
   font: inherit;
 
   border: none;
+}
 
-  &:focus {
-    outline: none;
-  }
-
-  &:focus-visible {
-    outline: none;
-  }
+svg {
+  vertical-align: bottom;
 }
 
 svg *[stroke] {

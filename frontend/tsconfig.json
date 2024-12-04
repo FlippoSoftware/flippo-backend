@@ -1,54 +1,9 @@
 {
   "compilerOptions": {
-    "target": "ES6",
-    "lib": ["dom", "dom.iterable", "esnext"],
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
-    "alwaysStrict": true,
-    "noImplicitReturns": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "allowSyntheticDefaultImports": true,
-    "allowJs": true,
-    "skipLibCheck": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "module": "esnext",
-    "moduleResolution": "bundler",
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "jsx": "preserve",
-    "incremental": true,
-    "plugins": [
-      {
-        "name": "next"
-      },
-      {
-        "name": "typescript-plugin-css-modules"
-      }
-    ],
-    "baseUrl": ".",
-    "paths": {
-      "@styles/*": ["src/settings/styles/*"],
-      "@ui/*": ["src/shared/ui/*"],
-      "@env/*": ["src/shared/env/*"],
-      "@hooks/*": ["src/shared/hooks/*"],
-      "@icons/*": ["src/shared/icons/*"],
-      "@schemas/*": ["src/shared/schemas/*"],
-      "@utils/*": ["src/shared/utils/*"],
-      "@*": ["./src/*"],
-      "@widgets/*": ["src/widgets/*"],
-      "@settings/*": ["src/settings/*"]
-    }
+    "strict": true
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx",
-    ".next/types/**/*.ts",
-    "src/lib/functions/import_surreal_ql.js",
-    "src/lib/utils/auth/providers/google.ts",
-    "src/settings/styles/scss.d.ts"
-  ],
+  "files": [],
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }],
   "exclude": ["node_modules"]
 }

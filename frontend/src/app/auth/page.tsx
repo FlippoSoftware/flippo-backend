@@ -1,11 +1,7 @@
-import { Auth } from "@modules/Auth";
+import { AuthPage } from '@pages';
 
-function AuthPage() {
-  return (
-    <>
-      <Auth type={"main"} />
-    </>
-  );
+function Page() {
+  return <AuthPage />;
 }
 
-export default AuthPage;
+export default Page;

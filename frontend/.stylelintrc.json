@@ -1,9 +1,0 @@
-{
-  "extends": "stylelint-config-standard-scss",
-  "rules": {
-    "property-no-vendor-prefix": null,
-    "rule-empty-line-before": ["always", { "except": ["first-nested"] }],
-    "custom-property-empty-line-before": null,
-    "selector-class-pattern": null
-  }
-}

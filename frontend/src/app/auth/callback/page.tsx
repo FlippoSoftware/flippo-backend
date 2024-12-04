@@ -1,14 +1,7 @@
-"use client";
+import { AuthCallbackPage } from '@pages';
 
-import { Auth } from "@modules/Auth";
-import { NextModal } from "@ui/Modal";
-
-function Callback() {
-  return (
-    <NextModal>
-      <Auth type={"callback"} />
-    </NextModal>
-  );
+function Page() {
+  return <AuthCallbackPage />;
 }
 
-export default Callback;
+export default Page;

@@ -1,24 +1,20 @@
-import type { TUnstyledInputProps } from "@ui/Input/types/TInputProps";
-
-type TCompletedResult = {
-  ok: boolean;
-  error?: string;
-  callback?: (() => void) | (() => Promise<void>);
-};
+import { type InputHTMLAttributes } from 'react';
 
 type TVerifyInputHandler = {
   focus: () => void;
 };
 
 type TInputVerificationCodeProps = {
-  value?: string;
-  length?: number;
-  placeholder?: string;
-  type?: "alphanumeric" | "number";
   autoFocus?: boolean;
+  inputSlotProps?: InputHTMLAttributes<HTMLInputElement>;
+  invalid?: boolean;
+  length?: number;
   onChange?: (data: string) => void;
-  onCompleted?: (code: string) => TCompletedResult | Promise<TCompletedResult>;
-  inputSlotProps?: TUnstyledInputProps<"input">;
+  onCompleted?: (code: string) => unknown;
+  placeholder?: string;
+  valid?: boolean;
+  value?: string;
+  variant?: 'alphanumeric' | 'number';
 };
 
-export { type TInputVerificationCodeProps, type TVerifyInputHandler, type TCompletedResult };
+export { type TInputVerificationCodeProps, type TVerifyInputHandler };

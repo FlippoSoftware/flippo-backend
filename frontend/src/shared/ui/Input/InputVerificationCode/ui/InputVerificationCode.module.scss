@@ -1,65 +1,47 @@
-.containerVerifyCode {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
-
-  width: 100%;
-
-  .status {
-    text-align: center;
-    opacity: 0;
-
-    transition:
-      opacity 0.3s ease,
-      margin-top 0.3s ease;
-
-    svg {
-      width: 24px;
-      aspect-ratio: 1;
-    }
-  }
-
-  .showStatus {
-    opacity: 1;
-    margin-top: 1rem;
-  }
-
-  .error {
-    color: var(--feedback-notification);
-  }
-}
+@use 'mixins/_flex.scss' as flex;
+@use 'mixins/_font.scss' as font;
 
 .verifyInput {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 12px;
+  @include flex.display(flex, row, center, center, 12px);
+  @include font.title-2('default');
 
-  font-size: 36px;
+  color: var(--text-primary);
 
   cursor: text;
 
+  &:hover:not(:focus-within) {
+    .verifyInputSlot {
+      background: var(--bg-area-subtle);
+
+      &:placeholder-shown {
+        outline: 1.5px solid var(--stroke);
+      }
+
+      &.invalid {
+        outline-color: var(--error-hover);
+      }
+    }
+  }
+
   .verifyInputSlot {
-    border: 1.5px solid transparent;
-    border-radius: var(--border-card);
+    outline: 1.5px solid transparent;
+    border-radius: var(--radius-card);
 
     text-align: center;
 
-    background-color: var(--neutral-12);
-    color: var(--neutral-white);
+    background-color: var(--bg-area-muted);
 
     padding: 16px 0px;
     height: 80px;
-    width: 100%;
+    max-width: 61.6px;
 
     &:where(:focus, :not(:placeholder-shown)) {
-      border-color: var(--brand-30);
-      caret-color: var(--brand-30);
+      outline-color: var(--brand-light);
+      color: var(--text-white);
     }
 
     &::selection {
-      background-color: var(--brand-30);
+      background-color: var(--brand-light);
     }
 
     &:read-only {
@@ -67,16 +49,32 @@
     }
 
     &.invalid {
-      transition: border-color 0.5s ease;
-      animation: invalidCode 0.5s 1 ease-out normal;
+      transition: outline-color 0.5s ease;
+      outline-color: var(--error);
 
-      border-color: var(--feedback-notification);
-      caret-color: var(--feedback-notification);
+      caret-color: var(--error);
 
       &::selection {
-        background-color: var(--feedback-notification);
+        background-color: var(--error);
       }
     }
+
+    &.valid {
+      transition: outline-color 0.5s ease;
+      outline-color: var(--success);
+
+      &::selection {
+        background-color: var(--success);
+      }
+    }
+  }
+
+  &.invalid {
+    animation: invalidCode 0.5s 1 ease-out normal;
+  }
+
+  &.valid {
+    animation: validCode 0.5s 1 ease-out normal;
   }
 }
 
@@ -101,5 +99,17 @@
   }
   100% {
     transform: translateX(0);
+  }
+}
+
+@keyframes validCode {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }

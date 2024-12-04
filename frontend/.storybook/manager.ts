@@ -1,6 +1,7 @@
-import { addons } from "@storybook/manager-api";
-import FlippoTheme from "./FlippoTheme";
+import { addons } from '@storybook/manager-api';
+
+import customTheme from './customTheme';
 
 addons.setConfig({
-  theme: FlippoTheme
+  theme: customTheme
 });

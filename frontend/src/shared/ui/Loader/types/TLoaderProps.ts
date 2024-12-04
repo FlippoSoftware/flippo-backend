@@ -1,9 +1,9 @@
-import { type HTMLAttributes } from "react";
+import { type HTMLAttributes } from 'react';
 
-type TLoadingKing = "spinner";
+type TLoadingKind = 'dotsFade' | 'spinner';
 
 type TLoaderProps = {
-  loader: TLoadingKing;
+  loader: TLoadingKind;
 } & HTMLAttributes<HTMLOrSVGElement>;
 
-export { type TLoaderProps, type TLoadingKing };
+export { type TLoaderProps, type TLoadingKind };
