@@ -2,7 +2,6 @@
 
 import { LoadingButton } from '@shared/ui/Button';
 import { FormInput } from '@shared/ui/Input';
-import { Loader } from '@shared/ui/Loader';
 import clsx from 'clsx';
 import { type ChangeEvent } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -11,22 +10,11 @@ import { useInputUsername } from '../../../../vm/useInputUsername';
 import st from './InputUsernameContent.module.scss';
 
 function InputUsernameContent() {
-  const {
-    authDisabled,
-    onUsernameInputChanged,
-    onUsernameSubmitted,
-    usernameInput,
-    usernameInputError,
-    usernameInputRef,
-    userRegistration
-  } = useInputUsername();
+  const { onUsernameInputChanged, onUsernameSubmitted, usernameInput, usernameInputError, usernameInputRef } =
+    useInputUsername();
   const { t } = useTranslation('auth', { keyPrefix: 'inputUsernameContent' });
 
-  return userRegistration ? (
-    <div className={st.pending}>
-      <Loader className={st.loader} loader={'spinner'} />
-    </div>
-  ) : (
+  return (
     <div className={st.contentWrapper}>
       <div className={st.header}>
         <h1 className={st.title}>{t('title')}</h1>
@@ -40,7 +28,6 @@ function InputUsernameContent() {
         }}
       >
         <FormInput
-          disabled={authDisabled}
           errorMessage={usernameInputError ? (t(`inputError.${usernameInputError}` as any) as string) : null}
           id={'username'}
           name={'username'}

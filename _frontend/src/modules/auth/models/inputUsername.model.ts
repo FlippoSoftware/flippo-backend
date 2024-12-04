@@ -1,16 +1,18 @@
 import { authRoute } from '@settings/routing';
 import { sessionChanged } from '@settings/session';
 import { createFormInput } from '@shared/factories';
-import { displayRequestError } from '@widgets/ToastNotification';
-import { createEvent, sample } from 'effector';
-import { and, not, or, reset } from 'patronum';
+import { displayRequestError, displayRequestSuccess, type TTranslationOptions } from '@widgets/ToastNotification';
+import { attach, createEvent, sample } from 'effector';
+import { not, reset } from 'patronum';
 import { z } from 'zod';
 
-import { signUpWithEmailFx } from '../api';
-import { $authEmail, authClose, authToAuthorizationMethod } from './auth.model';
+import * as authApi from '../api';
+import { $authEmail, authClose, authToAuthorizationMethod, authToPending } from './auth.model';
 
 // #region of model description $usernameInput
 const UsernameFieldSchema = z.string().min(1, 'empty').min(2, 'size');
+
+const signUpWithEmailFx = attach({ effect: authApi.signUpWithEmailFx });
 
 export const {
   $usernameInput,
@@ -28,11 +30,6 @@ export const {
 export const usernameSubmitted = createEvent();
 // #endregion
 
-// #region of model description status
-export const $userRegistration = signUpWithEmailFx.pending;
-export const $authDisabled = or($userRegistration);
-// #endregion
-
 // #region of logic registration
 reset({
   clock: [authRoute.closed, authToAuthorizationMethod],
@@ -47,8 +44,13 @@ sample({
 sample({
   clock: usernameSubmitted,
   source: { username: $usernameInput, email: $authEmail },
-  filter: and(not($userRegistration), not($usernameInputError)),
+  filter: not($usernameInputError),
   target: signUpWithEmailFx
+});
+
+sample({
+  clock: signUpWithEmailFx,
+  target: authToPending
 });
 
 sample({
@@ -57,7 +59,14 @@ sample({
 });
 
 sample({
+  clock: signUpWithEmailFx.done,
+  fn: (): TTranslationOptions<'auth'> => [`success.authorized`, { ns: 'auth' }],
+  target: displayRequestSuccess
+});
+
+sample({
   clock: signUpWithEmailFx.failData,
+  fn: (error): TTranslationOptions => [`error.${error}` as any],
   target: [displayRequestError, authToAuthorizationMethod]
 });
 // #endregion
