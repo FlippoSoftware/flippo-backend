@@ -4,7 +4,7 @@ import { type TVerifyInputHandler } from '@shared/ui/Input';
 import { useUnit } from 'effector-react';
 import { useEffect, useRef } from 'react';
 
-import { $authEmail, authToAuthorizationMethod } from '../models/auth.model';
+import { authToAuthorizationMethod } from '../models/auth.model';
 import {
   $checkVerificationCodeProcess,
   $emailProvider,
@@ -13,6 +13,7 @@ import {
   $resendCodeDisabled,
   $timer,
   $timeView,
+  $truncatedEmail,
   $verificationCodeError,
   inputRefChanged,
   resendCode,
@@ -42,7 +43,7 @@ const useVerificationCode = () => {
     $timeView,
     $modalDisabled,
     $timer,
-    $authEmail,
+    $truncatedEmail,
     $emailProvider,
     $verificationCodeError,
     $checkVerificationCodeProcess,
