@@ -10,6 +10,27 @@ import { getEmailProvider, type TEmailProvider } from '../utils/getEmailProvider
 import { $authEmail, authClose, authToAuthorizationMethod, authToInputUsername } from './auth.model';
 
 export const $emailProvider = createStore<null | TEmailProvider>(null);
+export const $truncatedEmail = $authEmail.map((email) => {
+  const maxEmailLength = 50;
+  const reserveForDomainLength = 20;
+
+  if (email.length < maxEmailLength) return email;
+
+  const [local, domain] = email.split('@');
+
+  const localLength = local.length;
+
+  if (localLength > maxEmailLength - reserveForDomainLength) {
+    const maxLocalLength = maxEmailLength - reserveForDomainLength - 4; // 1 - this @ character, 3 - this dots (...)
+
+    const startLocal = local.slice(0, maxLocalLength >> 1);
+    const endLocal = local.slice(-(maxLocalLength >> 1));
+
+    return `${startLocal}...${endLocal}@${domain}`;
+  }
+
+  return email;
+});
 
 // #region of model description $verificationCode
 export const $verificationCode = createStore<string>('');
