@@ -13,6 +13,7 @@ export const authTo = createEvent<TAuthContent>();
 export const authToAuthorizationMethod = createEvent();
 export const authToVerificationCode = createEvent();
 export const authToInputUsername = createEvent();
+export const authToPending = createEvent();
 
 // #endregion
 
@@ -27,6 +28,7 @@ $authContent.on(authTo, (value) => value);
 $authContent.on(authToAuthorizationMethod, () => 'authorizationMethod');
 $authContent.on(authToVerificationCode, () => 'verificationCode');
 $authContent.on(authToInputUsername, () => 'inputUsername');
+$authContent.on(authToPending, () => 'pending');
 
 sample({ clock: authRoute.open, target: rememberPlaceBeforeAuthorization });
 
