@@ -1,6 +1,8 @@
 import { type TSession } from '@settings/session';
-import { requestFx } from '@shared/api';
-import { createEffect } from 'effector';
+import * as appApi from '@shared/api';
+import { attach, createEffect } from 'effector';
+
+const requestFx = attach({ effect: appApi.requestFx });
 
 export const requestVerificationCodeFx = createEffect<string, void, string>((email: string) => {
   return requestFx({
