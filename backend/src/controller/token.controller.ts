@@ -25,6 +25,8 @@ class TokenController {
         userId: user.id,
         name: user.name,
         surname: user.surname,
+        role: user.role,
+        email: user.email,
         username: user.username,
         image: user.image
       });
