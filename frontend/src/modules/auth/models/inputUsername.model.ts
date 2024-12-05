@@ -8,6 +8,7 @@ import { z } from 'zod';
 
 import * as authApi from '../api';
 import { $authEmail, authClose, authToAuthorizationMethod, authToPending } from './auth.model';
+import { placeBeforeAuthorization } from './placeBefore.model';
 
 const signUpWithEmailFx = attach({ effect: authApi.signUpWithEmailFx });
 
@@ -61,7 +62,7 @@ sample({
 sample({
   clock: signUpWithEmailFx.done,
   fn: (): TTranslationOptions<'auth'> => [`success.authorized`, { ns: 'auth' }],
-  target: displayRequestSuccess
+  target: [displayRequestSuccess, placeBeforeAuthorization]
 });
 
 sample({
