@@ -91,7 +91,15 @@ async function deleteRefreshToken(id: string) {
 
   const [table, value] = String(id).split(":");
   try {
-    const result = await getSurreal().delete<TRefreshToken>(new RecordId(table, value));
+    const [[result]] = await getSurreal().query<[[TRefreshToken]]>(
+      /* surql */ `
+      DELETE ${id} RETURN BEFORE; //type::thing($table, $value)
+      `,
+      {
+        table: table,
+        value: value
+      }
+    );
 
     return await RefreshTokenSchema.parseAsync(result).catch(() => undefined);
   } catch (error: any) {
