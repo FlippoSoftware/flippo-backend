@@ -4,7 +4,7 @@ import { createEffect } from 'effector';
 
 const api = axios.create({
   baseURL: `${ENV.API_BASE_URL}`,
-  timeout: 1000,
+  timeout: 5000,
   validateStatus: (status) => status >= 200 && status < 300
 });
 
