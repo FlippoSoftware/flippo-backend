@@ -27,7 +27,7 @@ export const {
   emailInputFocusedDueError,
   emailInputRefChanged,
   emailInputValidate
-} = createFormInput<string, 'email'>('email', $authEmail, EmailFieldSchema);
+} = createFormInput<string, 'email'>('email', '', EmailFieldSchema);
 
 export const emailSubmitted = createEvent();
 // #endregion
@@ -72,7 +72,8 @@ sample({
 
 sample({
   clock: requestVerificationCodeFx.done,
-  target: authToVerificationCode
+  source: $emailInput,
+  target: [$authEmail, authToVerificationCode]
 });
 
 sample({
