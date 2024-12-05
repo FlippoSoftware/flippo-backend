@@ -6,7 +6,7 @@ import { useOauthCallback } from '../../../../vm/useOauthCallback';
 import st from './Fail.module.scss';
 
 function Fail() {
-  const { errorMessage, onPlaceBeforeAuthorization, onTryAgain } = useOauthCallback();
+  const { errorMessage, onCanceled, onTryAgain } = useOauthCallback();
   const { t } = useTranslation('auth', { keyPrefix: 'oauthCallbackContent.fail' });
 
   return (
@@ -22,7 +22,7 @@ function Fail() {
         <Button onClick={onTryAgain} size={'large'} variant={'primary'}>
           {t('buttonAgain')}
         </Button>
-        <Button iconLeft={<ArrowIcon />} onClick={onPlaceBeforeAuthorization} size={'large'} variant={'secondary'}>
+        <Button iconLeft={<ArrowIcon />} onClick={onCanceled} size={'large'} variant={'secondary'}>
           {t('buttonBack')}
         </Button>
       </div>
