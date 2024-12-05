@@ -1,0 +1,47 @@
+@use 'mixins/_font.scss' as font;
+
+.inputWrapper {
+  --bw: 1.5px;
+  @include font.title-1('stronger');
+
+  padding: 6.5px 0;
+  background: transparent;
+
+  width: 100%;
+
+  border-bottom: var(--bw) solid transparent;
+
+  transition: border-bottom-color 0.3s ease;
+
+  &.invisible {
+    &:hover {
+      border-bottom-color: var(--stroke-hover);
+    }
+
+    &:focus-within {
+      border-bottom-color: var(--brand-light);
+    }
+  }
+
+  &.affordance {
+    border-bottom-color: var(--stroke);
+
+    &:hover {
+      border-bottom-color: var(--stroke-hover);
+    }
+
+    &:focus-within {
+      border-bottom-color: var(--brand-light);
+    }
+  }
+
+  .input {
+    width: 100%;
+    color: var(--text-primary);
+    caret-color: var(--text-white);
+
+    background: transparent;
+
+    outline: unset;
+  }
+}
