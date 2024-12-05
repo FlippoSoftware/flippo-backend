@@ -5,12 +5,15 @@ import { displayRequestError, displayRequestSuccess, type TTranslationOptions } 
 import { attach, createEffect, createEvent, createStore, sample, split } from 'effector';
 import { and, not, or, reset } from 'patronum';
 
-import { checkVerificationCodeFx, requestVerificationCodeFx, signInWithEmailFx } from '../api';
+import * as authApi from '../api';
 import { TIMEOUT_IN_MILLISECONDS, TIMEOUT_IN_MINUTES } from '../constant';
 import { getEmailProvider, type TEmailProvider } from '../utils/getEmailProvider';
 import { $authEmail, authClose, authToAuthorizationMethod, authToInputUsername } from './auth.model';
 
 const sessionValidateFx = attach({ effect: sessionApi.sessionValidateFx });
+const checkVerificationCodeFx = attach({ effect: authApi.checkVerificationCodeFx });
+const requestVerificationCodeFx = attach({ effect: authApi.requestVerificationCodeFx });
+const signInWithEmailFx = attach({ effect: authApi.signInWithEmailFx });
 
 export const $emailProvider = createStore<null | TEmailProvider>(null);
 export const $truncatedEmail = $authEmail.map((email) => {

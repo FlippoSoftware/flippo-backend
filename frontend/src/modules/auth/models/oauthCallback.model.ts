@@ -4,6 +4,8 @@ import { $session, sessionValidateFx as sideSessionValidateFx } from '@settings/
 import * as sessionApi from '@shared/api';
 import { attach, createEvent, createStore, sample } from 'effector';
 
+import { placeBeforeAuthorization } from './placeBefore.model';
+
 export enum OauthStatus {
   Pending = 0,
   Success,
@@ -17,7 +19,7 @@ export const $oauthCallbackStatus = createStore<OauthStatus>(OauthStatus.Pending
 export const $errorMessage = createStore<string>('');
 
 export const tryAgain = createEvent();
-export const placeBeforeAuthorization = createEvent();
+export const canceled = createEvent();
 
 // #region opened
 $oauthCallbackStatus.on(sessionAuthFx, () => OauthStatus.Pending);
@@ -70,8 +72,7 @@ sample({
 });
 
 sample({
-  clock: placeBeforeAuthorization,
-  fn: () => ({}),
-  target: mainRoute.open
+  clock: canceled,
+  target: placeBeforeAuthorization
 });
 // #endregion

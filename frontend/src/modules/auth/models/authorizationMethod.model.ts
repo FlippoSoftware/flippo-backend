@@ -3,12 +3,15 @@ import { createFormInput } from '@shared/factories';
 import { getOAuthUrl, type TAuthProvider } from '@shared/query';
 import { displayRequestError, type TTranslationOptions } from '@widgets/ToastNotification';
 import { type HistoryPushParams } from 'atomic-router';
-import { createEffect, createEvent, createStore, sample } from 'effector';
+import { attach, createEffect, createEvent, createStore, sample } from 'effector';
 import { and, not, or, reset } from 'patronum';
 import { z } from 'zod';
 
-import { requestPkceFx, requestVerificationCodeFx, type TPkceResponse } from '../api';
+import * as authApi from '../api';
 import { $authEmail, authClose, authToVerificationCode } from './auth.model';
+
+const requestPkceFx = attach({ effect: authApi.requestPkceFx });
+const requestVerificationCodeFx = attach({ effect: authApi.requestVerificationCodeFx });
 
 // #region of model description $emailInput
 const EmailFieldSchema = z.string().min(1, 'empty').email('invalid');
@@ -24,7 +27,7 @@ export const {
   emailInputFocusedDueError,
   emailInputRefChanged,
   emailInputValidate
-} = createFormInput<string, 'email'>('email', $authEmail, EmailFieldSchema);
+} = createFormInput<string, 'email'>('email', '', EmailFieldSchema);
 
 export const emailSubmitted = createEvent();
 // #endregion
@@ -69,7 +72,8 @@ sample({
 
 sample({
   clock: requestVerificationCodeFx.done,
-  target: authToVerificationCode
+  source: $emailInput,
+  target: [$authEmail, authToVerificationCode]
 });
 
 sample({
@@ -90,7 +94,7 @@ sample({
   clock: requestPkceFx.doneData,
   source: $provider,
   filter: (src, result) => !!src && !!result,
-  fn: (provider, result: TPkceResponse) => {
+  fn: (provider, result: authApi.TPkceResponse) => {
     const { codeChallenge } = result;
 
     return { provider: provider as TAuthProvider, codeChallenge };

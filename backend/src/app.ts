@@ -16,7 +16,8 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: ENV.APP_BASE_URL,
-    credentials: true
+    credentials: true,
+    optionsSuccessStatus: 200
   })
 );
 app.use(userAgent.express());

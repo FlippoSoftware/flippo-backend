@@ -2,7 +2,7 @@ import { $t } from '@settings/i18next';
 import { createEvent, sample } from 'effector';
 import { type Namespace, type TFunction, type TypeOptions } from 'i18next';
 
-import { createErrorNotification, type TToastCreate } from '../models/ToastContainerStorage';
+import { createErrorNotification, createSuccessNotification, type TToastCreate } from '../models/ToastContainerStorage';
 
 type TDefaultNamespace = TypeOptions['defaultNS'];
 
@@ -24,5 +24,5 @@ sample({
   source: $t,
   filter: $t.map((t) => !!t),
   fn: (t, options): TToastCreate => ({ message: t(...(options as any)) }),
-  target: createErrorNotification
+  target: createSuccessNotification
 });
