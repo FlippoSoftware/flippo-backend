@@ -9,10 +9,10 @@ import { z } from 'zod';
 import * as authApi from '../api';
 import { $authEmail, authClose, authToAuthorizationMethod, authToPending } from './auth.model';
 
+const signUpWithEmailFx = attach({ effect: authApi.signUpWithEmailFx });
+
 // #region of model description $usernameInput
 const UsernameFieldSchema = z.string().min(1, 'empty').min(2, 'size');
-
-const signUpWithEmailFx = attach({ effect: authApi.signUpWithEmailFx });
 
 export const {
   $usernameInput,
