@@ -57,7 +57,7 @@
 
 1. Веб-технологии:
 
-- Frontend: HTML5, NextJS, SCSS, React, Effector, react-hook-form, axios, storybook;
+- Frontend: HTML5, SCSS, React, Effector, axios, storybook, atomic-router, i18next, motion/react(framer-motion);
 - Backend: NodeJS, Express, jose, nodemailer;
 - База данных: SurrealDB;
 - Общие: TypeScript, Zod.
