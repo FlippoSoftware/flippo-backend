@@ -6,41 +6,18 @@ import { type TMenuItemProps } from '../types/TMenuItemProps';
 import { default as MenuItem } from '../ui/MenuItem';
 
 const meta: Meta<TMenuItemProps> = {
-  args: {
-    icon: <AddIcon type={'default'} />,
-    onClick: (value: string) => {
-      console.log(value);
-    },
-    title: 'Option',
-    value: '01'
-  },
   argTypes: {
     icon: {
       control: false,
-      description: 'Icon to display on the left relative to the menu item'
-    },
-    isSelected: {
-      control: 'boolean',
-      defaultValue: false,
-      description: 'Whether the menu item is selected or not. Available only with the "option" role.'
-    },
-    role: {
-      control: 'select',
-      description: 'The semantic meaning of the item',
-      options: ['menuitem', 'option']
+      description: 'Icon to display on the left relative to the choice item'
     },
     title: {
       control: 'text',
-      description: 'The text content of the menu item'
-    },
-    value: {
-      control: 'text',
-      description: 'The value associated with the menu item'
+      description: 'The text content of the choice item'
     },
     variant: {
       control: 'select',
-      description:
-        'The visual appearance of the item. With the "option" role, it can only take the value "nonDestructive"',
+      description: 'The visual appearance of the item.',
       options: ['nonDestructive', 'destructive']
     }
   },
@@ -48,28 +25,21 @@ const meta: Meta<TMenuItemProps> = {
   parameters: {
     docs: {
       description: {
-        component: 'The MenuItem component will be used in selectors and in the additional actions menu.'
+        component: 'The MenuItem component will be used in action menu.'
       }
     }
   },
-  title: 'UIKit/MenuItem'
+  title: 'UIKit/Item/MenuItem'
 };
 
 export default meta;
 
 type MenuItemStory = StoryObj<typeof MenuItem>;
 
-export const NonDestructive: MenuItemStory = {
+export const Default: MenuItemStory = {
   args: {
-    role: 'option',
-    variant: 'nonDestructive'
-  }
-};
-
-export const Destructive: MenuItemStory = {
-  args: {
-    role: 'menuitem',
-    variant: 'destructive'
+    icon: <AddIcon type={'default'} />,
+    title: 'Menu item'
   }
 };
 
@@ -79,30 +49,18 @@ export const MenuItemStoryCombine: MenuItemStory = {
       disable: true
     }
   },
-  render: () => <StoryCombine<TMenuItemProps<'menuitem' | 'option'>> {...GROUPS} />
+  render: () => <StoryCombine {...GROUPS} />
 };
 
-const GROUPS: TStoryCombineProps<TMenuItemProps<'menuitem' | 'option'>> = {
+const GROUPS: TStoryCombineProps<TMenuItemProps> = {
   args: {
     icon: <AddIcon type={'default'} />,
-    onClick: (value: string) => {
-      console.log(value);
-    },
-    title: 'Option'
+    title: 'Menu item'
   },
   component: MenuItem,
   groups: [
     {
-      groupArgs: { role: 'option', variant: 'nonDestructive' },
-      name: 'Option',
-      variants: [
-        { components: [{}], name: 'Default' },
-        { components: [{ disabled: true }], name: 'Disabled' },
-        { components: [{ isSelected: true }], name: 'Selected' }
-      ]
-    },
-    {
-      groupArgs: { role: 'menuitem', variant: 'nonDestructive' },
+      groupArgs: { onClick: () => {}, role: 'menuitem', variant: 'nonDestructive' },
       name: 'Menu item',
       variants: [
         { components: [{}], name: 'Default' },

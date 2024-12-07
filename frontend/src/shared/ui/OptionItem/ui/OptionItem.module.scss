@@ -1,7 +1,7 @@
 @use 'mixins/_flex.scss' as flex;
 @use 'mixins/_font.scss' as font;
 
-.menuItem {
+.optionItem {
   @include flex.display(flex, row, start, center, 16px);
   @include font.bodyMinus('default');
 
@@ -39,16 +39,10 @@
     cursor: not-allowed;
   }
 
-  &.destructive {
-    color: var(--error);
-
-    &:hover:not(:disabled) {
-      color: var(--error-hover);
-    }
-
-    &:disabled {
-      color: var(--text-disabled);
-    }
+  &[aria-selected='true'] {
+    background: var(--bg-3-alt);
+    color: var(--text-white);
+    fill: var(--brand-light);
   }
 
   svg {
