@@ -1,0 +1,7 @@
+@use 'mixins/_flex.scss' as flex;
+
+.tabList {
+  @include flex.display(flex, row, start, center, 20px);
+
+  width: 100%;
+}
