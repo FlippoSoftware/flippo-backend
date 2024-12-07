@@ -1,5 +1,5 @@
 {
-  "typescript.tsdk": "_frontend\\node_modules\\typescript\\lib",
+  "typescript.tsdk": "frontend\\node_modules\\typescript\\lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "eslint.useFlatConfig":true
 }
