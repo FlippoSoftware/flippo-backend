@@ -6,6 +6,8 @@ import st from './MenuItem.module.scss';
 
 function MenuItem<E extends 'menuitem' | 'option' = 'option'>(props: TMenuItemProps<E>) {
   const { icon, onClick, title, value, variant = 'nonDestructive', ...otherProps } = props;
+  const { isSelected, ...propsWithOutIsSelected } =
+    'isSelected' in otherProps ? otherProps : { isSelected: false, ...otherProps };
 
   const handelClick = useCallback(() => {
     if ('isSelected' in props && props.isSelected) return;
@@ -15,9 +17,9 @@ function MenuItem<E extends 'menuitem' | 'option' = 'option'>(props: TMenuItemPr
 
   return (
     <button
-      className={clsx(st.menuItem, st[variant], 'isSelected' in props && props.isSelected && st.selected)}
+      className={clsx(st.menuItem, st[variant], (isSelected as boolean) && st.selected)}
       onClick={() => handelClick()}
-      {...otherProps}
+      {...propsWithOutIsSelected}
     >
       {icon}
       <span>{title}</span>
