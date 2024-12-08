@@ -10,7 +10,27 @@ import { default as ActionMenu } from '../ui/ActionMenu';
 import st from './Decorator.module.scss';
 
 const meta: Meta<TActionMenuProps> = {
+  argTypes: {
+    groups: {
+      control: false,
+      description:
+        'Array of groups with arrays of menu items. Designed for semantic separation of items by a separator.'
+    },
+    id: {
+      control: 'text',
+      description: 'Id is an optional parameter that is used to bind to the menu opening button.'
+    },
+    onClose: { control: false, description: 'Menu close function.' },
+    targetRec: { control: false, description: 'Position of the opening menu object.' }
+  },
   component: ActionMenu,
+  parameters: {
+    docs: {
+      description: {
+        component: 'The ActionMenu component is a component for displaying a menu with additional actions.'
+      }
+    }
+  },
   title: 'Widgets/ActionMenu'
 };
 
@@ -18,13 +38,13 @@ export default meta;
 
 type ActionMenuStory = StoryObj<typeof ActionMenu>;
 
-const GROUPS = [
+const GROUPS: TActionMenuProps['groups'] = [
   [
-    { icon: <LinkIcon />, onClick: () => {}, title: 'Setting up access', value: '01', variant: 'nonDestructive' },
-    { icon: <FolderIcon />, onClick: () => {}, title: 'Add to Folder', value: '02', variant: 'nonDestructive' },
-    { icon: <BookMarkIcon />, onClick: () => {}, title: 'Create a copy', value: '03', variant: 'nonDestructive' }
+    { icon: <LinkIcon />, onClick: () => {}, title: 'Setting up access', variant: 'nonDestructive' },
+    { icon: <FolderIcon />, onClick: () => {}, title: 'Add to Folder', variant: 'nonDestructive' },
+    { icon: <BookMarkIcon />, onClick: () => {}, title: 'Create a copy', variant: 'nonDestructive' }
   ],
-  [{ icon: <DeleteIcon />, onClick: () => {}, title: 'Delete a set', value: '05', variant: 'destructive' }]
+  [{ icon: <DeleteIcon />, onClick: () => {}, title: 'Delete a set', variant: 'destructive' }]
 ];
 
 export const Default: ActionMenuStory = {
