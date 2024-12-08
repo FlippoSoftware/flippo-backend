@@ -1,3 +1,4 @@
+import { useClickOutside } from '@shared/hooks';
 import { MenuItem, type TMenuItem } from '@shared/ui/MenuItem';
 import { Separator } from '@shared/ui/Separator';
 import { Fragment, useCallback, useLayoutEffect, useRef, useState } from 'react';
@@ -9,6 +10,7 @@ function ActionMenu(props: TActionMenuProps) {
   const { groups, id, onClose, targetRec } = props;
   const menuRef = useRef<HTMLMenuElement | null>(null);
   const [menuDimensions, setMenuDimensions] = useState<{ height: number; width: number }>({ height: 0, width: 0 });
+  useClickOutside(menuRef, onClose);
 
   useLayoutEffect(() => {
     if (menuRef.current) {
