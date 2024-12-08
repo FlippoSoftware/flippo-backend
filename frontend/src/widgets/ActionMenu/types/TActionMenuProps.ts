@@ -1,4 +1,4 @@
-import { type TMenuItemProps } from '@shared/ui/OptionItem';
+import { type TMenuItemProps } from '@shared/ui/MenuItem';
 import { type MenuHTMLAttributes } from 'react';
 
 type TMenu = {
