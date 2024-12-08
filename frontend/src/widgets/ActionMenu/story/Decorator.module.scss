@@ -1,0 +1,44 @@
+@use 'mixins/_flex.scss' as flex;
+
+.decorator {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  inset: 0;
+
+  .left {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    width: fit-content;
+  }
+
+  .right {
+    position: absolute;
+    right: 0%;
+    top: 50%;
+    width: fit-content;
+  }
+
+  .top {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    width: fit-content;
+  }
+
+  .bottom {
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: fit-content;
+  }
+
+  .button {
+    width: fit-content;
+  }
+}
+
+.offAbsolute {
+  position: unset;
+}
