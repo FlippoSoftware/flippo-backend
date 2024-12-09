@@ -1,29 +1,23 @@
 @use 'mixins/_flex.scss' as flex;
 @use 'mixins/_effect.scss' as effect;
 
-.menuWrapper {
-  width: 100vw;
-  height: 100vh;
+.menu {
+  @include flex.display(flex, column, center, start, 2px);
+  @include effect.elevation-1();
 
-  position: absolute;
-  inset: 0;
+  position: fixed;
+  z-index: 100;
 
-  .menu {
+  width: fit-content;
+  padding: 6px;
+  border-radius: var(--radius-menu);
+  margin: 0;
+
+  background: var(--bg-1);
+
+  .group {
     @include flex.display(flex, column, center, start, 2px);
-    @include effect.elevation-1();
 
-    width: fit-content;
-    min-width: 224px;
-    padding: 6px;
-    border-radius: var(--radius-menu);
-    margin: 0;
-
-    background: var(--bg-1);
-
-    .group {
-      @include flex.display(flex, column, center, start, 2px);
-
-      width: 100%;
-    }
+    width: 100%;
   }
 }
