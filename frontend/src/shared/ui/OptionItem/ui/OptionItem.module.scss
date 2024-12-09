@@ -45,7 +45,14 @@
     fill: var(--brand-light);
   }
 
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   svg {
+    flex: 0 0 auto;
     width: 21px;
     aspect-ratio: 1;
   }
