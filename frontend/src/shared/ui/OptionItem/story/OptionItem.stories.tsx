@@ -16,13 +16,13 @@ const meta: Meta<TOptionProps> = {
       control: false,
       description: 'Icon to display on the left relative to the choice item'
     },
+    onClick: {
+      control: false,
+      description: 'Callback function when the choice item is clicked.'
+    },
     title: {
       control: 'text',
       description: 'The text content of the choice item'
-    },
-    value: {
-      control: 'text',
-      description: 'The value associated with the choice item'
     }
   },
   component: OptionItem,
@@ -43,9 +43,7 @@ type OptionStory = StoryObj<typeof OptionItem>;
 export const Default: OptionStory = {
   args: {
     icon: <AddIcon type={'default'} />,
-    onClick: (value: string) => {
-      console.log(value);
-    },
+    onClick: () => {},
     title: 'Option item'
   }
 };
@@ -68,9 +66,7 @@ const GROUPS: TStoryCombineProps<TOptionProps> = {
   groups: [
     {
       groupArgs: {
-        onClick: (value: string) => {
-          console.log(value);
-        },
+        onClick: () => {},
         role: 'option'
       },
       name: 'Option',

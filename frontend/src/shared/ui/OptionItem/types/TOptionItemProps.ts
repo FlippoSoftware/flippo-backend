@@ -3,9 +3,8 @@ import { type ComponentProps, type ReactElement } from 'react';
 type TOption = {
   'aria-selected': boolean;
   icon: ReactElement;
-  onClick: (value: string) => void;
+  onClick: () => void;
   title: string;
-  value: string;
 };
 
 type TOptionProps = Omit<ComponentProps<'button'>, keyof TOption> & TOption;
