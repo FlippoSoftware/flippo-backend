@@ -2,46 +2,123 @@
 @use './variables/_borders.scss';
 
 @font-face {
-  font-family: 'VelaSans';
-  src: url('fonts/vela-sans/VelaSans-ExtraLight.ttf') format('truetype');
-  font-weight: 200;
-}
-
-@font-face {
-  font-family: 'VelaSans';
-  src: url('fonts/vela-sans/VelaSans-Light.ttf') format('truetype');
-  font-weight: 300;
-}
-
-@font-face {
-  font-family: 'VelaSans';
-  src: url('fonts/vela-sans/VelaSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-}
-
-@font-face {
-  font-family: 'VelaSans';
-  src: url('fonts/vela-sans/VelaSans-Medium.ttf') format('truetype');
-  font-weight: 500;
-}
-
-@font-face {
-  font-family: 'VelaSans';
-  src: url('fonts/vela-sans/VelaSans-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-}
-
-@font-face {
-  font-family: 'VelaSans';
-  src: url('fonts/vela-sans/VelaSans-Bold.ttf') format('truetype');
-  font-weight: 700;
-}
-
-@font-face {
-  font-family: 'VelaSans';
-  src: url('fonts/vela-sans/VelaSans-ExtraBold.ttf') format('truetype');
+  font-family: 'Vela Sans ExtBd';
+  src:
+    url('fonts/vela-sans/VelaSans-ExtraBold.woff2') format('woff2'),
+    url('fonts/vela-sans/VelaSans-ExtraBold.woff') format('woff'),
+    url('fonts/vela-sans/VelaSans-ExtraBold.ttf') format('truetype');
   font-weight: 800;
+  font-style: normal;
+  font-display: swap;
 }
+
+@font-face {
+  font-family: 'Vela Sans Bd';
+  src:
+    url('fonts/vela-sans/VelaSans-Bold.woff2') format('woff2'),
+    url('fonts/vela-sans/VelaSans-Bold.woff') format('woff'),
+    url('fonts/vela-sans/VelaSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vela Sans SemBd';
+  src:
+    url('fonts/vela-sans/VelaSans-SemiBold.woff2') format('woff2'),
+    url('fonts/vela-sans/VelaSans-SemiBold.woff') format('woff'),
+    url('fonts/vela-sans/VelaSans-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vela Sans Med';
+  src:
+    url('fonts/vela-sans/VelaSans-Medium.woff2') format('woff2'),
+    url('fonts/vela-sans/VelaSans-Medium.woff') format('woff'),
+    url('fonts/vela-sans/VelaSans-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vela Sans';
+  src:
+    url('fonts/vela-sans/VelaSans-Regular.woff2') format('woff2'),
+    url('fonts/vela-sans/VelaSans-Regular.woff') format('woff'),
+    url('fonts/vela-sans/VelaSans-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vela Sans';
+  src:
+    url('fonts/vela-sans/VelaSans-Light.woff2') format('woff2'),
+    url('fonts/vela-sans/VelaSans-Light.woff') format('woff'),
+    url('fonts/vela-sans/VelaSans-Light.ttf') format('truetype');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Vela Sans ExtLt';
+  src:
+    url('fonts/vela-sans/fonts/vela-sans/VelaSans-ExtraLight.woff2') format('woff2'),
+    url('fonts/vela-sans/VelaSans-ExtraLight.woff') format('woff'),
+    url('fonts/vela-sans/VelaSans-ExtraLight.ttf') format('truetype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+// @font-face {
+//   font-family: 'VelaSans';
+//   src: url('fonts/vela-sans/VelaSans-ExtraLight.ttf') format('truetype');
+//   font-weight: 200;
+// }
+
+// @font-face {
+//   font-family: 'VelaSans';
+//   src: url('fonts/vela-sans/VelaSans-Light.ttf') format('truetype');
+//   font-weight: 300;
+// }
+
+// @font-face {
+//   font-family: 'VelaSans';
+//   src: url('fonts/vela-sans/VelaSans-Regular.ttf') format('truetype');
+//   font-weight: 400;
+// }
+
+// @font-face {
+//   font-family: 'VelaSans';
+//   src: url('fonts/vela-sans/VelaSans-Medium.ttf') format('truetype');
+//   font-weight: 500;
+// }
+
+// @font-face {
+//   font-family: 'VelaSans';
+//   src: url('fonts/vela-sans/VelaSans-SemiBold.ttf') format('truetype');
+//   font-weight: 600;
+// }
+
+// @font-face {
+//   font-family: 'VelaSans';
+//   src: url('fonts/vela-sans/VelaSans-Bold.ttf') format('truetype');
+//   font-weight: 700;
+// }
+
+// @font-face {
+//   font-family: 'VelaSans';
+//   src: url('fonts/vela-sans/VelaSans-ExtraBold.ttf') format('truetype');
+//   font-weight: 800;
+// }
 
 *,
 *::after,
@@ -61,7 +138,7 @@ html {
 }
 
 body {
-  font-family: 'VelaSans';
+  font-family: 'Vela Sans', 'Vela Sans Med', 'Vela Sans SemBd', 'Vela Sans Bd', 'Vela Sans ExtBd', 'Vela Sans ExtLt';
 
   height: 100vh;
   width: 100vw;
