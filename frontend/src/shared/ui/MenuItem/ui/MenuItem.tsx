@@ -7,14 +7,10 @@ function MenuItem(props: TMenuItemProps) {
   const { icon, title, variant = 'nonDestructive', ...otherProps } = props;
 
   return (
-    <button
-      className={clsx(st.menuItem, variant === 'destructive' && st.destructive)}
-      role={'menuitem'}
-      {...otherProps}
-    >
+    <div className={clsx(st.menuItem, variant === 'destructive' && st.destructive)} role={'menuitem'} {...otherProps}>
       {icon}
       <span>{title}</span>
-    </button>
+    </div>
   );
 }
 
