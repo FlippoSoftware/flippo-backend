@@ -1,18 +1,19 @@
 import { CaptiveIcon, FavoriteIcon, GroupIcon, LinkIcon, PersonIcon, SuccessIcon } from '@shared/icons';
+import { Separator } from '@shared/ui/Separator';
 import { type Meta, type StoryObj } from '@storybook/react';
-import { useState } from 'react';
+import { type ComponentType, useState } from 'react';
 
 import { type TSelectProps } from '../types/TSelectProps';
+import { default as Option } from '../ui/Option';
 import { default as Select } from '../ui/Select';
 
 const meta: Meta<TSelectProps> = {
   argTypes: {
     defaultOption: { control: 'number', description: 'The index of the default option.' },
-    groups: { control: false, description: 'An array with arrays of options.' },
     icon: { control: false, description: 'The icon displayed for the selector on the left' },
     onSelected: {
       control: false,
-      description: 'Functions for set a new active option. Accepts the option index as input.'
+      description: 'Functions for set a new active option. Accepts the option value as input.'
     },
     placeholder: {
       control: 'text',
@@ -20,12 +21,7 @@ const meta: Meta<TSelectProps> = {
     },
     selected: {
       control: false,
-      description: 'The index of the selected option, if null, then the default option is selected.'
-    },
-    variantDropdown: {
-      control: 'select',
-      description: 'Determines which edge to align the drop-down list to.',
-      options: ['left', 'right']
+      description: 'The value of the selected option, if null, then the default option is selected.'
     }
   },
   component: Select,
@@ -36,6 +32,7 @@ const meta: Meta<TSelectProps> = {
       }
     }
   },
+  subcomponents: { Option } as { [key: string]: ComponentType<unknown> },
   title: 'Widgets/Select'
 };
 
@@ -53,31 +50,25 @@ const ICON = (
   </svg>
 );
 
-const GROUPS = [
-  [{ icon: <SuccessIcon type={'default'} />, title: 'All', value: '01' }],
-  [
-    { icon: <PersonIcon type={'check'} />, title: 'Created by you', value: '02' },
-    {
-      icon: <FavoriteIcon type={'default'} />,
-      title: 'Added to the collection',
-      value: '03'
-    },
-    { icon: <GroupIcon />, title: 'Shared with you', value: '04' }
-  ],
-  [
-    { icon: <LinkIcon />, title: 'You have given access', value: '05' },
-    { icon: <CaptiveIcon type={'default'} />, title: 'Published', value: '06' }
-  ]
-];
-
 export const Default: SelectStory = {
-  render: () => <WithSource groups={GROUPS} icon={ICON} placeholder={'Filter'} />
+  render: () => <WithSource icon={ICON} placeholder={'Filter'} />
 };
 
-function WithSource(props: Omit<TSelectProps, 'defaultOption' | 'onSelected' | 'selected'>) {
-  const [selected, setSelected] = useState<null | number>(null);
+function WithSource(props: Omit<TSelectProps, 'children' | 'defaultOption' | 'onSelected' | 'selected'>) {
+  const [selected, setSelected] = useState<string>('all');
 
-  const onSelected = (index: number) => setSelected(index);
+  const onSelected = (value: string) => setSelected(value);
 
-  return <Select onSelected={onSelected} selected={selected} {...props} />;
+  return (
+    <Select defaultOption={'all'} onSelected={onSelected} selected={selected} {...props}>
+      <Option icon={<SuccessIcon type={'default'} />} title={'All'} value={'all'} />
+      <Separator orientation={'horizontal'} spacing={'spacing-6'} />
+      <Option icon={<PersonIcon type={'check'} />} title={'Created by you'} value={'created'} />
+      <Option icon={<FavoriteIcon type={'default'} />} title={'Added to the collection'} value={'added'} />
+      <Option icon={<GroupIcon />} title={'Shared with you'} value={'shared'} />
+      <Separator orientation={'horizontal'} spacing={'spacing-6'} />
+      <Option icon={<LinkIcon />} title={'You have given access'} value={'access'} />
+      <Option icon={<CaptiveIcon type={'default'} />} title={'Published'} value={'published'} />
+    </Select>
+  );
 }

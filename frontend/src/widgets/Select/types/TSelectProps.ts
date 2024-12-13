@@ -1,14 +1,13 @@
-import { type TOptionProps } from '@shared/ui/OptionItem';
-import { type ReactElement } from 'react';
+import { type Dispatch, type ReactElement, type ReactNode, type SetStateAction } from 'react';
 
 type TSelectProps = {
-  defaultOption?: number;
-  groups: Omit<TOptionProps, 'aria-selected' | 'onClick'>[][];
-  icon: ReactElement;
-  onSelected: (index: number) => void;
+  children: ReactNode;
+  defaultOption?: string;
+  icon?: ReactElement;
+  onSelected: ((value: string) => void) | Dispatch<SetStateAction<string>>;
   placeholder: string;
-  selected: null | number;
-  variantDropdown?: 'left' | 'right';
+  placementDropdown?: 'left' | 'right';
+  selected: string;
 };
 
 export type { TSelectProps };

@@ -120,5 +120,78 @@
       color: var(--text-5);
       overflow: hidden;
     }
+
+    .option {
+      @include flex.display(flex, row, start, center, 16px);
+      @include font.bodyMinus('default');
+
+      background: transparent;
+      fill: currentColor;
+      color: var(--text-3);
+
+      min-height: 48px;
+      padding: 8px 20px;
+      border-radius: var(--radius-menu-item);
+      width: 100%;
+
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+
+      &:hover:not(:disabled) {
+        background: var(--bg-3-alt);
+        color: var(--text-2);
+      }
+
+      &:active:not(:disabled) {
+        background: var(--bg-2-hover);
+        outline: unset;
+        color: var(--text-4);
+      }
+
+      &:focus-visible {
+        outline: 1.5px solid var(--brand-light);
+        color: var(--text-white);
+      }
+
+      &:disabled {
+        color: var(--text-disabled);
+        cursor: not-allowed;
+      }
+
+      &.destructive {
+        color: var(--error);
+
+        &:hover:not(:disabled) {
+          color: var(--error-hover);
+        }
+
+        &:disabled {
+          color: var(--text-disabled);
+        }
+      }
+
+      span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      svg {
+        width: 21px;
+        aspect-ratio: 1;
+
+        flex: 0 0 auto;
+      }
+
+      &[data-selected='true'] {
+        background: var(--bg-3-alt);
+        color: var(--text-white);
+
+        svg {
+          fill: var(--brand-light);
+        }
+      }
+    }
   }
 }
