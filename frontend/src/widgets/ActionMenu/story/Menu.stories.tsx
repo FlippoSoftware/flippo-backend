@@ -1,6 +1,6 @@
 import { BookMarkIcon, DeleteIcon, FolderIcon, LinkIcon, MoreIcon } from '@shared/icons';
 import { IconButton } from '@shared/ui/Button';
-import { MenuItem as CustomItem } from '@shared/ui/MenuItem';
+import { Item } from '@shared/ui/Item';
 import { Separator } from '@shared/ui/Separator';
 import { type Meta, type StoryObj } from '@storybook/react';
 import { type ComponentType } from 'react';
@@ -104,17 +104,17 @@ function WithContent({ className, placement }: { className?: string; placement?:
       </MenuHandler>
       <MenuList>
         <MenuItem>
-          <CustomItem icon={<LinkIcon />} onClick={() => {}} title={'Setting up access'} variant={'nonDestructive'} />
+          <Item icon={<LinkIcon />} onClick={() => {}} title={'Setting up access'} variant={'nonDestructive'} />
         </MenuItem>
         <MenuItem>
-          <CustomItem icon={<FolderIcon />} onClick={() => {}} title={'Add to Folder'} variant={'nonDestructive'} />
+          <Item icon={<FolderIcon />} onClick={() => {}} title={'Add to Folder'} variant={'nonDestructive'} />
         </MenuItem>
         <MenuItem>
-          <CustomItem icon={<BookMarkIcon />} onClick={() => {}} title={'Create a copy'} variant={'nonDestructive'} />
+          <Item icon={<BookMarkIcon />} onClick={() => {}} title={'Create a copy'} variant={'nonDestructive'} />
         </MenuItem>
         <Separator orientation={'horizontal'} spacing={'spacing-6'} />
         <MenuItem>
-          <CustomItem icon={<DeleteIcon />} onClick={() => {}} title={'Delete a set'} variant={'destructive'} />
+          <Item icon={<DeleteIcon />} onClick={() => {}} title={'Delete a set'} variant={'destructive'} />
         </MenuItem>
       </MenuList>
     </Menu>
