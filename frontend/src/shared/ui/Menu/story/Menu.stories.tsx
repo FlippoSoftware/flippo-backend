@@ -51,7 +51,7 @@ const meta: Meta<TMenuProps> = {
     }
   },
   subcomponents: { MenuContextProvider, MenuHandler, MenuItem, MenuList } as { [key: string]: ComponentType<unknown> },
-  title: 'Widgets/ActionMenu'
+  title: 'UIKit/Menu'
 };
 
 export default meta;

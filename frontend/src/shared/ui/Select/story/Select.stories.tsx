@@ -33,7 +33,7 @@ const meta: Meta<TSelectProps> = {
     }
   },
   subcomponents: { Option } as { [key: string]: ComponentType<unknown> },
-  title: 'Widgets/Select'
+  title: 'UIKit/Select'
 };
 
 export default meta;
