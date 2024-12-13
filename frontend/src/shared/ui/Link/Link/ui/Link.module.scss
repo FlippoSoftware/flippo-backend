@@ -44,11 +44,11 @@
     overflow: hidden;
 
     & > span {
-      width: 100%; // Занимает всю доступную ширину внутри родителя
+      width: 100%;
       display: block;
-      text-overflow: ellipsis; // Добавляем многоточие для обрезанного текста
-      overflow: hidden; // Прячем выходящий текст
-      white-space: nowrap; // Запрещаем перенос строк
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
 
       flex: 1 1 auto;
     }

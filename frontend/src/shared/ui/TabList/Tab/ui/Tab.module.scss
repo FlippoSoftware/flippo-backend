@@ -1,0 +1,48 @@
+@use 'mixins/_flex.scss' as flex;
+@use 'mixins/_font.scss' as font;
+
+.tab {
+  @include flex.display(flex, row, center, center, 10px);
+  @include font.body('stronger');
+
+  width: fit-content;
+  padding: 16px 6px;
+  position: relative;
+
+  background: transparent;
+  color: var(--text-3);
+  fill: currentColor;
+
+  transition: color 0.3s ease;
+
+  &:hover:not(:disabled) {
+    color: var(--text-primary);
+  }
+
+  &:active:not(:disabled) {
+    color: var(--text-4);
+  }
+
+  &[aria-selected='true']:not(:disabled) {
+    color: var(--text-white);
+  }
+
+  &:disabled {
+    color: var(--text-disabled);
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 24px;
+    aspect-ratio: 1;
+  }
+
+  .selectedLine {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+
+    background: var(--brand-light);
+  }
+}

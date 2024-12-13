@@ -1,12 +1,19 @@
 import type { RefObject } from 'react';
 
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 
-const useClickOutside = (ref: RefObject<HTMLElement>, callback: () => void): void => {
+const useClickOutside = (ref: HTMLElement | null | RefObject<HTMLElement>, callback: () => void): void => {
+  const sourceRef = useMemo(() => ref, [ref]);
+
   useEffect(() => {
     const listener = (event: MouseEvent) => {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        callback();
+      if (event.target instanceof Node && sourceRef) {
+        if (
+          (sourceRef instanceof HTMLElement && !sourceRef.contains(event.target)) ||
+          ('current' in sourceRef && sourceRef.current && !sourceRef.current.contains(event.target))
+        ) {
+          callback();
+        }
       }
     };
 
@@ -15,7 +22,7 @@ const useClickOutside = (ref: RefObject<HTMLElement>, callback: () => void): voi
     return () => {
       document.removeEventListener('mousedown', listener);
     };
-  }, [ref, callback]);
+  }, [sourceRef, callback]);
 };
 
 export { useClickOutside };

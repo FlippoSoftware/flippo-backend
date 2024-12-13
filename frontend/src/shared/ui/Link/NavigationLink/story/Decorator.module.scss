@@ -1,0 +1,8 @@
+@use 'mixins/_font.scss' as font;
+
+.text {
+  @include font.title-3('default');
+
+  color: var(--text-primary);
+  text-align: center;
+}

@@ -1,0 +1,197 @@
+@use 'mixins/_flex.scss' as flex;
+@use 'mixins/_font.scss' as font;
+
+.selectWrapper {
+  --max-width: 300px;
+
+  @include flex.display(flex, column, start, start);
+
+  position: relative;
+
+  width: fit-content;
+  height: fit-content;
+
+  &.left {
+    align-items: start;
+  }
+
+  &.right {
+    align-items: end;
+  }
+
+  .hiddenLabel {
+    overflow: hidden;
+    position: absolute;
+    height: 1px;
+    width: 1px;
+    top: -99999px;
+  }
+
+  .combobox {
+    @include flex.display(flex, row, start, center, 8px);
+    @include font.bodyMinus('default');
+
+    width: fit-content;
+    max-width: var(--max-width);
+    background: transparent;
+    padding: 8px 18px;
+    border-radius: var(--radius-button);
+
+    color: var(--text-4);
+    fill: currentColor;
+
+    overflow: hidden;
+
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
+
+    &:hover {
+      background: var(--bg-2);
+      color: var(--text-white);
+    }
+
+    &.comboboxOpen {
+      background: var(--bg-2);
+      color: var(--text-primary);
+
+      &:hover {
+        .arrowOpen {
+          fill: var(--text-primary);
+        }
+      }
+    }
+
+    .arrow {
+      width: 18px;
+      aspect-ratio: 1;
+
+      transition:
+        transform 0.3s ease,
+        fill 0.3s ease;
+    }
+
+    .arrowOpen {
+      transform: rotate(180deg);
+      fill: var(--text-6);
+    }
+
+    span {
+      flex: 1 1 auto;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    svg {
+      width: 21px;
+      aspect-ratio: 1;
+
+      flex: 0 0 auto;
+    }
+  }
+
+  .listbox {
+    @include flex.display(flex, column, start, start, 2px);
+
+    position: absolute;
+    width: fit-content;
+    max-width: var(--max-width);
+    min-width: 258px;
+    padding: 6px;
+    overflow: hidden;
+
+    background: var(--bg-2);
+    border-radius: var(--radius-menu);
+
+    top: calc(100% + 4px);
+
+    z-index: 100;
+
+    .placeholder {
+      @include font.label('default');
+
+      width: 100%;
+      min-height: 32px;
+      padding-left: 20px;
+      align-content: center;
+
+      color: var(--text-5);
+      overflow: hidden;
+    }
+
+    .option {
+      @include flex.display(flex, row, start, center, 16px);
+      @include font.bodyMinus('default');
+
+      background: transparent;
+      fill: currentColor;
+      color: var(--text-3);
+
+      min-height: 48px;
+      padding: 8px 20px;
+      border-radius: var(--radius-menu-item);
+      width: 100%;
+
+      transition:
+        background-color 0.3s ease,
+        color 0.3s ease;
+
+      &:hover:not(:disabled) {
+        background: var(--bg-3-alt);
+        color: var(--text-2);
+      }
+
+      &:active:not(:disabled) {
+        background: var(--bg-2-hover);
+        outline: unset;
+        color: var(--text-4);
+      }
+
+      &:focus-visible {
+        outline: 1.5px solid var(--brand-light);
+        color: var(--text-white);
+      }
+
+      &:disabled {
+        color: var(--text-disabled);
+        cursor: not-allowed;
+      }
+
+      &.destructive {
+        color: var(--error);
+
+        &:hover:not(:disabled) {
+          color: var(--error-hover);
+        }
+
+        &:disabled {
+          color: var(--text-disabled);
+        }
+      }
+
+      span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      svg {
+        width: 21px;
+        aspect-ratio: 1;
+
+        flex: 0 0 auto;
+      }
+
+      &[data-selected='true'] {
+        background: var(--bg-3-alt);
+        color: var(--text-white);
+
+        svg {
+          fill: var(--brand-light);
+        }
+      }
+    }
+  }
+}
