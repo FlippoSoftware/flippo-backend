@@ -1,11 +1,14 @@
 import type auth from '../../../locales/en/auth.json';
+import type header from '../../../locales/en/header.json';
 import type translation from '../../../locales/en/translation.json';
 
 type TTranslation = typeof translation;
 type TAuth = typeof auth;
+type THeader = typeof header;
 
 type TResource = {
   auth: TAuth;
+  header: THeader;
   translation: TTranslation;
 };
 
