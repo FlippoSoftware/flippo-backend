@@ -33,9 +33,9 @@ const ROUTES: UnmappedRouteObject<any>[] = [
   { path: '/auth/callback', route: callbackRoute },
   { path: '/collection', route: collectionRoute },
   { path: '/community', route: communityRoute },
-  { path: '/profile', route: profileRoute }
+  { path: '/profile/:userId', route: profileRoute }
 ];
 
-export const router = createHistoryRouter({ routes: ROUTES });
+export const router: ReturnType<typeof createHistoryRouter> = createHistoryRouter({ routes: ROUTES });
 
 sample({ clock: initRouter, fn: () => createBrowserHistory(), target: router.setHistory });
