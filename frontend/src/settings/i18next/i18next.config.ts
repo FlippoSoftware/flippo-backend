@@ -47,7 +47,7 @@ const defaultI18nextInstance = i18next
       order: ['subdomain', 'path', 'navigator', 'cookie', 'localStorage', 'sessionStorage', 'querystring', 'htmlTag']
     },
     fallbackLng: INTERNATIONALIZATION_DEFAULT_LOCALE,
-    ns: ['translation', 'auth', 'header'],
+    ns: ['translation', 'auth', 'header', 'notfound'],
     react: {
       useSuspense: true
     },

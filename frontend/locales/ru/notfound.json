@@ -1,0 +1,7 @@
+{
+  "baseOtherwise": {
+    "header": "404: NOT FOUND",
+    "headerGroup": "Страницы не существует или она не доступна!",
+    "mainButton": "Назад"
+  }
+}
