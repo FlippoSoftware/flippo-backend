@@ -2,7 +2,7 @@
 @use 'mixins/_font.scss' as font;
 
 .profileButton {
-  @include flex.display(flex, row, center, center, 10px);
+  @include flex.display(flex, row, start, center, 10px);
   @include font.label('default');
 
   height: 40px;
@@ -24,6 +24,12 @@
   &[aria-expanded='true'] {
     background: var(--bg-2-hover);
     color: var(--text-primary);
+  }
+
+  span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   img {
