@@ -1,11 +1,8 @@
 import { EnIcon, RuIcon } from '@shared/icons';
-import { motion } from 'framer-motion';
 import { useMemo } from 'react';
 
 import { type TLanguageSwitchProps } from '../types/TLanguageSwitchProps';
 import st from './LanguageSwitch.module.scss';
-
-const SPRING = { damping: 15, type: 'spring' };
 
 function LanguageSwitch(props: TLanguageSwitchProps) {
   const { language, onLanguageSwitch } = props;
@@ -23,13 +20,12 @@ function LanguageSwitch(props: TLanguageSwitchProps) {
       <div className={isRu ? st.checked : ''} role={'presentation'}>
         <RuIcon />
         <span>{'Рус'}</span>
-        {isRu ? <motion.div className={st.switch} layoutId={'switch'} transition={SPRING} /> : null}
       </div>
       <div className={!isRu ? st.checked : ''} role={'presentation'}>
         <EnIcon />
         <span>{'Eng'}</span>
-        {!isRu ? <motion.div className={st.switch} layoutId={'switch'} transition={SPRING} /> : null}
       </div>
+      <div className={st.switch} data-ru={isRu} />
     </label>
   );
 }
