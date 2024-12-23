@@ -93,7 +93,7 @@ async function deleteRefreshToken(id: string) {
   try {
     const [[result]] = await getSurreal().query<[[TRefreshToken]]>(
       /* surql */ `
-      DELETE ${id} RETURN BEFORE; //type::thing($table, $value)
+      DELETE type::thing($table, $value) RETURN BEFORE;
       `,
       {
         table: table,
