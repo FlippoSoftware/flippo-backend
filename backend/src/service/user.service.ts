@@ -17,6 +17,7 @@ class UserService {
     if (!user) throw ApiError.ServiceUnavailable("Failed to create a user.");
 
     const tokens = await TokenService.generateAccessRefreshTokens(user.id, connectionData);
+
     return { user, tokens };
   }
 
