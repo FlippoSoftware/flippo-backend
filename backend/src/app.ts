@@ -2,7 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import userAgent from "express-useragent";
-import { connectSurrealDB, getSurreal } from "@utils/connect.ts";
+import { getDb } from "@utils/connect.ts";
 import logger from "@utils/logger.ts";
 import { ENV } from "@schemas/index.ts";
 
@@ -28,12 +28,12 @@ const start = () => {
       logger.info(`Server started at http://localhost:${port}`);
       routes(app);
 
-      await connectSurrealDB();
+      let db = await getDb();
 
-      if (!getSurreal().connection) {
+      if (!db.connection) {
         setTimeout(async function tick() {
-          await connectSurrealDB();
-          if (!getSurreal().connection) setTimeout(tick, 30000);
+          db = await getDb();
+          if (!db.connection) setTimeout(tick, 30000);
         }, 30000);
       }
     });

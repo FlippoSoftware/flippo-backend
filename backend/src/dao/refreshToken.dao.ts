@@ -8,7 +8,7 @@ import {
   type TConnectionData,
   type TRefreshToken
 } from "@schemas/index.ts";
-import { getSurreal } from "@utils/connect.ts";
+import { getDb } from "@utils/connect.ts";
 import logger from "@utils/logger.ts";
 import { RecordId } from "surrealdb";
 import { z } from "zod";
@@ -16,8 +16,9 @@ import { z } from "zod";
 async function findRefreshTokenById(id: string) {
   id = RefreshJwtIdSchema.parse(id);
 
+  const db = await getDb();
   const [table, value] = String(id).split(":");
-  const result = await getSurreal().select<TRefreshToken>(new RecordId(table, value));
+  const result = await db.select<TRefreshToken>(new RecordId(table, value));
 
   return await RefreshTokenSchema.parseAsync(result).catch(() => undefined);
 }
@@ -31,8 +32,9 @@ async function findRefreshTokenByData(
   browser = ConnectionDataSchema.shape.browser.parse(browser);
   ip = ConnectionDataSchema.shape.ip.parse(ip);
 
+  const db = await getDb();
   const [tableUser, valueUser] = String(userId).split(":");
-  const [[result]] = await getSurreal().query<[[TRefreshToken]]>(
+  const [[result]] = await db.query<[[TRefreshToken]]>(
     /* surql */ `
       SELECT * FROM refreshToken WHERE $user = user AND connectionData.system = $system
        AND connectionData.browser = $browser AND connectionData.ip = $ip
@@ -48,9 +50,10 @@ async function createRefreshToken(refreshId: string, refreshData: TCreateRefresh
   refreshId = RefreshJwtIdSchema.parse(refreshId);
   refreshData = CreateRefreshTokenSchema.parse(refreshData);
 
+  const db = await getDb();
   const [table, value] = String(refreshId).split(":");
   const [tableUser, valueUser] = String(refreshData.user).split(":");
-  const [[result]] = await getSurreal().query<[[TRefreshToken]]>(
+  const [[result]] = await db.query<[[TRefreshToken]]>(
     /* surql */ `
       CREATE type::thing($table, $value) SET user = $user, isRevoked = $isRevoked,
         connectionData.system = $system,
@@ -75,8 +78,9 @@ async function createRefreshToken(refreshId: string, refreshData: TCreateRefresh
 async function revokeRefreshToken(id: string) {
   id = RefreshJwtIdSchema.parse(id);
 
+  const db = await getDb();
   const [table, value] = String(id).split(":");
-  const [result] = await getSurreal().merge<TRefreshToken, Pick<TRefreshToken, "isRevoked">>(
+  const [result] = await db.merge<TRefreshToken, Pick<TRefreshToken, "isRevoked">>(
     new RecordId(table, value),
     {
       isRevoked: true
@@ -91,7 +95,8 @@ async function deleteRefreshToken(id: string) {
 
   const [table, value] = String(id).split(":");
   try {
-    const [[result]] = await getSurreal().query<[[TRefreshToken]]>(
+    const db = await getDb();
+    const [[result]] = await db.query<[[TRefreshToken]]>(
       /* surql */ `
       DELETE type::thing($table, $value) RETURN BEFORE;
       `,
@@ -113,7 +118,8 @@ async function deleteAllRefreshTokens(userId: string) {
 
   const [tableUser, valueUser] = String(userId).split(":");
   try {
-    const [result] = await getSurreal().query<[TRefreshToken[]]>(
+    const db = await getDb();
+    const [result] = await db.query<[TRefreshToken[]]>(
       /* surrealql */ `
       DELETE refreshToken WHERE user = $userId RETURN BEFORE
       ;
