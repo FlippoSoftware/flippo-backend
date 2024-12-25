@@ -20,6 +20,9 @@ class TokenController {
         throw ApiError.Unauthorized();
 
       const user = await UserService.getUserById(verificationResult.payload.id);
+      const dbToken = await TokenService.generateDbToken(user.id);
+
+      res.cookie("dbToken", dbToken, dbTokenCookieOptions);
 
       return res.status(200).json({
         userId: user.id,

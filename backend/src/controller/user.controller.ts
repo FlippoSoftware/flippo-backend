@@ -10,21 +10,23 @@ import { type IYandexUserResult } from "@service/types/IYandexUserResult.ts";
 import { UserService } from "@service/user.service.ts";
 import getConnectionData from "@utils/getConnectionData.ts";
 import { ApiError } from "src/exceptions/api.error.ts";
-import { type TTokens } from "@utils/jwt/types/TTokens.ts";
+import { type TAllTokens } from "@utils/jwt/types/TTokens.ts";
 import { EmailService } from "@service/email.service.ts";
 
 import {
   accessTokenClearCookieOptions,
   accessTokenCookieOptions,
+  dbTokenCookieOptions,
   refreshTokenClearCookieOptions,
   refreshTokenCookieOptions,
   registrationEmailClearCookieOptions
 } from "./constant/cookieOption.ts";
 
 class UserController {
-  static composeAnAuthResponse(res: Response, tokens: TTokens, user: TUser) {
+  static composeAnAuthResponse(res: Response, tokens: TAllTokens, user: TUser) {
     res.cookie("refreshToken", tokens.refreshToken, refreshTokenCookieOptions);
     res.cookie("accessToken", tokens.accessToken, accessTokenCookieOptions);
+    res.cookie("dbToken", tokens.dbToken, dbTokenCookieOptions);
 
     const composeData = {
       userId: user.id,
