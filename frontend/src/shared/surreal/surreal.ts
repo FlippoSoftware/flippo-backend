@@ -1,7 +1,9 @@
 import { ENV } from '@shared/env';
+import { createEffect, createEvent, createStore, sample } from 'effector';
 import { Surreal } from 'surrealdb';
 
 import { getDbTokenCookie, removeDbTokenCookie } from './utils/cookie.utils';
+import { SurrealError } from './utils/surreal.error';
 
 type TDbConfig = {
   database: string;
@@ -15,36 +17,45 @@ const DEFAULT_CONFIG: TDbConfig = {
   namespace: ENV.SURREALDB_NS || 'test'
 };
 
-let connectionPromise: null | Promise<Surreal> = null;
+export const $db = createStore<null | Surreal>(null);
+export const $dbConfig = createStore<TDbConfig>(DEFAULT_CONFIG);
 
-export async function connectToDatabase(config: TDbConfig = DEFAULT_CONFIG): Promise<Surreal> {
+export const initDb = createEvent();
+export const authenticateDb = createEvent<string>();
+
+export const dbConnectFx = createEffect<TDbConfig, Surreal>(async (config) => {
   const db = new Surreal();
 
-  try {
-    await db.connect(config.endpoint);
-    await db.use({ database: config.database, namespace: config.namespace });
+  await db.connect(config.endpoint);
+  await db.use({ database: config.database, namespace: config.namespace });
 
-    const token = getDbTokenCookie();
-    if (token) {
-      try {
-        await db.authenticate(token);
-      } catch {
-        removeDbTokenCookie();
-      }
-    }
+  return db;
+});
 
-    return db;
-  } catch (err) {
-    console.error('Failed to connect to SurrealDB:', err instanceof Error ? err.message : String(err));
-    await db.close();
-    throw err;
-  }
-}
+export const dbAuthenticateFx = createEffect<null | Surreal, void, SurrealError>(async (db) => {
+  if (!db) throw SurrealError.DatabaseOffline();
 
-export const getDb = async (config: TDbConfig = DEFAULT_CONFIG): Promise<Surreal> => {
-  if (!connectionPromise) {
-    connectionPromise = connectToDatabase(config);
-  }
+  const token = getDbTokenCookie();
+  if (!token) throw SurrealError.DatabaseTokenMissing();
 
-  return connectionPromise;
-};
+  await db.authenticate(token);
+});
+
+const removeDbTokenCookieFx = createEffect(() => {
+  removeDbTokenCookie();
+});
+
+sample({ clock: initDb, source: $dbConfig, target: dbConnectFx });
+
+sample({
+  clock: dbConnectFx.doneData,
+  target: $db
+});
+
+sample({
+  clock: authenticateDb,
+  source: $db,
+  target: dbAuthenticateFx
+});
+
+sample({ clock: dbAuthenticateFx.fail, target: removeDbTokenCookieFx });
