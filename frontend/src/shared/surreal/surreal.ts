@@ -21,9 +21,8 @@ export const $db = createStore<null | Surreal>(null);
 export const $dbConfig = createStore<TDbConfig>(DEFAULT_CONFIG);
 
 export const initDb = createEvent();
-export const authenticateDb = createEvent<string>();
 
-export const dbConnectFx = createEffect<TDbConfig, Surreal>(async (config) => {
+const dbConnectFx = createEffect<TDbConfig, Surreal>(async (config) => {
   const db = new Surreal();
 
   await db.connect(config.endpoint);
@@ -31,6 +30,9 @@ export const dbConnectFx = createEffect<TDbConfig, Surreal>(async (config) => {
 
   return db;
 });
+
+export const dbConnected = dbConnectFx.done;
+export const dbFailConnected = dbConnectFx.fail;
 
 export const dbAuthenticateFx = createEffect<null | Surreal, void, SurrealError>(async (db) => {
   if (!db) throw SurrealError.DatabaseOffline();
@@ -41,7 +43,7 @@ export const dbAuthenticateFx = createEffect<null | Surreal, void, SurrealError>
   await db.authenticate(token);
 });
 
-const removeDbTokenCookieFx = createEffect(() => {
+export const removeDbTokenCookieFx = createEffect(() => {
   removeDbTokenCookie();
 });
 
@@ -51,11 +53,3 @@ sample({
   clock: dbConnectFx.doneData,
   target: $db
 });
-
-sample({
-  clock: authenticateDb,
-  source: $db,
-  target: dbAuthenticateFx
-});
-
-sample({ clock: dbAuthenticateFx.fail, target: removeDbTokenCookieFx });
