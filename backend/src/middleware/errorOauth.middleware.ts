@@ -7,7 +7,7 @@ async function errorOauthMiddleware(error: Error, req: Request, res: Response, n
   logger.error(error.message);
 
   if (error instanceof ApiError) {
-    return res.redirect(`${ENV.APP_REDIRECT_URL}`);
+    return res.redirect(`${ENV.APP_REDIRECT_URL}?error=${error.status}`);
   }
 
   return res.redirect(`${ENV.APP_REDIRECT_URL}?error=500`);
