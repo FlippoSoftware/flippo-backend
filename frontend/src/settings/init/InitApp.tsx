@@ -1,5 +1,7 @@
 import { $i18n } from '@settings/i18next';
+import { router } from '@settings/routing';
 import { ToastContainer } from '@widgets/ToastNotification';
+import { RouterProvider } from 'atomic-router-react';
 import { useUnit } from 'effector-react';
 import { type i18n } from 'i18next';
 import { type PropsWithChildren, useEffect } from 'react';
@@ -25,8 +27,10 @@ function InitApp(props: PropsWithChildren<object>) {
 
   return (
     <I18nextProvider i18n={i18n as i18n}>
-      {children}
-      <ToastContainer toastCountOnScreen={4} />
+      <RouterProvider router={router}>
+        {children}
+        <ToastContainer toastCountOnScreen={4} />
+      </RouterProvider>
     </I18nextProvider>
   );
 }
