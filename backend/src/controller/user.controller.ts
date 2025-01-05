@@ -49,7 +49,7 @@ class UserController {
 
     const { user, tokens } = userData;
 
-    this.composeAnAuthResponse(res, tokens, user);
+    UserController.composeAnAuthResponse(res, tokens, user);
 
     return res.redirect(`${ENV.APP_REDIRECT_URL}`);
   }
@@ -81,7 +81,7 @@ class UserController {
         image: googleUser.picture
       };
 
-      await this.authProcess(req, res, authUser);
+      await UserController.authProcess(req, res, authUser);
     } catch (error: any) {
       return next(error); // -->error.middleware
     }
@@ -112,7 +112,7 @@ class UserController {
         image: vkontakteUser.avatar
       };
 
-      await this.authProcess(req, res, authUser);
+      await UserController.authProcess(req, res, authUser);
       return;
     } catch (error: any) {
       return next(error); // -->error.middleware
@@ -142,7 +142,7 @@ class UserController {
           : undefined
       };
 
-      await this.authProcess(req, res, authUser);
+      await UserController.authProcess(req, res, authUser);
     } catch (error: any) {
       return next(error); // -->error.middleware
     }
@@ -168,7 +168,7 @@ class UserController {
       const connectionData = getConnectionData(req);
       const { user, tokens } = await UserService.signUp(userData, connectionData);
 
-      const composeData = this.composeAnAuthResponse(res, tokens, user);
+      const composeData = UserController.composeAnAuthResponse(res, tokens, user);
 
       res.clearCookie("registrationEmail", registrationEmailClearCookieOptions);
 
@@ -191,7 +191,7 @@ class UserController {
       const { user, tokens } = await UserService.signIn(providerId, connectionData);
       if (!user) throw ApiError.Unauthorized();
 
-      const composeData = this.composeAnAuthResponse(res, tokens, user);
+      const composeData = UserController.composeAnAuthResponse(res, tokens, user);
 
       res.clearCookie("registrationEmail", registrationEmailClearCookieOptions);
 
