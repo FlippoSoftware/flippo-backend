@@ -1,9 +1,0 @@
-.dialog {
-  border: none;
-  padding: 0;
-  background: transparent;
-
-  &::backdrop {
-    background: rgba($color: var(--brand), $alpha: 0.5);
-  }
-}
