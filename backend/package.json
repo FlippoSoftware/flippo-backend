@@ -6,7 +6,7 @@
   "main": "./src/app.ts",
   "scripts": {
     "dev:server": "nodemon src/app.ts",
-    "dev:surreal": "surreal start --allow-all --bind 0.0.0.0:3031 surrealkv:database/flippo.db",
+    "dev:surreal": "surreal start --log trace --allow-all --bind 0.0.0.0:3031 surrealkv:database/flippo.db",
     "dev": "concurrently --names surreal,server \"pnpm run dev:surreal\" \"pnpm run dev:server\"",
     "surreal::validate": "surreal validate database/models/*.surql",
     "lint": "npx eslint --fix"
