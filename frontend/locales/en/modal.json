@@ -1,0 +1,22 @@
+{
+  "createFolder": {
+    "title": "New folder",
+    "input": {
+      "placeholder": "Enter name",
+      "error": {
+        "empty": "The name cannot be empty.",
+        "exists": "A folder with that name already exists."
+      }
+    },
+    "actions": {
+      "cancel": "Cancel",
+      "create": "Create"
+    },
+    "error": {
+      "fail_create": "Failed to create folder"
+    },
+    "success": {
+      "success_create": "Папка {{name}} успешно создана"
+    }
+  }
+}

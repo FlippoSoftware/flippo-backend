@@ -1,0 +1,34 @@
+@use 'mixins/_flex.scss' as flex;
+@use 'mixins/_font.scss' as font;
+@use 'mixins/_effect.scss' as effect;
+
+.modal {
+  @include flex.display(flex, column, space-between, center);
+  @include effect.elevation-modal();
+
+  width: 420px;
+  min-height: 275px;
+  padding: 32px;
+  border-radius: var(--radius-popup);
+
+  background: var(--bg-1);
+
+  .content {
+    @include flex.display(flex, column, center, start, 24px);
+    width: 100%;
+
+    h3 {
+      @include font.title-3('default');
+      color: var(--text-primary);
+    }
+
+    & > div:has(input) {
+      width: 100%;
+    }
+  }
+
+  .actions {
+    @include flex.display(flex, row, end, center, 12px);
+    width: 100%;
+  }
+}

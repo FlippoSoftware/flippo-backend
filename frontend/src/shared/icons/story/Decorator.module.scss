@@ -1,0 +1,13 @@
+.grid {
+  display: grid;
+  grid-template: repeat(16, 1fr) / repeat(16, 1fr);
+
+  gap: 24px;
+
+  svg {
+    width: 24px;
+    aspect-ratio: 1;
+
+    fill: var(--text-primary);
+  }
+}

@@ -1,0 +1,337 @@
+openapi: 3.1.0
+info:
+  title: Swagger Flippo - OpenAPI 3.0
+  description: >-
+    This is an API for the [Flippo project](https://github.com/BlackPoretsky/Flippo).
+  contact:
+    name: 'author Flippo'
+    email: 20vinipuh02@gmail.com
+  license :
+    name: Apache 2.0
+    url: 'https://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 0.0.1
+servers:
+  - url: http://{domain}:{port}
+    description: The production API server
+    variables:
+      domain:
+        enum:
+          - 'localhost'
+          - 'flippo.ru'
+          - 'flippo.one'
+          - 'flippo.com'
+        default: localhost
+      port:
+        enum:
+          - '80'
+          - '3030'
+        default: '80'
+tags:
+  - name: email
+    description: Registration and authorization via email
+  - name: auth
+    description: Working with an authorized user
+  - name: oauth
+    description: Login via OAuth 2.0. Designed for providers (Google, Vkontakte, YandexID).
+paths:
+  /auth:
+    get:
+      tags: 
+        - auth
+      summary: Check access token (returns user data)
+      responses:
+        "200":
+          description: The user's data has been received and the cookies for the database have been installed
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/userInfo'
+          headers: 
+            Set-Cookies:
+              schema: 
+                $ref: '#/components/headers/Set-Cookies-DbToken/schema'
+        "401":
+          description: The access token is expired
+  /auth/refresh_token/signout:
+    patch:
+      tags: 
+        - auth
+      summary: Cleans cookies with tokens and deletes the refresh token from the database
+      responses:
+        "200":
+          description: The cookies have been successfully cleared and the refresh token has been deleted from the database
+        "400":
+          description: Cookies have been cleared, the token is missing from the database, or the token could not be deleted from the database
+  /auth/refresh_token/refreh:
+    put:
+      tags: 
+        - auth
+      summary: Generates new tokens and stores the refresh token in the database
+      responses:
+        "200":
+          description: The refresh token in the database has been updated and cookies for the access and refresh token have been installed
+          headers: 
+            Set-Cookies:
+              schema: 
+                $ref: '#/components/headers/Set-Cookies-Auth/schema'
+        "401":
+          description: Failed to update tokens
+  /oauth/google:
+    get:
+      tags: 
+        - oauth
+      summary: Callback for authorization via Google
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "301":
+          description: The generated access and refresh tokens and refresh token are stored in the database
+          headers: 
+            Set-Cookies:
+              schema: 
+                $ref: '#/components/headers/Set-Cookies-Auth/schema'
+        "308":
+          description: Moves to the same page as the 301 status, but sets error in the query parameters
+  /oauth/vkontakte:
+    get:
+      tags: 
+        - oauth
+      summary: Callback for authorization via VKontakte
+      parameters:
+        - name: code
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "301":
+          description: The generated access and refresh tokens and refresh token are stored in the database
+          headers: 
+            Set-Cookies:
+              schema: 
+                $ref: '#/components/headers/Set-Cookies-Auth/schema'
+        "308":
+          description: Moves to the same page as the 301 status, but sets error in the 
+  /oauth/yandexID:
+    get:
+      tags: 
+        - oauth
+      summary: Callback for authorization via Yandex
+      parameters:
+          - name: code
+            in: query
+            required: true
+            schema:
+              type: string
+      responses:
+        "301":
+          description: The generated access and refresh tokens and refresh token are stored in the database
+          headers: 
+            Set-Cookies:
+              schema: 
+                $ref: '#/components/headers/Set-Cookies-Auth/schema'
+        "308":
+          description: Moves to the same page as the 301 status, but sets error in the 
+  /sign_in_with_email:
+    post:
+      tags: 
+        - email
+      summary: Log in to your account via email
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: 
+                  $ref: '#/components/schemas/email'
+      responses:
+        "200":
+          description:
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/userInfo'
+          headers: 
+            Set-Cookies:
+              schema:
+                allOf: 
+                  - $ref: '#/components/headers/Set-Cookies-Auth/schema'
+                  - $ref: '#/components/headers/Set-Cookies-DbToken/schema'
+        "401":
+          description: Unauthorized
+        "500":
+          description: Unknown error
+  /sign_up_with_email:
+    post:
+      tags: 
+        - email
+      summary: Registers the user via email
+      requestBody: 
+        content: 
+          application/json:
+            schema: 
+              type: object
+              properties:
+                username: 
+                  $ref: '#/components/schemas/username'
+                email: 
+                  $ref: '#/components/schemas/email'
+      responses:
+        "200":
+          description: 
+          content: 
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/userInfo'
+          headers: 
+            Set-Cookies:
+              schema: 
+                allOf: 
+                  - $ref: '#/components/headers/Set-Cookies-Auth/schema'
+                  - $ref: '#/components/headers/Set-Cookies-DbToken/schema'
+        "400":
+          description: Invalid email
+        "500":
+          description: Unknown error
+        "503":
+          description: Service unavailable
+  /pkce:
+    get:
+      tags: 
+        - oauth
+      summary: Generates PKCE for OAuth authorization
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  codeChalenger: 
+                    type: string
+          headers:
+            Set-Cookies:
+              schema:
+                $ref: '#/components/headers/Set-Cookies-CodeVerifier/schema'
+        "500":
+          description: Unknown error 
+  /generate_verification_code:
+    post:
+      tags: 
+        - email
+      summary: Generates a verification code and sends it to the mail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: 
+                  $ref: '#/components/schemas/email'
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad request
+        "500":
+          description: Unknown error
+
+  /check_verification_code:
+    patch:
+      tags: 
+        - email
+      summary: Checks the verification code
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email: 
+                  $ref: '#/components/schemas/email'
+                code: 
+                  $ref: '#/components/schemas/verifyCode'
+      responses:
+        "200":
+          description: The correct code
+        "400":
+          description: Invalid code
+        "410":
+          description: Verification code expired
+        "500":
+          description: Unknown error
+components:
+  schemas: 
+    email:
+      type: string
+    username: 
+      type: string
+    verifyCode:
+      type: string
+    userInfo:
+      type: object
+      properties:
+        userId: 
+          type: string
+        role: 
+          type: string
+          enum: 
+            - 'user'
+            - 'admin'
+            - 'premium'
+        email: 
+          type: string
+        image:
+          type: string
+        name:
+          type: string
+        surname:
+          type: string
+        username:
+          type: string
+    domain:
+      enum:
+        - 'localhost'
+        - 'flippo.ru'
+        - 'flippo.one'
+        - 'flippo.com'
+      default: localhost
+  headers:
+    Set-Cookies-Auth:
+      description: Cookies for access and refresh tokens
+      schema:
+        type: array
+        items: 
+          type: string
+          examples:
+            - accessToken:
+              value: _Secure-accessToken=fkwekfpowe, Secure, HttpOnly, Max-Age=900, SameSite=lax, Path=/auth, Domain={domain}
+            - refreshToken:
+              value: _Secure-refreshToken=fkwekfpowe, Secure, HttpOnly, Max-Age=14515200, SameSite=lax, Path=/auth/refresh_token, Domain={domain}
+    Set-Cookies-DbToken:
+      description: Cookies for dbToken
+      schema:
+        type: string
+        exampels:
+          - dbToken: 
+            value: _Secure-dbToken=fkwekfpowe, Secure, Max-Age=60, SameSite=lax, Path=/, Domain={domain}
+    Set-Cookies-RegistrationEmail:
+      description: The email used when generating the code
+      schema:
+        type: string
+        examples:
+          - registrationEmail:
+            value: _Secure-registrationEmail=fkwekfpowe, Secure, HttpOnly, Max-Age=3600, SameSite=lax, Path=/, Domain={domain}
+    Set-Cookies-CodeVerifier:
+      description: code_verifier for OAuth
+      schema:
+        type: string
+        examples:
+          - codeVerifier:
+            value: _Secure-codeVerifier=fkwekfpowe, Secure, HttpOnly, Max-Age=300, SameSite=lax

@@ -3,7 +3,7 @@ import { type ComponentProps, type ReactElement } from 'react';
 type TItem = {
   disabled?: boolean;
   icon: ReactElement;
-  onClick: () => void;
+  onClick?: () => void;
   title: string;
   variant?: 'destructive' | 'nonDestructive';
 };

@@ -16,17 +16,20 @@ class UserService {
     const user = await createUser(userData);
     if (!user) throw ApiError.ServiceUnavailable("Failed to create a user.");
 
-    const tokens = await TokenService.generateAccessRefreshTokens(user.id, connectionData);
-    return { user, tokens };
+    const authTokens = await TokenService.generateAccessRefreshTokens(user.id, connectionData);
+    const dbToken = await TokenService.generateDbToken(user.id);
+
+    return { user, tokens: { ...authTokens, dbToken } };
   }
 
   static async signIn(providerId: string, connectionData: Omit<TConnectionData, "date">) {
     const user = await findUserByProviderId(providerId);
     if (!user) return { user: undefined, tokens: undefined };
 
-    const tokens = await TokenService.generateAccessRefreshTokens(user.id, connectionData);
+    const authTokens = await TokenService.generateAccessRefreshTokens(user.id, connectionData);
+    const dbToken = await TokenService.generateDbToken(user.id);
 
-    return { user, tokens };
+    return { user, tokens: { ...authTokens, dbToken } };
   }
 
   static async signOut(refreshToken: string) {

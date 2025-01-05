@@ -1,5 +1,3 @@
-import { URLSearchParams } from "url";
-
 import { type Request, type Response, type NextFunction } from "express";
 import { ENV, type TCreateUser, type TUser } from "@schemas/index.ts";
 import { OAuthService } from "@service/oauth.service.ts";
@@ -11,53 +9,51 @@ import { type IYandexTokensResult } from "@service/types/IYandexTokensResult.ts"
 import { type IYandexUserResult } from "@service/types/IYandexUserResult.ts";
 import { UserService } from "@service/user.service.ts";
 import getConnectionData from "@utils/getConnectionData.ts";
-import omitUndefined from "@utils/omitUndefined.ts";
 import { ApiError } from "src/exceptions/api.error.ts";
-import { type TTokens } from "@utils/jwt/types/TTokens.ts";
+import { type TAllTokens } from "@utils/jwt/types/TTokens.ts";
 import { EmailService } from "@service/email.service.ts";
 
 import {
   accessTokenClearCookieOptions,
   accessTokenCookieOptions,
+  dbTokenCookieOptions,
   refreshTokenClearCookieOptions,
   refreshTokenCookieOptions,
   registrationEmailClearCookieOptions
 } from "./constant/cookieOption.ts";
 
-function composeAnAuthResponse(res: Response, tokens: TTokens, user: TUser) {
-  res.cookie("refreshToken", tokens.refreshToken, refreshTokenCookieOptions);
-  res.cookie("accessToken", tokens.accessToken, accessTokenCookieOptions);
-
-  const composeData = {
-    userId: user.id,
-    role: user.role,
-    email: user.email,
-    image: user.image,
-    name: user.name,
-    surname: user.surname,
-    username: user.username
-  };
-
-  return composeData;
-}
-
-async function authProcess(req: Request, res: Response, authUser: TCreateUser) {
-  const connectionData = getConnectionData(req);
-
-  let userData = await UserService.signIn(authUser.providersId[0], connectionData);
-  if (!userData.user) userData = await UserService.signUp(authUser, connectionData);
-
-  const { user, tokens } = userData;
-
-  const composeData = composeAnAuthResponse(res, tokens, user);
-  const queryData = omitUndefined(composeData);
-
-  const query = new URLSearchParams(queryData);
-
-  return res.redirect(`${ENV.APP_REDIRECT_URL}?` + query.toString());
-}
-
 class UserController {
+  static composeAnAuthResponse(res: Response, tokens: TAllTokens, user: TUser) {
+    res.cookie("refreshToken", tokens.refreshToken, refreshTokenCookieOptions);
+    res.cookie("accessToken", tokens.accessToken, accessTokenCookieOptions);
+    res.cookie("dbToken", tokens.dbToken, dbTokenCookieOptions);
+
+    const composeData = {
+      userId: user.id,
+      role: user.role,
+      email: user.email,
+      image: user.image,
+      name: user.name,
+      surname: user.surname,
+      username: user.username
+    };
+
+    return composeData;
+  }
+
+  static async authProcess(req: Request, res: Response, authUser: TCreateUser) {
+    const connectionData = getConnectionData(req);
+
+    let userData = await UserService.signIn(authUser.providersId[0], connectionData);
+    if (!userData.user) userData = await UserService.signUp(authUser, connectionData);
+
+    const { user, tokens } = userData;
+
+    UserController.composeAnAuthResponse(res, tokens, user);
+
+    return res.redirect(`${ENV.APP_REDIRECT_URL}`);
+  }
+
   static async oauthGoogle(req: Request, res: Response, next: NextFunction) {
     try {
       const code = req.query.code;
@@ -85,7 +81,7 @@ class UserController {
         image: googleUser.picture
       };
 
-      await authProcess(req, res, authUser);
+      await UserController.authProcess(req, res, authUser);
     } catch (error: any) {
       return next(error); // -->error.middleware
     }
@@ -116,7 +112,7 @@ class UserController {
         image: vkontakteUser.avatar
       };
 
-      await authProcess(req, res, authUser);
+      await UserController.authProcess(req, res, authUser);
       return;
     } catch (error: any) {
       return next(error); // -->error.middleware
@@ -146,7 +142,7 @@ class UserController {
           : undefined
       };
 
-      await authProcess(req, res, authUser);
+      await UserController.authProcess(req, res, authUser);
     } catch (error: any) {
       return next(error); // -->error.middleware
     }
@@ -172,7 +168,7 @@ class UserController {
       const connectionData = getConnectionData(req);
       const { user, tokens } = await UserService.signUp(userData, connectionData);
 
-      const composeData = composeAnAuthResponse(res, tokens, user);
+      const composeData = UserController.composeAnAuthResponse(res, tokens, user);
 
       res.clearCookie("registrationEmail", registrationEmailClearCookieOptions);
 
@@ -195,7 +191,7 @@ class UserController {
       const { user, tokens } = await UserService.signIn(providerId, connectionData);
       if (!user) throw ApiError.Unauthorized();
 
-      const composeData = composeAnAuthResponse(res, tokens, user);
+      const composeData = UserController.composeAnAuthResponse(res, tokens, user);
 
       res.clearCookie("registrationEmail", registrationEmailClearCookieOptions);
 

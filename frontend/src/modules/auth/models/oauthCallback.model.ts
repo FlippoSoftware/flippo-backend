@@ -1,7 +1,7 @@
-import { $t } from '@settings/i18next';
 import { authRoute, callbackRoute, mainRoute } from '@settings/routing';
 import { $session, sessionValidateFx as sideSessionValidateFx } from '@settings/session';
 import * as sessionApi from '@shared/api';
+import { type NavigateParams } from 'atomic-router';
 import { attach, createEvent, createStore, sample } from 'effector';
 
 import { placeBeforeAuthorization } from './placeBefore.model';
@@ -44,23 +44,21 @@ sample({
 });
 
 sample({
-  clock: sessionValidateFx.doneData,
-  fn: (session) => ({ userId: session.userId }),
-  target: mainRoute.open
+  clock: sessionValidateFx.done,
+  fn: () => ({ replace: true }) as NavigateParams<object>,
+  target: mainRoute.navigate
 });
 
 sample({
   clock: sessionValidateFx.fail,
-  source: $t,
-  fn: (t) => t('oauthCallbackContent.fail.error.invalidSession', { ns: 'auth' }),
+  fn: () => 'invalidSession',
   target: $errorMessage
 });
 // #endregion
 
 sample({
   clock: sessionAuthFx.fail,
-  source: $t,
-  fn: (t) => t('oauthCallbackContent.fail.error.401', { ns: 'auth' }),
+  fn: () => '401',
   target: $errorMessage
 });
 // #endregion
@@ -68,7 +66,8 @@ sample({
 // #region routing
 sample({
   clock: tryAgain,
-  target: authRoute.open
+  fn: () => ({ replace: true }) as NavigateParams<object>,
+  target: authRoute.navigate
 });
 
 sample({

@@ -1,4 +1,4 @@
-import { getSurreal } from "@utils/connect.ts";
+import { getDb } from "@utils/connect.ts";
 import {
   CreateUserSchema,
   type TCreateUser,
@@ -13,8 +13,13 @@ import logger from "@utils/logger.ts";
 async function findUserById(id: string) {
   id = UserSchema.shape.id.parse(id);
 
+  const db = await getDb();
   const [table, value] = String(id).split(":");
-  const result = await getSurreal().select<TUser>(new RecordId(table, value));
+  const [[result]] = await db.query<[[TUser]]>(/* surql */ `SELECT * FROM $id`, {
+    id: new RecordId(table, value)
+  });
+
+  if (result) result.id = result.id.toString() as z.infer<typeof UserSchema.shape.id>;
 
   return UserSchema.parse(result);
 }
@@ -22,12 +27,15 @@ async function findUserById(id: string) {
 async function findUserByEmail(email: string) {
   email = z.string().email().parse(email);
 
-  const [[result]] = await getSurreal().query<[[TUser]]>(
+  const db = await getDb();
+  const [[result]] = await db.query<[[TUser]]>(
     /* surrealql */ `
             SELECT ONLY * FROM user WHERE $email = email
         `,
     { email }
   );
+
+  if (result) result.id = result.id.toString() as z.infer<typeof UserSchema.shape.id>;
 
   return await UserSchema.parseAsync(result).catch(() => undefined);
 }
@@ -35,12 +43,15 @@ async function findUserByEmail(email: string) {
 async function findUserByProviderId(providerId: string) {
   providerId = ProviderIdSchema.parse(providerId);
 
-  const [[result]] = await getSurreal().query<[[TUser]]>(
+  const db = await getDb();
+  const [[result]] = await db.query<[[TUser]]>(
     /* surrealql */ `
             SELECT * FROM user WHERE $providerId IN providersId
         `,
     { providerId }
   );
+
+  if (result) result.id = result.id.toString() as z.infer<typeof UserSchema.shape.id>;
 
   return await UserSchema.parseAsync(result).catch(() => undefined);
 }
@@ -48,7 +59,8 @@ async function findUserByProviderId(providerId: string) {
 async function createUser(userData: TCreateUser) {
   userData = CreateUserSchema.parse(userData);
 
-  const result = await getSurreal().create<TUser, TCreateUser>("user", userData);
+  const db = await getDb();
+  const result = await db.create<TUser, TCreateUser>("user", userData);
 
   return await UserSchema.parseAsync(result).catch(() => undefined);
 }
@@ -60,11 +72,12 @@ async function updateUser(
   id = UserSchema.shape.id.parse(id);
   userData = UserSchema.omit({ id: true, created: true, updated: true }).partial().parse(userData);
 
+  const db = await getDb();
   const [table, value] = String(id).split(":");
-  const result = await getSurreal().merge<
-    TUser,
-    Partial<Omit<TUser, "id" | "created" | "updated">>
-  >(new RecordId(table, value), userData);
+  const result = await db.merge<TUser, Partial<Omit<TUser, "id" | "created" | "updated">>>(
+    new RecordId(table, value),
+    userData
+  );
 
   return await UserSchema.parseAsync(result).catch(() => undefined);
 }
@@ -74,7 +87,8 @@ async function deleteUser(id: string) {
 
   const [table, value] = String(id).split(":");
   try {
-    const result = await getSurreal().delete<TUser>(new RecordId(table, value));
+    const db = await getDb();
+    const result = await db.delete<TUser>(new RecordId(table, value));
 
     return await UserSchema.parseAsync(result).catch(() => undefined);
   } catch (error: any) {

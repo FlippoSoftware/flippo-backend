@@ -1,0 +1,14 @@
+{
+  "createSet": "Create set",
+  "main": "Main",
+  "community": "Community",
+  "collection": "Collection",
+  "recent": "Recent",
+  "yourFolders": "Your folders",
+  "signin": "Sign In",
+  "profileButton": {
+    "switchLabel": "Interface language",
+    "settingsItem": "Settings",
+    "logoutItem": "Logout"
+  }
+}

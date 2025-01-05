@@ -1,0 +1,97 @@
+@use 'mixins/_flex.scss' as flex;
+@use 'mixins/_font.scss' as font;
+
+.header {
+  @include flex.display(flex, column, start, start, 64px);
+
+  max-width: 256px;
+  width: 100%;
+  height: 100vh;
+  padding: 16px 24px 24px 24px;
+
+  border-radius: 0 24px 24px 0;
+
+  background: var(--bg-area-muted);
+
+  .primary {
+    @include flex.display(flex, column, center, start, 28px);
+    width: 100%;
+
+    .logo {
+      @include font.title-3('stronger');
+
+      color: var(--text-6);
+      cursor: pointer;
+
+      transition: color 0.3s ease;
+
+      &:hover {
+        color: var(--text-4);
+      }
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+
+  nav {
+    @include flex.display(flex, column, start, start, 40px);
+    width: 100%;
+
+    ul {
+      @include flex.display(flex, column, start, start, 2px);
+      width: 100%;
+      overflow: hidden;
+
+      box-sizing: border-box;
+
+      padding: 0;
+      margin: 0;
+
+      &:first-child {
+        gap: 6px;
+      }
+
+      li {
+        width: 100%;
+        cursor: pointer;
+        display: block;
+      }
+    }
+
+    .recentSection,
+    .folderSection {
+      overflow-x: hidden;
+      overflow-y: auto;
+
+
+      h3 {
+        @include font.label('default');
+        padding-left: 20px;
+        color: var(--text-6);
+      }
+    }
+
+    section {
+      width: 100%;
+    }
+
+    .folderSection {
+      div {
+        @include flex.display(flex, row, space-between, center);
+      }
+    }
+  }
+
+  .profile {
+    @include flex.display(flex, row, start, center);
+    width: 100%;
+
+    margin-top: auto;
+
+    .signButton {
+      width: 100%;
+    }
+  }
+}
