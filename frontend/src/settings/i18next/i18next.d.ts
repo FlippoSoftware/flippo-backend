@@ -1,5 +1,6 @@
 import type auth from '../../../locales/en/auth.json';
 import type header from '../../../locales/en/header.json';
+import type modal from '../../../locales/en/modal.json';
 import type notfound from '../../../locales/en/notfound.json';
 import type translation from '../../../locales/en/translation.json';
 
@@ -7,10 +8,12 @@ type TTranslation = typeof translation;
 type TAuth = typeof auth;
 type THeader = typeof header;
 type TNotfound = typeof notfound;
+type TModal = typeof modal;
 
 type TResource = {
   auth: TAuth;
   header: THeader;
+  modal: TModal;
   notfound: TNotfound;
   translation: TTranslation;
 };

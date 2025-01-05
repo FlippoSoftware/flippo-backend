@@ -1,4 +1,11 @@
 {
+  "createSet": "Создать набор",
+  "main": "Главная",
+  "community": "Сообщество",
+  "collection": "Коллекция",
+  "recent": "Недавние",
+  "yourFolders": "Ваши папки",
+  "signin": "Войти",
   "profileButton": {
     "switchLabel": "Язык интерфейса",
     "settingsItem": "Настройки",
