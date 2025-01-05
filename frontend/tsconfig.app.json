@@ -8,7 +8,7 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "composite": true,
-    "types": ["node", "react", "react-dom"],
+    "types": ["node", "react", "react-dom", "testplane"],
 
     /* Bundler mode */
     "moduleResolution": "Bundler",
@@ -43,6 +43,13 @@
       "@widgets/*": ["src/widgets/*/index.ts"]
     }
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/settings/**/*.d.ts", ".storybook/**/*.ts", ".storybook/**/*.tsx"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/settings/**/*.d.ts",
+    ".storybook/**/*.ts",
+    ".storybook/**/*.tsx",
+    "testplane.config.ts"
+  ],
   "exclude": ["node_modules", "eslint.config.js", "prettier.config.js", "stylelint.config.js"]
 }
