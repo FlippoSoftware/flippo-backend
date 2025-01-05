@@ -43,6 +43,8 @@ async function findRefreshTokenByData(
     { user: new RecordId(tableUser, valueUser), system, browser, ip }
   );
 
+  if (result) result.id = result.id.toString() as z.infer<typeof RefreshJwtIdSchema>;
+
   return await RefreshTokenSchema.parseAsync(result).catch(() => undefined);
 }
 
@@ -72,6 +74,8 @@ async function createRefreshToken(refreshId: string, refreshData: TCreateRefresh
     }
   );
 
+  result.id = result.id.toString() as z.infer<typeof RefreshJwtIdSchema>;
+
   return await RefreshTokenSchema.parseAsync(result).catch(() => undefined);
 }
 
@@ -98,11 +102,13 @@ async function deleteRefreshToken(id: string) {
     const db = await getDb();
     const [[result]] = await db.query<[[TRefreshToken]]>(
       /* surql */ `
-      DELETE type::thing($table, $value) RETURN BEFORE;
+      DELETE $id RETURN BEFORE;
       `,
       {
-        table: table,
-        value: value
+        id: new RecordId(
+          table,
+          value.startsWith("⟨") && value.endsWith("⟩") ? value.slice(1, -1) : value
+        )
       }
     );
 

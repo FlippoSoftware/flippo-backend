@@ -15,7 +15,11 @@ async function findUserById(id: string) {
 
   const db = await getDb();
   const [table, value] = String(id).split(":");
-  const result = await db.select<TUser>(new RecordId(table, value));
+  const [[result]] = await db.query<[[TUser]]>(/* surql */ `SELECT * FROM $id`, {
+    id: new RecordId(table, value)
+  });
+
+  if (result) result.id = result.id.toString() as z.infer<typeof UserSchema.shape.id>;
 
   return UserSchema.parse(result);
 }
@@ -31,6 +35,8 @@ async function findUserByEmail(email: string) {
     { email }
   );
 
+  if (result) result.id = result.id.toString() as z.infer<typeof UserSchema.shape.id>;
+
   return await UserSchema.parseAsync(result).catch(() => undefined);
 }
 
@@ -44,6 +50,8 @@ async function findUserByProviderId(providerId: string) {
         `,
     { providerId }
   );
+
+  if (result) result.id = result.id.toString() as z.infer<typeof UserSchema.shape.id>;
 
   return await UserSchema.parseAsync(result).catch(() => undefined);
 }
