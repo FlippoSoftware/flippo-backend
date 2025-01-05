@@ -6,6 +6,9 @@ type TDbConfig = {
   database: string;
   endpoint: string;
   namespace: string;
+};
+
+type TCredentials = {
   username: string;
   password: string;
 };
@@ -13,7 +16,10 @@ type TDbConfig = {
 const DEFAULT_CONFIG: TDbConfig = {
   database: ENV.SURREALDB_DB || "test",
   endpoint: ENV.SURREALDB_ENDPOINT || "http://127.0.0.1:8000/rpc",
-  namespace: ENV.SURREALDB_NS || "test",
+  namespace: ENV.SURREALDB_NS || "test"
+};
+
+const DEFAULT_CREDENTIALS: TCredentials = {
   username: ENV.SURREALDB_USER || "root",
   password: ENV.SURREALDB_PASS || "root"
 };
@@ -27,7 +33,9 @@ async function connectToDatabase(config: TDbConfig = DEFAULT_CONFIG): Promise<Su
     await db.connect(config.endpoint);
     await db.use({ database: config.database, namespace: config.namespace });
 
-    await db.signin({ password: config.password, username: config.username });
+    await signInToDatabase(db);
+
+    await db.ready;
 
     logger.info("SurrealDB connected!");
     return db;
@@ -39,12 +47,20 @@ async function connectToDatabase(config: TDbConfig = DEFAULT_CONFIG): Promise<Su
   }
 }
 
+async function signInToDatabase(db: Surreal, credentials: TCredentials = DEFAULT_CREDENTIALS) {
+  await db.signin({ password: credentials.password, username: credentials.username });
+  await db.ready;
+}
+
 export async function getDb() {
-  if (
-    !connectionPromise ||
-    !(await connectionPromise.then((db) => db.info()).then((info) => info?.id))
-  ) {
+  if (!connectionPromise) {
     connectionPromise = connectToDatabase(DEFAULT_CONFIG);
+  }
+
+  const db = await connectionPromise;
+  const connection = await db.connection;
+  if (!connection) {
+    await signInToDatabase(db, DEFAULT_CREDENTIALS);
   }
 
   return connectionPromise;
