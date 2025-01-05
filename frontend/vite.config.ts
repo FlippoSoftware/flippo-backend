@@ -19,7 +19,13 @@ export default defineConfig({
   esbuild: {
     jsxInject: `import React from 'react'`
   },
-  plugins: [react()],
+  plugins: [
+    react({
+      babel: {
+        plugins: ['effector/babel-plugin']
+      }
+    })
+  ],
   resolve: {
     alias: {
       '@app': '/src/app',
