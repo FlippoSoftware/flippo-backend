@@ -151,5 +151,12 @@ export default [
       }
     },
     ...tseslint.configs.disableTypeChecked
+  },
+  {
+    files: ['**/tests/*.testplane.ts'],
+    rules: {
+      '@typescript-eslint/await-thenable': 'off',
+      'no-undef': 'off'
+    }
   }
 ];
