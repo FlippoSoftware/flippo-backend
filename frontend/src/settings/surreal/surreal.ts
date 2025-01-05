@@ -13,7 +13,7 @@ type TDbConfig = {
 
 const DEFAULT_CONFIG: TDbConfig = {
   database: ENV.SURREALDB_DB || 'test',
-  endpoint: ENV.SURREALDB_ENDPOINT || 'http://127.0.0.1:8000/rpc',
+  endpoint: ENV.SURREALDB_ENDPOINT || 'ws://127.0.0.1:8000/rpc',
   namespace: ENV.SURREALDB_NS || 'test'
 };
 
@@ -31,11 +31,15 @@ const dbConnectFx = createEffect<TDbConfig, Surreal>(async (config) => {
   return db;
 });
 
+export const dbDisconnectFx = createEffect<null | Surreal, void>(async (db) => {
+  if (db) await db.close();
+});
+
 export const dbConnected = dbConnectFx.done;
 export const dbFailConnected = dbConnectFx.fail;
 
 export const dbAuthenticateFx = createEffect<null | Surreal, void, SurrealError>(async (db) => {
-  if (!db) throw SurrealError.DatabaseOffline();
+  if (!db || !db.connection) throw SurrealError.DatabaseOffline();
 
   const token = getDbTokenCookie();
   if (!token) throw SurrealError.DatabaseTokenMissing();
@@ -47,9 +51,22 @@ export const removeDbTokenCookieFx = createEffect(() => {
   removeDbTokenCookie();
 });
 
+export const dbCheckAuthorizedFx = createEffect<null | Surreal, void, SurrealError>(async (db) => {
+  if (!db || !db.connection) throw SurrealError.DatabaseOffline();
+
+  const info = await db.info();
+  if (!info) throw SurrealError.DatabaseUnauthorized();
+});
+
 sample({ clock: initDb, source: $dbConfig, target: dbConnectFx });
 
 sample({
   clock: dbConnectFx.doneData,
   target: $db
 });
+
+// eslint-disable-next-line effector/no-watch
+dbAuthenticateFx.done.watch(() => console.info('DB authenticated'));
+
+// eslint-disable-next-line effector/no-watch
+dbAuthenticateFx.failData.watch((error) => console.error(error));
