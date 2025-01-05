@@ -4,10 +4,6 @@
 .header {
   @include flex.display(flex, column, start, start, 64px);
 
-  position: fixed;
-  top: 0;
-  left: 0;
-
   max-width: 256px;
   width: 100%;
   height: 100vh;
@@ -66,13 +62,15 @@
 
     .recentSection,
     .folderSection {
+      overflow-x: hidden;
+      overflow-y: auto;
+
+
       h3 {
         @include font.label('default');
         padding-left: 20px;
         color: var(--text-6);
       }
-    }
-    .recentSection {
     }
 
     section {
@@ -83,6 +81,17 @@
       div {
         @include flex.display(flex, row, space-between, center);
       }
+    }
+  }
+
+  .profile {
+    @include flex.display(flex, row, start, center);
+    width: 100%;
+
+    margin-top: auto;
+
+    .signButton {
+      width: 100%;
     }
   }
 }
