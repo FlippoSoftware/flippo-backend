@@ -1,7 +1,18 @@
 import * as sessionApi from '@shared/api';
 import { chainRoute, type RouteInstance, type RouteParams, type RouteParamsAndQuery } from 'atomic-router';
-import { attach, createEffect, createEvent, createStore, type Effect, type Event, is, sample, split } from 'effector';
-import { and, condition } from 'patronum';
+import {
+  attach,
+  createEffect,
+  createEvent,
+  createStore,
+  type Effect,
+  type Event,
+  type EventCallable,
+  is,
+  sample,
+  split
+} from 'effector';
+import { and, condition, not } from 'patronum';
 
 import { SessionSchema, type TSession } from './session.schema';
 
@@ -44,6 +55,7 @@ $authenticationStatus.on(sessionAuthFx, (status) => {
 
 $authenticationStatus.on(sessionAuthFx.done, () => AuthStatus.Authenticated);
 $authenticationStatus.on(sessionAuthFx.fail, () => AuthStatus.Anonymous);
+$authenticationStatus.on(sessionSignOutFx.finally, () => AuthStatus.Anonymous);
 
 $countOfAuthenticationAttempts.reset(sessionAuthFx.doneData, sessionSignOut);
 $session.reset(sessionReset);
@@ -68,6 +80,7 @@ sample({ clock: sessionValidateFx.doneData, target: $session });
 
 sample({
   clock: sessionAuth,
+  filter: not(sessionAuthFx.pending),
   target: sessionAuthFx
 });
 
@@ -107,13 +120,13 @@ sample({
 // #endregion
 
 // #region chain routes of authorization
-interface ChainParams<Params extends RouteParams> {
-  otherwise?: Effect<RouteParamsAndQuery<Params>, any, any> | Event<RouteParamsAndQuery<Params>>;
+interface ChainParams {
+  otherwise?: Effect<void, any, any> | Event<void> | EventCallable<void>;
 }
 
 export function chainAuthorized<Params extends RouteParams>(
   route: RouteInstance<Params>,
-  { otherwise }: ChainParams<Params> = {}
+  { otherwise }: ChainParams = {}
 ): RouteInstance<Params> {
   const sessionCheckStarted = createEvent<RouteParamsAndQuery<Params>>();
   const sessionReceivedAnonymous = createEvent<RouteParamsAndQuery<Params>>();
@@ -168,7 +181,7 @@ export function chainAuthorized<Params extends RouteParams>(
 
 export function chainAnonymous<Params extends RouteParams>(
   route: RouteInstance<Params>,
-  { otherwise }: ChainParams<Params> = {}
+  { otherwise }: ChainParams = {}
 ): RouteInstance<Params> {
   const sessionCheckStarted = createEvent<RouteParamsAndQuery<Params>>();
   const sessionReceivedAuthenticated = createEvent<RouteParamsAndQuery<Params>>();
@@ -218,6 +231,37 @@ export function chainAnonymous<Params extends RouteParams>(
     beforeOpen: sessionCheckStarted,
     openOn: [alreadyAnonymous, sessionAuthFx.fail],
     cancelOn: sessionReceivedAuthenticated
+  });
+}
+
+export function chainOptionalAuthorization<Params extends RouteParams>(
+  route: RouteInstance<Params>
+): RouteInstance<Params> {
+  const sessionCheckStarted = createEvent<RouteParamsAndQuery<Params>>();
+
+  const alreadyAuthenticated = sample({
+    clock: sessionCheckStarted,
+    source: $authenticationStatus,
+    filter: (status) => status === AuthStatus.Authenticated
+  });
+
+  const alreadyAnonymous = sample({
+    clock: sessionCheckStarted,
+    source: $authenticationStatus,
+    filter: (status) => status === AuthStatus.Anonymous
+  });
+
+  sample({
+    clock: sessionCheckStarted,
+    source: $authenticationStatus,
+    filter: (status) => status === AuthStatus.Initial,
+    target: sessionAuthFx
+  });
+
+  return chainRoute({
+    route,
+    beforeOpen: sessionCheckStarted,
+    openOn: [alreadyAnonymous, alreadyAuthenticated, sessionAuthFx.done, sessionAuthFx.fail]
   });
 }
 // #endregion
