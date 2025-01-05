@@ -15,7 +15,7 @@ function Fail() {
         <ErrorIcon type={'circle'} />
         <div>
           <h1 className={st.title}>{t('title')}</h1>
-          <p className={st.errorMessage}>{`ERROR: ${errorMessage}`}</p>
+          <p className={st.errorMessage}>{`ERROR: ${t(`error.${errorMessage}` as any) as string}`}</p>
         </div>
       </div>
       <div className={st.buttonContainer}>
