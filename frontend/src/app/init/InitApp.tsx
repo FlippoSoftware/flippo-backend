@@ -1,3 +1,4 @@
+import { StartPage } from '@pages';
 import { $i18n } from '@settings/i18next';
 import { router } from '@settings/routing';
 import { ToastContainer } from '@widgets/ToastNotification';
@@ -22,7 +23,7 @@ function InitApp(props: PropsWithChildren<object>) {
   }, [initAppEvent, teardownAppEvent]);
 
   if (!initialized) {
-    return <p style={{ color: 'white', fontSize: '40px' }}>{'loading'}</p>;
+    return <StartPage />;
   }
 
   return (
