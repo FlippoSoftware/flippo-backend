@@ -6,7 +6,6 @@
 .yarn/install-state.gz
 .env
 /config
-pnpm-lock.yaml
 
 # production
 /build
